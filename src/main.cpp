@@ -381,8 +381,8 @@ static void render(const int x, const int y) {
       dma_scanline_count++;
       if (dma_scanline_count == dma_n_scanlines) {
         dma_writes++;
-        dma_busy += device.asyncDMAIsBusy() ? 1 : 0;
-        device.asyncDMAWriteBytes(
+        dma_busy += device.dma_is_busy() ? 1 : 0;
+        device.dma_write_bytes(
             reinterpret_cast<uint8_t *>(dma_buf),
             uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
         // bus.writeBytes(
@@ -403,8 +403,8 @@ static void render(const int x, const int y) {
   constexpr int dma_n_scanlines_trailing = display_height % dma_n_scanlines;
   if (dma_n_scanlines_trailing) {
     dma_writes++;
-    dma_busy += device.asyncDMAIsBusy() ? 1 : 0;
-    device.asyncDMAWriteBytes(
+    dma_busy += device.dma_is_busy() ? 1 : 0;
+    device.dma_write_bytes(
         reinterpret_cast<uint8_t *>(dma_buf),
         uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
     // bus.writeBytes(

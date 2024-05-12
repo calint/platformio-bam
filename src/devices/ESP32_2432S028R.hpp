@@ -32,11 +32,11 @@ public:
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  void asyncDMAWriteBytes(uint8_t *data, uint32_t len) override {
+  void dma_write_bytes(uint8_t *data, uint32_t len) override {
     display.pushPixelsDMA(reinterpret_cast<uint16_t *>(data), len >> 1);
   }
 
-  auto asyncDMAIsBusy() -> bool override { return display.dmaBusy(); }
+  auto dma_is_busy() -> bool override { return display.dmaBusy(); }
 
-  void asyncDMAWaitForCompletion() override { return display.dmaWait(); }
+  void dma_wait_for_completion() override { return display.dmaWait(); }
 };

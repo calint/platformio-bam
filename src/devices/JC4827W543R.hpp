@@ -261,7 +261,7 @@ public:
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  bool asyncDMAIsBusy() override {
+  bool dma_is_busy() override {
     if (!async_busy_) {
       return false;
     }
@@ -273,7 +273,7 @@ public:
     return async_busy_;
   }
 
-  void asyncDMAWaitForCompletion() override {
+  void dma_wait_for_completion() override {
     if (!async_busy_) {
       return;
     }
@@ -285,8 +285,8 @@ public:
     async_busy_ = false;
   }
 
-  void asyncDMAWriteBytes(uint8_t *data, uint32_t len) override {
-    asyncDMAWaitForCompletion();
+  void dma_write_bytes(uint8_t *data, uint32_t len) override {
+    dma_wait_for_completion();
 
     transaction_async_.tx_buffer = data;
     transaction_async_.length = len * 8; // length in bits
