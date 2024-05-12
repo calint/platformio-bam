@@ -22,6 +22,7 @@
 class JC4827W543R final : public device {
   // maximum for this device
   static constexpr int dma_max_transfer_b = 32768;
+  static constexpr int nv3041a_max_clock_freq = 32000000;
   // init touch screen
   SPIClass hspi{HSPI}; // note. VSPI is used by the display
   XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
@@ -61,7 +62,7 @@ public:
         .duty_cycle_pos = 0,
         .cs_ena_pretrans = 0,
         .cs_ena_posttrans = 0,
-        .clock_speed_hz = 32000000UL,
+        .clock_speed_hz = nv3041a_max_clock_freq,
         .input_delay_ns = 0,
         .spics_io_num = -1, // avoid use system CS control
         .flags = SPI_DEVICE_HALFDUPLEX,
@@ -74,7 +75,11 @@ public:
       assert(ret);
     }
 
-    assert(spi_device_acquire_bus(device_handle_, portMAX_DELAY) == ESP_OK);
+    ret = spi_device_acquire_bus(device_handle_, portMAX_DELAY);
+    if (ret != ESP_OK) {
+      ESP_ERROR_CHECK(ret);
+      assert(ret);
+    }
 
     // init values that will not change
     transaction_async_.cmd = 0x32;
