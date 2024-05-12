@@ -61,7 +61,7 @@ public:
         .duty_cycle_pos = 0,
         .cs_ena_pretrans = 0,
         .cs_ena_posttrans = 0,
-        .clock_speed_hz = 32000000UL,
+        .clock_speed_hz = 8000000UL, // 32
         .input_delay_ns = 0,
         .spics_io_num = -1, // avoid use system CS control
         .flags = SPI_DEVICE_HALFDUPLEX,
@@ -73,6 +73,8 @@ public:
       ESP_ERROR_CHECK(ret);
       assert(ret);
     }
+
+    assert(spi_device_acquire_bus(device_handle_, portMAX_DELAY) == ESP_OK);
 
     // init values that will not change
     transaction_async_.cmd = 0x32;
@@ -254,7 +256,17 @@ public:
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  bool asyncDMAIsBusy() override { return async_busy_; }
+  bool asyncDMAIsBusy() override {
+    if (!async_busy_) {
+      return false;
+    }
+
+    spi_transaction_t *t = nullptr;
+    async_busy_ =
+        spi_device_get_trans_result(device_handle_, &t, 0) == ESP_ERR_TIMEOUT;
+
+    return async_busy_;
+  }
 
   void asyncDMAWaitForCompletion() override {
     if (!async_busy_) {
@@ -277,25 +289,16 @@ public:
     async_busy_ = true;
     assert(spi_device_queue_trans(device_handle_, &transaction_async_,
                                   portMAX_DELAY) == ESP_OK);
-
-
-    async_busy_ = false;
   }
 
 private:
   static void pre_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
-    if (trans == &dev->transaction_async_) {
-      dev->async_busy_ = true;
-    }
     dev->bus_chip_select_enable();
   }
 
   static void post_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
-    if (trans == &dev->transaction_async_) {
-      dev->async_busy_ = false;
-    }
     dev->bus_chip_select_disable();
   }
 
