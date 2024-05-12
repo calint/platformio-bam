@@ -311,7 +311,7 @@ private:
     transaction_.cmd = 0x02;
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
     transaction_.tx_data[0] = data;
-    transaction_.length = 8;
+    transaction_.length = 8; // in bits
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
@@ -324,7 +324,7 @@ private:
     transaction_.tx_data[1] = data1;
     transaction_.tx_data[2] = data2 >> 8;
     transaction_.tx_data[3] = data2;
-    transaction_.length = 32;
+    transaction_.length = 32; // in bits
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 

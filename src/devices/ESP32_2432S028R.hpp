@@ -35,7 +35,8 @@ public:
   }
 
   void dma_write_bytes(uint8_t *data, uint32_t len) override {
-    display.pushPixelsDMA(reinterpret_cast<uint16_t *>(data), len >> 1);
+    display.pushPixelsDMA(reinterpret_cast<uint16_t *>(data),
+                          len / sizeof(uint16_t));
   }
 
   auto dma_is_busy() -> bool override { return display.dmaBusy(); }
