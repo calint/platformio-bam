@@ -18,7 +18,7 @@ a.k.a. cheap-yellow-display (CYD)
 
 ## device JC4827W543R
 
-a.k.a. cheap-chonky-display (CCD)
+a.k.a. cheap-black-display (CBD)
 
 * display: 272 x 480
 * performance: ~40 frames per second
