@@ -53,7 +53,7 @@ static ESP32_2432S028R device{};
 
 // number of scanlines to render before DMA transfer
 static constexpr int dma_n_scanlines = 8;
-// note. performance on device: max 60 (32640 B buffer) (max on device 32768 B)
+// note. performance on device:
 //  ESP32-2432S028R:
 //    1: 25 fps, 2: 28 fps, 4: 29 fps, 8: 31 fps, 16: 31 fps, 32: 31 fps
 //  JC4827W543R:
