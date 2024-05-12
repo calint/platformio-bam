@@ -256,31 +256,47 @@ public:
 
   bool asyncDMAIsBusy() override { return async_busy_; }
 
+  void asyncDMAWaitForCompletion() override {
+    if (!async_busy_) {
+      return;
+    }
+
+    spi_transaction_t *t = nullptr;
+    assert(spi_device_get_trans_result(device_handle_, &t, portMAX_DELAY) ==
+           ESP_OK);
+
+    async_busy_ = false;
+  }
+
   void asyncDMAWriteBytes(uint8_t *data, uint32_t len) override {
+    asyncDMAWaitForCompletion();
+
     transaction_async_.tx_buffer = data;
     transaction_async_.length = len * 8; // length in bits
 
+    async_busy_ = true;
     assert(spi_device_queue_trans(device_handle_, &transaction_async_,
                                   portMAX_DELAY) == ESP_OK);
 
-    async_busy_ = true;
+
+    async_busy_ = false;
   }
 
 private:
   static void pre_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
-    dev->bus_chip_select_enable();
     if (trans == &dev->transaction_async_) {
       dev->async_busy_ = true;
     }
+    dev->bus_chip_select_enable();
   }
 
   static void post_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
-    dev->bus_chip_select_disable();
     if (trans == &dev->transaction_async_) {
       dev->async_busy_ = false;
     }
+    dev->bus_chip_select_disable();
   }
 
   void bus_chip_select_enable() { digitalWrite(TFT_CS, LOW); }
