@@ -94,238 +94,126 @@ public:
 
         0x7d, 0x03, // vdds_trim[2:0]  2.07V
 
-        0xc1, // avdd_clp_en avdd_clp[1:0] avcl_clp_en avcl_clp[1:0]
-        0xbb, // 0xbb	 88		  a2
+        0xc1, 0xbb, // avdd_clp_en avdd_clp[1:0] avcl_clp_en avcl_clp[1:0]
+                    // 0xbb 88  a2
 
-        0xc2, // vgl_clp_en vgl_clp[2:0]
-        0x05,
+        0xc2, 0x05, // vgl_clp_en vgl_clp[2:0] default 15h
+        0xc3, 0x10, // vgl_clp_en vgl_clp[2:0] default 12h
+        0xc6, 0x3e, // avdd_ratio_sel avcl_ratio_sel vgh_ratio_sel[1:0] default
+                    // 35h vgl_ratio_sel[1:0] default 35h
+        0xc7, 0x25, // mv_clk_sel[1:0] avdd_clk_sel[1:0] avcl_clk_sel[1:0]
+                    // default 2ah
+        0xc8, 0x11, // VGL_CLK_sel default 11h
 
-        0xc3, // vgl_clp_en vgl_clp[2:0]
-        0x10,
+        0x7a, 0x5f, // user_vgsp 4f:0.8V 3f:1.04V	5f
 
-        0xc6, // avdd_ratio_sel avcl_ratio_sel vgh_ratio_sel[1:0]
-              // vgl_ratio_sel[1:0]
-        0x3e, // 35
+        0x6f, 0x44, // user_gvdd 1C:5.61  5f 53  2a  3a
 
-        0xc7, // mv_clk_sel[1:0] avdd_clk_sel[1:0] avcl_clk_sel[1:0]
-        0x25, // 2e
+        0x78, 0x70, // user_gvcl 50:-3.22  75  58  66
 
-        0xc8, //	VGL_CLK_sel
-        0x11, //
+        0xc9, 0x00, // mv_clk_clp
 
-        0x7a, //	user_vgsp
-        0x5f, // 4f:0.8V		3f:1.04V	5f
-
-        0x6f, //	user_gvdd
-        0x44, // 1C:5.61	  5f	 53		   2a	    3a
-
-        0x78, //	user_gvcl
-        0x70, // 50:-3.22	  75			58	     	66
-
-        0xc9, //
-        0x00,
-
-        0x67, //
-        0x21,
+        0x67, 0x21, //
 
         // gate_ed
 
-        0x51, // gate_st_o[7:0]
-        0x0a,
+        0x51, 0x0a, // gate_st_o[7:0]
+        0x52, 0x76, // gate_ed_o[7:0]
+        0x53, 0x0a, // gate_st_e[7:0]
+        0x54, 0x76, // gate_ed_e[7:0]
 
-        0x52, // gate_ed_o[7:0]
-        0x76, // 76
+        // FSM_V-Porch
+        0x46, 0x0a, // fsm_hbp_o[5:0]
+        0x47, 0x2a, // fsm_hfp_o[5:0]
+        0x48, 0x0a, // fsm_hbp_e[5:0]
+        0x49, 0x1a, // fsm_hfp_e[5:0]
 
-        0x53, // gate_st_e[7:0]
-        0x0a, // 76
+        0x56, 0x43, // src_ld_wd[1:0] src_ld_st[5:0]
+        0x57, 0x42, // pn_cs_en src_cs_st[5:0]
+        0x58, 0x3c, // src_cs_p_wd[6:0]
+        0x59, 0x64, // src_cs_n_wd[6:0]
+        0x5a, 0x41, // src_pchg_st_o[6:0]
+        0x5b, 0x3c, // src_pchg_wd_o[6:0]
+        0x5c, 0x02, // src_pchg_st_e[6:0]
+        0x5d, 0x3c, // src_pchg_wd_e[6:0]
+        0x5e, 0x1f, // src_pol_sw[7:0]
+        0x60, 0x80, // src_op_st_o[7:0]
+        0x61, 0x3f, // src_op_st_e[7:0]
+        0x62, 0x21, // src_op_ed_o[9:8] src_op_ed_e[9:8]
+        0x63, 0x07, // src_op_ed_o[7:0]
+        0x64, 0xe0, // src_op_ed_e[7:0]
+        0x65, 0x02, // chopper
 
-        0x54, // gate_ed_e[7:0]
-        0x76,
-        ////sorce
-        0x46, // fsm_hbp_o[5:0]
-        0x0a,
-
-        0x47, // fsm_hfp_o[5:0]
-        0x2a,
-
-        0x48, // fsm_hbp_e[5:0]
-        0x0a,
-
-        0x49, // fsm_hfp_e[5:0]
-        0x1a,
-
-        0x56, // src_ld_wd[1:0] src_ld_st[5:0]
-        0x43,
-
-        0x57, // pn_cs_en src_cs_st[5:0]
-        0x42,
-
-        0x58, // src_cs_p_wd[6:0]
-        0x3c,
-
-        0x59, // src_cs_n_wd[6:0]
-        0x64,
-
-        0x5a, // src_pchg_st_o[6:0]
-        0x41, // 41
-
-        0x5b, // src_pchg_wd_o[6:0]
-        0x3c,
-
-        0x5c, // src_pchg_st_e[6:0]
-        0x02, // 02
-
-        0x5d, // src_pchg_wd_e[6:0]
-        0x3c, // 3c
-
-        0x5e, // src_pol_sw[7:0]
-        0x1f,
-
-        0x60, // src_op_st_o[7:0]
-        0x80,
-
-        0x61, // src_op_st_e[7:0]
-        0x3f,
-
-        0x62, // src_op_ed_o[9:8] src_op_ed_e[9:8]
-        0x21,
-
-        0x63, // src_op_ed_o[7:0]
-        0x07,
-
-        0x64, // src_op_ed_e[7:0]
-        0xe0,
-
-        0x65, // chopper
-        0x02,
-
-        0xca, // avdd_mux_st_o[7:0]
-        0x20,
-
-        0xcb, // avdd_mux_ed_o[7:0]
-        0x52, // 52
-
-        0xcc, // avdd_mux_st_e[7:0]
-        0x10,
-
-        0xcD, // avdd_mux_ed_e[7:0]
-        0x42,
-
-        0xD0, // avcl_mux_st_o[7:0]
-        0x20,
-
-        0xD1, // avcl_mux_ed_o[7:0]
-        0x52,
-
-        0xD2, // avcl_mux_st_e[7:0]
-        0x10,
-
-        0xD3, // avcl_mux_ed_e[7:0]
-        0x42,
-
-        0xD4, // vgh_mux_st[7:0]
-        0x0a,
-
-        0xD5, // vgh_mux_ed[7:0]
-        0x32,
+        0xca, 0x20, // avdd_mux_st_o[7:0]
+        0xcb, 0x52, // avdd_mux_ed_o[7:0]
+        0xcc, 0x10, // avdd_mux_st_e[7:0]
+        0xcd, 0x42, // avdd_mux_ed_e[7:0]
+        0xd0, 0x20, // avcl_mux_st_o[7:0]
+        0xd1, 0x52, // avcl_mux_ed_o[7:0]
+        0xd2, 0x10, // avcl_mux_st_e[7:0]
+        0xd3, 0x42, // avcl_mux_ed_e[7:0]
+        0xd4, 0x0a, // vgh_mux_st[7:0]
+        0xd5, 0x32, // vgh_mux_ed[7:0]
 
         // 2-1
         // gammma  weihuan pianguangpian 0913
-        0x80, // gam_vrp0	0					6bit
-        0x00,
-        0xA0, // gam_VRN0		 0-
-        0x00,
+        0x80, 0x00, // gam_vrp0 0 6bit
+        0xA0, 0x00, // gam_VRN0 0-
 
-        0x81, // gam_vrp1	1				   6bit
-        0x07,
-        0xA1, // gam_VRN1		 1-
-        0x06,
+        0x81, 0x07, // gam_vrp1 1   6bit
+        0xA1, 0x06, // gam_VRN1 1-
 
-        0x82, // gam_vrp2	 2					6bit
-        0x02,
-        0xA2, // gam_VRN2		 2-
-        0x01,
+        0x82, 0x02, // gam_vrp2  2   6bit
+        0xA2, 0x01, // gam_VRN2  2-
 
-        0x86, // gam_prp0	 7bit	8			7bit
-        0x11, // 33
-        0xA6, // gam_PRN0	 	8-
-        0x10, // 2a
+        0x86, 0x11, // gam_prp0  7bit  8 7bit
+        0xA6, 0x10, // gam_PRN0  8-
 
-        0x87, // gam_prp1	 7bit	 40			 7bit
-        0x27, // 2d
-        0xA7, // gam_PRN1	 	40-
-        0x27, // 2d
+        0x87, 0x27, // gam_prp1 7bit  40  7bit
+        0xA7, 0x27, // gam_PRN1 40-
 
-        0x83, // gam_vrp3	 61				 6bit
-        0x37,
-        0xA3, // gam_VRN3		61-
-        0x37,
+        0x83, 0x37, // gam_vrp3 61  6bit
+        0xA3, 0x37, // gam_VRN3 61-
 
-        0x84, // gam_vrp4	  62			 6bit
-        0x35,
-        0xA4, // gam_VRN4		62-
-        0x35,
+        0x84, 0x35, // gam_vrp4 62  6bit
+        0xA4, 0x35, // gam_VRN4 62-
 
-        0x85, // gam_vrp5	  63			 6bit
-        0x3f,
-        0xA5, // gam_VRN5		63-
-        0x3f,
+        0x85, 0x3f, // gam_vrp5 63  6bit
+        0xA5, 0x3f, // gam_VRN5 63-
         //
 
-        0x88, // gam_pkp0	  	 4			   5bit
-        0x0b, // 0b
-        0xA8, // gam_PKN0		4-
-        0x0b, // 0b
+        0x88, 0x0b, // gam_pkp0 4   5bit
+        0xa8, 0x0b, // gam_PKN0 4-
 
-        0x89, // gam_pkp1	  5					5bit
-        0x14, // 14
-        0xA9, // gam_PKN1		5-
-        0x14, // 14
+        0x89, 0x14, // gam_pkp1 5   5bit
+        0xA9, 0x14, // gam_PKN1 5-
 
-        0x8a, // gam_pkp2	  7					 5bit
-        0x1a, // 1a
-        0xAa, // gam_PKN2		7-
-        0x1a, // 1a
+        0x8a, 0x1a, // gam_pkp2 7   5bit
+        0xaa, 0x1a, // gam_PKN2 7-
 
-        0x8b, // gam_PKP3	  10				 5bit
-        0x0a,
-        0xAb, // gam_PKN3		10-
-        0x0a,
+        0x8b, 0x0a, // gam_PKP3 10  5bit
+        0xab, 0x0a, // gam_PKN3  10-
 
-        0x8c, // gam_PKP4	   16				 5bit
-        0x14,
-        0xAc, // gam_PKN4		16-
-        0x08,
+        0x8c, 0x14, // gam_PKP4 16  5bit
+        0xac, 0x08, // gam_PKN4  16-
 
-        0x8d, // gam_PKP5		22				 5bit
-        0x17,
-        0xAd, // gam_PKN5		22-
-        0x07,
+        0x8d, 0x17, // gam_PKP5 22  5bit
+        0xad, 0x07, // gam_PKN5 22-
 
-        0x8e, // gam_PKP6		28				 5bit
-        0x16, // 16 change
-        0xAe, // gam_PKN6		28-
-        0x06, // 13change
+        0x8e, 0x16, // gam_PKP6  28  5bit
+        0xae, 0x06, // gam_PKN6  28-
 
-        0x8f, // gam_PKP7		34				  5bit
-        0x1B,
-        0xAf, // gam_PKN7		34-
-        0x07,
+        0x8f, 0x1b, // gam_PKP7  34  5bit
+        0xaf, 0x07, // gam_PKN7  34-
 
-        0x90, // gam_PKP8		 46				   5bit
-        0x04,
-        0xB0, // gam_PKN8		46-
-        0x04,
+        0x90, 0x04, // gam_PKP8  46  5bit
+        0xb0, 0x04, // gam_PKN8  46-
 
-        0x91, // gam_PKP9		 52 5bit
-        0x0A,
-        0xB1, // gam_PKN9		52-
-        0x0A,
+        0x91, 0x0a, // gam_PKP9  52 5bit
+        0xb1, 0x0a, // gam_PKN9  52-
 
-        0x92, // gam_PKP10		58 5bit
-        0x16,
-        0xB2, // gam_PKN10		58-
-        0x15,
+        0x92, 0x16, // gam_PKP10 58 5bit
+        0xb2, 0x15, // gam_PKN10 58-
         // gamma done
 
         0xff, 0x00,
