@@ -84,7 +84,7 @@ public:
     // magic numbers from from Arduino_NV3041A
     // https://admin.osptek.com/uploads/NV_3041_A_Datasheet_V1_2_20221011_686486a221.pdf
     constexpr uint8_t init_commands[] = {
-        0xff, 0xa5, //
+        0xff, 0xa5, // ?
 
         // gammma  weihuan pianguangpian 0913
         0x80, 0x00, // gam_vrp0[5:0]
