@@ -39,11 +39,11 @@
 // then the main entry file to user code
 #include "game/main.hpp"
 
-// setup device
-#if defined(DEVICE_JC4827W543R)
+// declare device based on config
+#ifdef DEVICE_JC4827W543R
 #include "devices/JC4827W543R.hpp"
 static JC4827W543R device{};
-#elif defined(DEVICE_ESP32_2432S028R)
+#elif DEVICE_ESP32_2432S028R
 #include "devices/ESP32_2432S028R.hpp"
 static ESP32_2432S028R device{};
 #else
