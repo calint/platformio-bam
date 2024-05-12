@@ -170,11 +170,11 @@ void loop() {
            sprites.allocated_list_len());
   }
 
-  if (device.is_display_touched()) {
+  if (device.display_is_touched()) {
     uint16_t x = 0;
     uint16_t y = 0;
     uint8_t pressure = 0;
-    device.get_display_touch(x, y, pressure);
+    device.display_get_touch(x, y, pressure);
     // ESP_LOGI("b", "x=%d  y=%d  pressure=%d", x, y, pressure);
     main_on_touch(x, y, pressure);
   }

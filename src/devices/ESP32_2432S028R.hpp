@@ -24,11 +24,11 @@ public:
     display.initDMA(true);
   }
 
-  auto is_display_touched() -> bool override {
+  auto display_is_touched() -> bool override {
     return touch_screen.tirqTouched() && touch_screen.touched();
   }
 
-  void get_display_touch(uint16_t &x, uint16_t &y, uint8_t &pressure) override {
+  void display_get_touch(uint16_t &x, uint16_t &y, uint8_t &pressure) override {
     touch_screen.readData(&x, &y, &pressure);
   }
 
