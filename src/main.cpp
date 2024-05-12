@@ -30,8 +30,8 @@
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 
-#include <Arduino.h>
 #include "hal/efuse_hal.h"
+#include <Arduino.h>
 
 // first game defines
 #include "game/defs.hpp"
