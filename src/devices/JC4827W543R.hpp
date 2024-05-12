@@ -76,7 +76,8 @@ public:
 
     ESP_ERROR_CHECK(spi_device_acquire_bus(device_handle_, portMAX_DELAY));
 
-    // init values that will not change
+    // init transaction values that are constant
+    transaction_.user = this;
     transaction_async_.cmd = 0x32;
     transaction_async_.addr = 0x003C00;
     transaction_async_.flags = SPI_TRANS_MODE_QIO;
@@ -301,7 +302,6 @@ private:
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
     transaction_.tx_buffer = NULL;
     transaction_.length = 0;
-    transaction_.user = this;
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
@@ -312,7 +312,6 @@ private:
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
     transaction_.tx_data[0] = data;
     transaction_.length = 8;
-    transaction_.user = this;
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
@@ -326,7 +325,6 @@ private:
     transaction_.tx_data[2] = data2 >> 8;
     transaction_.tx_data[3] = data2;
     transaction_.length = 32;
-    transaction_.user = this;
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
