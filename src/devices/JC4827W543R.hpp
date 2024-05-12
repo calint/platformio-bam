@@ -82,26 +82,17 @@ public:
 
     // magic numbers from from Arduino_NV3041A
     constexpr uint8_t init_commands[] = {
-        0xff,
-        0xa5,
+        0xff, 0xa5, //
+        0x36, 0xc0, // read / write scanning direction of frame memory
 
-        0x36, //
-        0xc0,
+        0x3A, 0x01, // format of RGB data, 01: 565 (default)，00: 666
 
-        0x3A, //
-        0x01, // 01---565，00---666
+        0x41, 0x03, // bus width, 01: 8bit, 03: 16bit
 
-        0x41,
-        0x03, // 01--8bit, 03-16bit
+        0x44, 0x15, // internal scan vbp ??? 21
+        0x45, 0x15, // internal scan vfp ??? 21
 
-        0x44, // VBP  ?????
-        0x15, // 21
-
-        0x45, // VFP  ?????
-        0x15, // 21
-
-        0x7d, // vdds_trim[2:0]
-        0x03,
+        0x7d, 0x03, // vdds_trim[2:0]  2.07V
 
         0xc1, // avdd_clp_en avdd_clp[1:0] avcl_clp_en avcl_clp[1:0]
         0xbb, // 0xbb	 88		  a2
@@ -239,7 +230,7 @@ public:
         0x32,
 
         // 2-1
-        ////gammma  weihuan pianguangpian 0913
+        // gammma  weihuan pianguangpian 0913
         0x80, // gam_vrp0	0					6bit
         0x00,
         0xA0, // gam_VRN0		 0-
@@ -335,25 +326,29 @@ public:
         0x16,
         0xB2, // gam_PKN10		58-
         0x15,
+        // gamma done
 
-        0xff,
-        0x00,
+        0xff, 0x00,
 
-        0x11,
-        0x00,
+        0x11, 0x00 // turns off sleep mode
     };
+
     for (int i = 0; i < sizeof(init_commands); i += 2) {
       bus_write_c8d8(init_commands[i], init_commands[i + 1]);
     }
 
-    delay(200);
+    delay(120);
 
-    bus_write_c8(0x21);         // inversion off
+    // bus_write_c8(0x20); // inversion off
+    bus_write_c8(0x21); // inversion on (results in correct colors on device)
     bus_write_c8d8(0x29, 0x00); // turn on display
+
+    delay(100);
 
     set_rotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     set_write_address_window(0, 0, display_width, display_height);
 
+    // turn on backlight
     pinMode(TFT_BL, OUTPUT);
     digitalWrite(TFT_BL, HIGH);
 
