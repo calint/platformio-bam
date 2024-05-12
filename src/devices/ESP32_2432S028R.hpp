@@ -21,9 +21,9 @@ public:
 
     // initiate display
     display.init();
+    display.initDMA(true);
     display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     display.setAddrWindow(0, 0, display_width, display_height);
-    display.initDMA(true);
   }
 
   auto display_is_touched() -> bool override {
