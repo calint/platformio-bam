@@ -54,11 +54,7 @@ public:
                                       .flags = SPICOMMON_BUSFLAG_MASTER |
                                                SPICOMMON_BUSFLAG_GPIO_PINS,
                                       .intr_flags = 0};
-    esp_err_t ret = spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO);
-    if (ret != ESP_OK) {
-      ESP_ERROR_CHECK(ret);
-      assert(ret);
-    }
+    ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO));
 
     // init graphics device
     const spi_device_interface_config_t dev_cfg = {
@@ -76,17 +72,9 @@ public:
         .queue_size = 1,
         .pre_cb = pre_transaction_cb,
         .post_cb = post_transaction_cb};
-    ret = spi_bus_add_device(SPI2_HOST, &dev_cfg, &device_handle_);
-    if (ret != ESP_OK) {
-      ESP_ERROR_CHECK(ret);
-      assert(ret);
-    }
+    ESP_ERROR_CHECK(spi_bus_add_device(SPI2_HOST, &dev_cfg, &device_handle_));
 
-    ret = spi_device_acquire_bus(device_handle_, portMAX_DELAY);
-    if (ret != ESP_OK) {
-      ESP_ERROR_CHECK(ret);
-      assert(ret);
-    }
+    ESP_ERROR_CHECK(spi_device_acquire_bus(device_handle_, portMAX_DELAY));
 
     // init values that will not change
     transaction_async_.cmd = 0x32;
@@ -276,8 +264,8 @@ public:
     }
 
     spi_transaction_t *t = nullptr;
-    assert(spi_device_get_trans_result(device_handle_, &t, portMAX_DELAY) ==
-           ESP_OK);
+    ESP_ERROR_CHECK(
+        spi_device_get_trans_result(device_handle_, &t, portMAX_DELAY));
 
     async_busy_ = false;
   }
@@ -289,8 +277,8 @@ public:
     transaction_async_.length = len * 8; // length in bits
 
     async_busy_ = true;
-    assert(spi_device_queue_trans(device_handle_, &transaction_async_,
-                                  portMAX_DELAY) == ESP_OK);
+    ESP_ERROR_CHECK(spi_device_queue_trans(device_handle_, &transaction_async_,
+                                           portMAX_DELAY));
   }
 
 private:
@@ -314,8 +302,7 @@ private:
     transaction_.tx_buffer = NULL;
     transaction_.length = 0;
     transaction_.user = this;
-    assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
-           ESP_OK);
+    ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
   void bus_write_c8d8(uint8_t cmd, uint8_t data) {
@@ -326,8 +313,7 @@ private:
     transaction_.tx_data[0] = data;
     transaction_.length = 8;
     transaction_.user = this;
-    assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
-           ESP_OK);
+    ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
   void bus_write_c8d16d16(uint8_t cmd, uint16_t data1, uint16_t data2) {
@@ -341,8 +327,7 @@ private:
     transaction_.tx_data[3] = data2;
     transaction_.length = 32;
     transaction_.user = this;
-    assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
-           ESP_OK);
+    ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
   void set_rotation(uint8_t r) {
