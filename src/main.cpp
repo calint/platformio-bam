@@ -171,9 +171,9 @@ void loop() {
   }
 
   if (device.is_display_touched()) {
-    int16_t x = 0;
-    int16_t y = 0;
-    int16_t z = 0;
+    uint16_t x = 0;
+    uint16_t y = 0;
+    uint8_t z = 0;
     device.get_display_touch(x, y, z);
     // ESP_LOGI("b", "x=%d  y=%d  z=%d", x, y, z);
     main_on_touch(x, y, z);

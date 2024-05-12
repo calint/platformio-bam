@@ -367,11 +367,8 @@ public:
     return touch_screen.tirqTouched() && touch_screen.touched();
   }
 
-  void get_display_touch(int16_t &x, int16_t &y, int16_t &z) override {
-    const TS_Point pt = touch_screen.getPoint();
-    x = pt.x;
-    y = pt.y;
-    z = pt.z;
+  void get_display_touch(uint16_t &x, uint16_t &y, uint8_t &z) override {
+    touch_screen.readData(&x, &y, &z);
   }
 
   bool asyncDMAIsBusy() override {

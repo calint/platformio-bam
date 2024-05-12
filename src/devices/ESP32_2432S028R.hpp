@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../device.hpp"
+
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Touchscreen.h>
@@ -20,7 +21,7 @@ public:
 
     // initiate display
     display.init();
-    display.setRotation(display_orientation);
+    display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     display.setAddrWindow(0, 0, display_width, display_height);
     display.initDMA(true);
   }
@@ -29,14 +30,11 @@ public:
     return touch_screen.tirqTouched() && touch_screen.touched();
   }
 
-  void get_display_touch(int16_t &x, int16_t &y, int16_t &z) override {
-    const TS_Point pt = touch_screen.getPoint();
-    x = pt.x;
-    y = pt.y;
-    z = pt.z;
+  void get_display_touch(uint16_t &x, uint16_t &y, uint8_t &z) override {
+    touch_screen.readData(&x, &y, &z);
   }
 
-  virtual auto asyncDMAIsBusy() -> bool override { return display.dmaBusy(); }
+  auto asyncDMAIsBusy() -> bool override { return display.dmaBusy(); }
 
   void asyncDMAWaitForCompletion() override { display.dmaWait(); }
 
