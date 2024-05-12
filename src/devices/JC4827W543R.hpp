@@ -88,45 +88,36 @@ public:
     transaction_async_.user = this;
 
     // magic numbers from from Arduino_NV3041A
+    // https://admin.osptek.com/uploads/NV_3041_A_Datasheet_V1_2_20221011_686486a221.pdf
     constexpr uint8_t init_commands[] = {
         0xff, 0xa5, //
         0x36, 0xc0, // MACTL read/write scanning direction of frame memory
-
         0x3A, 0x01, // COLMOD format of RGB data, 01: 565 (default)，00: 666
-
         0x41, 0x03, // BUS_WD  01: 8bit, 03: 16bit default 00h
-
         // FSM_V-Porch
         0x44, 0x15, // fsm_vbp[5:0] default 05h
         0x45, 0x15, // fsm_vfp[5:0] default 05h
-
+        //
         0x7d, 0x03, // VDDS_TRIM 2.07 V default 00h
 
         0xc1, 0xbb, // MV_CLP -5.16, 6.74 default
-
         0xc2, 0x05, // VGH_CLP disabled (15.39 V) default 15h
         0xc3, 0x10, // VGL_CLP -10.951 V default 12h
         0xc6, 0x3e, // RATIO_CTRL vgh_ratio_sel[1:0] default 35h
         0xc7, 0x25, // MV_PUMP_CLK mv_clk_sel[1:0] avdd_clk_sel[1:0]
                     // avcl_clk_sel[1:0] default 2ah
         0xc8, 0x11, // VGL_CLK_sel default 11h
-
         0x7a, 0x5f, // USR_VGSP 1.312 default 3fh
-
         0x6f, 0x44, // USR_GVDD 5.6465 default 16h
-
         0x78, 0x70, // USR_GVCL -3.8415 V default 47h
+        0xc9, 0x00, // MV_CLK_CLP default 37h
+        0x67, 0x21, // ?
 
-        0xc9, 0x00, // mv_clk_clp
-
-        0x67, 0x21, //
-
-        // gate_ed
-
-        0x51, 0x0a, // gate_st_o[7:0]
-        0x52, 0x76, // gate_ed_o[7:0]
-        0x53, 0x0a, // gate_st_e[7:0]
-        0x54, 0x76, // gate_ed_e[7:0]
+        // GATE_Setting
+        0x51, 0x0a, // gate_st_o[7:0] default
+        0x52, 0x76, // gate_ed_o[7:0] default 64h
+        0x53, 0x0a, // gate_st_e[7:0] default
+        0x54, 0x76, // gate_ed_e[7:0] default 64h
 
         // FSM_V-Porch
         0x46, 0x0a, // fsm_hbp_o[5:0]
@@ -224,7 +215,7 @@ public:
 
         0xff, 0x00,
 
-        0x11, 0x00 // turns off sleep mode (default)
+        0x11, 0x00 // SLPOUT, turns off sleep mode, default
     };
 
     for (int i = 0; i < sizeof(init_commands); i += 2) {
