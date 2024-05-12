@@ -9,7 +9,6 @@
 
 class ESP32_2432S028R final : public device {
   TFT_eSPI display{};
-  // init touch screen
   SPIClass hspi{HSPI}; // note. VSPI is used by the display
   XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
 
@@ -18,7 +17,7 @@ public:
     // start the spi for the touch screen and init the library
     hspi.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
     touch_screen.begin(hspi);
-    touch_screen.setRotation(display_orientation);
+    touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
 
     // initiate display
     display.init();
