@@ -1,12 +1,6 @@
 //
-//  JC4827W543R
-//  Guition ESP32-S3, 8M PSRAM, 4M FLASH, WIFI, Bluetooth
-//  4.3" IPS 480*272 LCD display
+// bam game platform
 //
-//  purchased at: https://www.aliexpress.com/item/1005006729377800.html
-//          docs: http://pan.jczn1688.com/s/zyojx8
-//
-
 // note. design decision of 'hpp' source files
 // * the program is one file split into logical sections using includes
 // * all globals are declared 'static'
@@ -85,13 +79,10 @@ static int dma_writes = 0;
 
 void setup() {
   Serial.begin(115200);
-  sleep(1); // arbitrary wait for serial to connects
-
-  printf("\n\n");
+  sleep(1); // arbitrary wait for serial to connect
 
   heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 
-  printf("\n\n");
   printf("------------------- platform -----------------------------\n");
   printf("        chip model: %s\n", ESP.getChipModel());
   printf("          revision: %u.%u\n", efuse_hal_get_major_chip_version(),
@@ -101,16 +92,16 @@ void setup() {
   printf("            screen: %u x %u px\n", display_width, display_height);
   printf("     free heap mem: %u B\n", ESP.getFreeHeap());
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
-  printf("------------------- type sizes ---------------------------\n");
-  printf("              bool: %zu B\n", sizeof(bool));
-  printf("              char: %zu B\n", sizeof(char));
-  printf("             short: %zu B\n", sizeof(short));
-  printf("               int: %zu B\n", sizeof(int));
-  printf("              long: %zu B\n", sizeof(long));
-  printf("         long long: %zu B\n", sizeof(long long));
-  printf("             float: %zu B\n", sizeof(float));
-  printf("            double: %zu B\n", sizeof(double));
-  printf("             void*: %zu B\n", sizeof(void *));
+  // printf("------------------- type sizes ---------------------------\n");
+  // printf("              bool: %zu B\n", sizeof(bool));
+  // printf("              char: %zu B\n", sizeof(char));
+  // printf("             short: %zu B\n", sizeof(short));
+  // printf("               int: %zu B\n", sizeof(int));
+  // printf("              long: %zu B\n", sizeof(long));
+  // printf("         long long: %zu B\n", sizeof(long long));
+  // printf("             float: %zu B\n", sizeof(float));
+  // printf("            double: %zu B\n", sizeof(double));
+  // printf("             void*: %zu B\n", sizeof(void *));
   printf("------------------- object sizes -------------------------\n");
   printf("            sprite: %zu B\n", sizeof(sprite));
   printf("            object: %zu B\n", sizeof(object));
