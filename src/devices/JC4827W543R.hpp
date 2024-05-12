@@ -90,33 +90,32 @@ public:
     // magic numbers from from Arduino_NV3041A
     constexpr uint8_t init_commands[] = {
         0xff, 0xa5, //
-        0x36, 0xc0, // read / write scanning direction of frame memory
+        0x36, 0xc0, // MACTL read/write scanning direction of frame memory
 
-        0x3A, 0x01, // format of RGB data, 01: 565 (default)，00: 666
+        0x3A, 0x01, // COLMOD format of RGB data, 01: 565 (default)，00: 666
 
-        0x41, 0x03, // bus width, 01: 8bit, 03: 16bit
+        0x41, 0x03, // BUS_WD  01: 8bit, 03: 16bit default 00h
 
-        0x44, 0x15, // internal scan vbp ??? 21
-        0x45, 0x15, // internal scan vfp ??? 21
+        // FSM_V-Porch
+        0x44, 0x15, // fsm_vbp[5:0] default 05h
+        0x45, 0x15, // fsm_vfp[5:0] default 05h
 
-        0x7d, 0x03, // vdds_trim[2:0]  2.07V
+        0x7d, 0x03, // VDDS_TRIM 2.07 V default 00h
 
-        0xc1, 0xbb, // avdd_clp_en avdd_clp[1:0] avcl_clp_en avcl_clp[1:0]
-                    // 0xbb 88  a2
+        0xc1, 0xbb, // MV_CLP -5.16, 6.74 default
 
-        0xc2, 0x05, // vgl_clp_en vgl_clp[2:0] default 15h
-        0xc3, 0x10, // vgl_clp_en vgl_clp[2:0] default 12h
-        0xc6, 0x3e, // avdd_ratio_sel avcl_ratio_sel vgh_ratio_sel[1:0] default
-                    // 35h vgl_ratio_sel[1:0] default 35h
-        0xc7, 0x25, // mv_clk_sel[1:0] avdd_clk_sel[1:0] avcl_clk_sel[1:0]
-                    // default 2ah
+        0xc2, 0x05, // VGH_CLP disabled (15.39 V) default 15h
+        0xc3, 0x10, // VGL_CLP -10.951 V default 12h
+        0xc6, 0x3e, // RATIO_CTRL vgh_ratio_sel[1:0] default 35h
+        0xc7, 0x25, // MV_PUMP_CLK mv_clk_sel[1:0] avdd_clk_sel[1:0]
+                    // avcl_clk_sel[1:0] default 2ah
         0xc8, 0x11, // VGL_CLK_sel default 11h
 
-        0x7a, 0x5f, // user_vgsp 4f:0.8V 3f:1.04V	5f
+        0x7a, 0x5f, // USR_VGSP 1.312 default 3fh
 
-        0x6f, 0x44, // user_gvdd 1C:5.61  5f 53  2a  3a
+        0x6f, 0x44, // USR_GVDD 5.6465 default 16h
 
-        0x78, 0x70, // user_gvcl 50:-3.22  75  58  66
+        0x78, 0x70, // USR_GVCL -3.8415 V default 47h
 
         0xc9, 0x00, // mv_clk_clp
 
@@ -225,7 +224,7 @@ public:
 
         0xff, 0x00,
 
-        0x11, 0x00 // turns off sleep mode
+        0x11, 0x00 // turns off sleep mode (default)
     };
 
     for (int i = 0; i < sizeof(init_commands); i += 2) {
