@@ -1,0 +1,83 @@
+[x] fix time rollover bug
+    => dt would become huge so it is capped to 0.1 s
+[x] investigate if chip revision is 0 indeed and PSRAM bug is possible
+[ ] investigate SPI_MAX_DMA_LEN which is 4092 but more seems to be possible without error
+[ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
+    bitwise comparison of layers between sprites at collision detection
+[ ] game_object: position relative to tile map or screen
+[ ] several sets of tiles cycled for animation
+[ ] o1store: ? inst_deleted->~object() at apply_free()
+[ ] render_scanline(...) consider looping through allocated sprites instead of all
+[ ] o1store: new_ list optimizing apply by putting new instances in deleted slots
+    without swapping. if len(del_)>len(add_) no swaps will be made.
+    concession is another list of size Size of pointers to instances
+[ ] o1store: consider a minimal implementation of 'span' to return allocated list
+[ ] #define O1STORE_DEBUG to check for double free, index out of bounds
+[ ] vectorized functions:
+    #include <esp32-hal-vector.h>
+    float a[4] = {1.5, 2.5, 3.5, 4.5};
+    float b[4] = {0.5, 1.5, 2.5, 3.5};
+    float result[4];
+    vaddf(result, a, b, 4);
+    => esp32 specific gain if used more extensively in game logic
+-------------------------------------------------------------------------------
+[x] check sprite collisions between sprites that are in the same layer
+[x] use object **const end = objects.store.allocated_list_end();
+[x] o1store: Serial.printf
+[x] flip sprite horizontal
+[x] flip sprite vertical
+[x] o1store: consider using std::vector instead of calloc and free
+    => implementation is concise with some pointer shenanigans
+[x] o1store: hang if overrun?
+    => return nullptr
+[x] o1store: can_allocate() is not thread safe
+    => removed, use
+      if (object *mem = objects.allocate_instance()) {
+        bullet *blt = new (mem) bullet{};
+[x] try n scanlines of display buffer and DMA transfer
+    =>  1: 23 fps
+    =>  2: 27 fps
+    =>  4: 29 fps
+    =>  8: 30 fps
+    => 16: 31 fps
+[x] examine generated assembler and compare 'for' and 'while'
+[x] inspect the sign conversion warnings and consider converting size constants to signed
+    => converted unsigned to signed including constants, sizes etc
+[x] inspect conversion warnings
+    => fixed with casts
+[x] extract.sh width and height parameter
+[x] fix rendering of 32x32 tiles and sprites
+[x]   portrait
+[x]   landscape
+[x] render, render_scanline: improve handling of non evenly divisible width, height
+[x] engine: make sprite_width, sprite_height, tile_width, tile_height user definable
+    => size = 2^n  size 64 does not fit the DMA buffers in remaining ram
+[x] o1store: consider replacing alloc_ix with pointer to array element
+    removing array look-ups vs free_, alloc_, del_ would hold pointers (x4 space usage)
+[x] consider locking dt to 30 fps for deterministic behavior
+    => config in defs
+[x] modifiable tiles map
+[x] keep engine 'object' minimalistic and extract logic and update to 'game_object'
+[x] display_width and height is defined in engine.hpp but is device dependent
+    => extracted to 'platform.hpp' as platform dependent constant
+[x] animated sprite class {sprite_img,ms}
+    => animation implemented ad-hoc in 'game/objects/ship2.hpp'
+[x] separate palette for sprites and tiles
+[x] extract files into headers/source
+[x] collision detection: bit field for type and collision interest
+[-] o1store: consider std::array instead of pointers
+    => done with pointer shenanigans
+[x] o1store: consider using pointers instead indexes in arrays
+[x] o1store: return pointer to object instead of reference.
+    nullptr if allocation could not be done.
+[x] sprite allocation for active objects
+    => O(1) sprite allocation and free
+[x] make sprite allocation class into a template
+    => o1store
+[x] objects composed of several sprites
+[x] separate concept of sprite and object
+[x] polymorphism without allocation on the heap
+    => 'new' in place
+[x] replace #define with constexpr
+    => somewhat worse because it is unclear by naming what is constant
+       consider reverting to 'defines' including other constexpr or naming captialized?
