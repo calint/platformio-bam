@@ -61,7 +61,7 @@ public:
         .duty_cycle_pos = 0,
         .cs_ena_pretrans = 0,
         .cs_ena_posttrans = 0,
-        .clock_speed_hz = 8000000UL, // 32
+        .clock_speed_hz = 32000000UL,
         .input_delay_ns = 0,
         .spics_io_num = -1, // avoid use system CS control
         .flags = SPI_DEVICE_HALFDUPLEX,
