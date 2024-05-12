@@ -254,33 +254,9 @@ public:
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  bool asyncDMAIsBusy() override {
-    if (!async_busy_) {
-      return false;
-    }
-
-    spi_transaction_t *t = nullptr;
-    async_busy_ =
-        spi_device_get_trans_result(device_handle_, &t, 0) == ESP_ERR_TIMEOUT;
-
-    return async_busy_;
-  }
-
-  void asyncDMAWaitForCompletion() override {
-    if (!async_busy_) {
-      return;
-    }
-
-    spi_transaction_t *t = nullptr;
-    assert(spi_device_get_trans_result(device_handle_, &t, portMAX_DELAY) ==
-           ESP_OK);
-
-    async_busy_ = false;
-  }
+  bool asyncDMAIsBusy() override { return async_busy_; }
 
   void asyncDMAWriteBytes(uint8_t *data, uint32_t len) override {
-    asyncDMAWaitForCompletion();
-
     transaction_async_.tx_buffer = data;
     transaction_async_.length = len * 8; // length in bits
 
@@ -294,11 +270,17 @@ private:
   static void pre_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
     dev->bus_chip_select_enable();
+    if (trans == &dev->transaction_async_) {
+      dev->async_busy_ = true;
+    }
   }
 
   static void post_transaction_cb(spi_transaction_t *trans) {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
     dev->bus_chip_select_disable();
+    if (trans == &dev->transaction_async_) {
+      dev->async_busy_ = false;
+    }
   }
 
   void bus_chip_select_enable() { digitalWrite(TFT_CS, LOW); }
@@ -310,6 +292,7 @@ private:
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
     transaction_.tx_buffer = NULL;
     transaction_.length = 0;
+    transaction_.user = this;
     assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
            ESP_OK);
   }
@@ -321,6 +304,7 @@ private:
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
     transaction_.tx_data[0] = data;
     transaction_.length = 8;
+    transaction_.user = this;
     assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
            ESP_OK);
   }
@@ -335,6 +319,7 @@ private:
     transaction_.tx_data[2] = data2 >> 8;
     transaction_.tx_data[3] = data2;
     transaction_.length = 32;
+    transaction_.user = this;
     assert(spi_device_polling_transmit(device_handle_, &transaction_) ==
            ESP_OK);
   }

@@ -34,8 +34,6 @@ public:
 
   auto asyncDMAIsBusy() -> bool override { return display.dmaBusy(); }
 
-  void asyncDMAWaitForCompletion() override { display.dmaWait(); }
-
   void asyncDMAWriteBytes(uint8_t *data, uint32_t len) override {
     display.pushPixelsDMA(reinterpret_cast<uint16_t *>(data), len >> 1);
   }
