@@ -2,13 +2,16 @@
 // display: NV3041A
 //     bus: QSPI
 
-// device implementation mostly from Arduino_GFX and XPT2046
-// code lifted from Arduino_ESP32QSPI and Arduino_NV3041A
+// code lifted and prettified from Arduino_GFX
+// https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
+// bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
+
 #include "../device.hpp"
 #include <SPI.h>
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 
+// set orientation related
 #define NV3041A_MADCTL 0x36
 #define NV3041A_COLMOD 0x3A
 
@@ -18,6 +21,7 @@
 #define NV3041A_MADCTL_ML 0x10
 #define NV3041A_MADCTL_RGB 0x00
 
+// set address window related
 #define NV3041A_CASET 0x2A
 #define NV3041A_RASET 0x2B
 #define NV3041A_RAMWR 0x2C
