@@ -236,7 +236,7 @@ public:
     // start the spi for the touch screen and init the library
     hspi.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
     touch_screen.begin(hspi);
-    touch_screen.setRotation(display_orientation ? 0 : 1);
+    touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
   }
 
   bool display_is_touched() override {
