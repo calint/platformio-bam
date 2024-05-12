@@ -1,4 +1,7 @@
 #pragma once
+// display: ILI9341
+//     bus: SPI
+
 #include "../device.hpp"
 #include <SPI.h>
 #include <TFT_eSPI.h>

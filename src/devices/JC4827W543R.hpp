@@ -1,4 +1,7 @@
 #pragma once
+// display: NV3041A
+//     bus: QSPI
+
 // device implementation mostly from Arduino_GFX and XPT2046
 // code lifted from Arduino_ESP32QSPI and Arduino_NV3041A
 #include "../device.hpp"
