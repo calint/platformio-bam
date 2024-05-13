@@ -9,7 +9,7 @@
   - smooth scrolling tile map
   - sprites in layers with pixel precision on-screen collision detection
   - intuitive definition of game objects and logic
-  - peak performance
+  - decent performance
 
 ## device ESP32-2432S028R
 
