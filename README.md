@@ -1,3 +1,7 @@
+| . | . |
+| - | - |
+| <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/51fba3c0-08a6-4c6c-8f55-ef64c6cfcafe"></video> | <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/c6bc8561-14d7-4e2f-bc48-a28126c2fc9c"></video> |
+
 ## intention
 * developing using arduino framework with visual code and platformio
 * exploring the devices by developing a toy game
@@ -43,7 +47,3 @@ a.k.a. cheap-black-display (CBD)
   - https://github.com/PaulStoffregen/XPT2046_Touchscreen#v1.4
   - https://github.com/Bodmer/TFT_eSPI#V2.5.43
 
-## videos
-| . | . |
-| - | - |
-| <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/51fba3c0-08a6-4c6c-8f55-ef64c6cfcafe"></video> | <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/c6bc8561-14d7-4e2f-bc48-a28126c2fc9c"></video> |
