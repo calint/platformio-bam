@@ -5,6 +5,7 @@
   - smooth scrolling tile map
   - sprites in layers with pixel precision on-screen collision detection
   - intuitive definition of game objects and logic
+  - peak performance
 
 ## device ESP32-2432S028R
 
@@ -30,7 +31,7 @@ a.k.a. cheap-black-display (CBD)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## development environment
-* Visual Code 1.89.0
+* Visual Code 1.89.0  - decent performance
 * PlatformIO 6.1.15
 * Espressif 32 (6.6.0) > Espressif ESP32 Dev Module
 * esp-idf 4.4 patch 6
@@ -45,5 +46,5 @@ a.k.a. cheap-black-display (CBD)
 ## videos
 | ESP32-2432S028R | JC4827W543R |
 | --------------- | ----------- |
-| <video width="240" height="320" src="https://github.com/calint/platformio-bam/assets/1920811/d234e4ba-01aa-4f43-8f1c-133e20ed7eb2"></video> | <video width="240" height="320" src="https://github.com/calint/platformio-bam/assets/1920811/a64f1edb-97bc-4003-bf15-1a5ae7824af0"></video> |
+| <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/a64f1edb-97bc-4003-bf15-1a5ae7824af0"></video> | <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/d234e4ba-01aa-4f43-8f1c-133e20ed7eb2"></video> |
 
