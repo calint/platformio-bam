@@ -15,7 +15,7 @@ public:
     spr = sprites.allocate_instance();
     spr->obj = this;
     spr->img = sprite_imgs[2];
-    spr->layer = 1;
+    spr->layer = 2;
     spr->flip = 0;
   }
 
