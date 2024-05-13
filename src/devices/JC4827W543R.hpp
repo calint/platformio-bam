@@ -12,17 +12,10 @@
 #include <driver/spi_master.h>
 
 // set orientation related
-#define NV3041A_MADCTL 0x36
 #define NV3041A_MADCTL_MY 0x80
 #define NV3041A_MADCTL_MX 0x40
 #define NV3041A_MADCTL_MV 0x20
 #define NV3041A_MADCTL_ML 0x10
-#define NV3041A_MADCTL_RGB 0x00
-
-// set address window related
-#define NV3041A_CASET 0x2A
-#define NV3041A_RASET 0x2B
-#define NV3041A_RAMWR 0x2C
 
 class JC4827W543R final : public device {
   // maximum for this device
@@ -145,7 +138,8 @@ public:
         0xb2, 0x15, // gam_pkn10[4:0]
         // gamma done
 
-        0x11, 0x00 // SLPOUT, turns off sleep mode, default
+        0x21, 0x00, // INVON, invert colors (displays correct colors on device)
+        0x11, 0x00  // SLPOUT, turns off sleep mode, default
     };
 
     for (int i = 0; i < sizeof(init_commands); i += 2) {
@@ -154,9 +148,7 @@ public:
 
     delay(120);
 
-    // bus_write_c8(0x20); // inversion off
-    bus_write_c8(0x21); // inversion on (results in correct colors on device)
-    bus_write_c8d8(0x29, 0x00); // turn on display
+    bus_write_c8d8(0x29, 0x00); // DISPON, turn on display
 
     delay(100);
 
@@ -265,25 +257,25 @@ private:
   void set_rotation(uint8_t r) {
     switch (r) {
     case 1:
-      r = NV3041A_MADCTL_MY | NV3041A_MADCTL_MV | NV3041A_MADCTL_RGB;
+      r = NV3041A_MADCTL_MY | NV3041A_MADCTL_MV;
       break;
     case 2:
-      r = NV3041A_MADCTL_RGB;
+      r = 0;
       break;
     case 3:
-      r = NV3041A_MADCTL_MX | NV3041A_MADCTL_MV | NV3041A_MADCTL_RGB;
+      r = NV3041A_MADCTL_MX | NV3041A_MADCTL_MV;
       break;
     default: // case 0:
-      r = NV3041A_MADCTL_MX | NV3041A_MADCTL_MY | NV3041A_MADCTL_RGB;
+      r = NV3041A_MADCTL_MX | NV3041A_MADCTL_MY;
       break;
     }
-    bus_write_c8d8(NV3041A_MADCTL, r);
+    bus_write_c8d8(0x36, r);
   }
 
   void set_write_address_window(int16_t x, int16_t y, uint16_t w, uint16_t h) {
-    bus_write_c8d16d16(NV3041A_CASET, x, x + w - 1);
-    bus_write_c8d16d16(NV3041A_RASET, y, y + h - 1);
-    bus_write_c8(NV3041A_RAMWR);
+    bus_write_c8d16d16(0x2a, x, x + w - 1);
+    bus_write_c8d16d16(0x2b, y, y + h - 1);
+    bus_write_c8(0x2c);
   }
 
   spi_host_device_t host_device_{};

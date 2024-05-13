@@ -1,36 +1,11 @@
+# tag with date and time
+TAG=$(date "+%Y-%m-%d--%H-%M") && git tag $TAG && git push origin $TAG
+
 # view assembler
 ~/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump -S .pio/build/JC4827W543R/src/main.cpp.o | less
-
-# revert changes to last commit
-git reset --hard HEAD
 
 # commit and push
 git add . && git commit -m "." && git push
 
-# tag with date and time
-TAG=$(date "+%Y-%m-%d--%H-%M") && git tag $TAG && git push origin $TAG
-
-
-# Arduino_GFX
-#include <Arduino_GFX_Library.h>
-#define GFX_BL 21
-static Arduino_DataBus *bus = new Arduino_ESP32SPI(
-    2 /* DC */, 15 /* CS */, 14 /* SCK */, 13 /* MOSI */, 12 /* MISO */);
-static Arduino_TFT *gfx =
-    new Arduino_ILI9341(bus, GFX_NOT_DEFINED /* RST */, display_orientation);
-
-...
-  // initiate display
-  if (!gfx->begin()) {
-    ESP_LOGE("bam", "could not initiate Arduino_GFX");
-    exit(1);
-  }
-  gfx->setAddrWindow(0, 0, display_width, display_height);
-  gfx->startWrite();
-#ifdef GFX_BL
-  pinMode(GFX_BL, OUTPUT);
-  digitalWrite(GFX_BL, HIGH);
-#endif
-...
-    gfx->writeBytes((uint8_t *)dma_buf,
-                    uint32_t(display_width * dma_n_scanlines * 2));
+# revert changes to last commit
+git reset --hard HEAD
