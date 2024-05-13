@@ -32,7 +32,7 @@ static constexpr int sprite_height = 16;
 // number of layers of sprites
 // note. number of layers deteriorates performance
 // 0: ground, 1: air, 2: overlay
-static constexpr int sprites_layers = 4;
+static constexpr int sprites_layers = 3;
 
 // number of tile images
 static constexpr int tiles_count = 256;

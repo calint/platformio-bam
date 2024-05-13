@@ -174,17 +174,20 @@ void loop() {
 }
 
 // sprites to be rendered divided in layers
-static sprite *render_sprites[sprites_layers][sprites_count];
-static sprite **render_sprites_end[sprites_layers];
-static int render_sprites_ix[sprites_layers][sprites_count];
+struct render_sprite_entry {
+  int ix = 0;
+  sprite *spr = nullptr;
+};
+
+static render_sprite_entry render_sprites_entries[sprites_layers]
+                                                 [sprites_count];
+// pointers to end of list in 'render_sprites_entries'
+static render_sprite_entry *render_sprites_entries_end[sprites_layers];
 
 static inline void build_render_sprites_lists() {
-  int *render_sprites_ix_end[sprites_layers]; // un-initialized ok
-
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprites_layers; i++) {
-    render_sprites_end[i] = render_sprites[i];
-    render_sprites_ix_end[i] = render_sprites_ix[i];
+    render_sprites_entries_end[i] = render_sprites_entries[i];
   }
   sprite *spr = sprites.all_list();
   const int len = sprites.all_list_len();
@@ -196,10 +199,10 @@ static inline void build_render_sprites_lists() {
       // is outside the screen x-wise
       continue;
     }
-    *render_sprites_end[spr->layer] = spr;
-    ++render_sprites_end[spr->layer];
-    *render_sprites_ix_end[spr->layer] = i;
-    ++render_sprites_ix_end[spr->layer];
+    render_sprite_entry *rse = render_sprites_entries_end[spr->layer];
+    rse->ix = i;
+    rse->spr = spr;
+    ++render_sprites_entries_end[spr->layer];
   }
 }
 
@@ -249,15 +252,15 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
   //       rendering
 
   for (int layer = 0; layer < sprites_layers; layer++) {
-    sprite **spr_it = render_sprites[layer];
-    sprite **spr_it_end = render_sprites_end[layer];
-    int *spr_ix_it = render_sprites_ix[layer];
-    for (; spr_it < spr_it_end; ++spr_it, ++spr_ix_it) {
-      const sprite *spr = *spr_it;
+    render_sprite_entry *spr_it = render_sprites_entries[layer];
+    render_sprite_entry *spr_it_end = render_sprites_entries_end[layer];
+    for (; spr_it < spr_it_end; ++spr_it) {
+      const sprite *spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
         // not within scanline or
         continue;
       }
+      const int spr_ix = spr_it->ix;
       // pointer to sprite image to be rendered
       uint8_t const *spr_img_ptr = spr->img;
       // extract sprite flip
@@ -317,7 +320,7 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
             }
           }
           // set pixel collision value to sprite index
-          *collision_pixel = sprite_ix(*spr_ix_it);
+          *collision_pixel = sprite_ix(spr_ix);
         }
         spr_img_ptr += spr_img_ptr_inc;
         collision_pixel++;
