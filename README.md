@@ -21,7 +21,7 @@ a.k.a. cheap-yellow-display (CYD)
 a.k.a. cheap-black-display (CBD)
 
 * display: 272 x 480
-* performance: ~40 frames per second
+* performance: ~45 frames per second
 
 * [purchased at](https://www.aliexpress.com/item/1005006729377800.html)
 * [manufacturer](https://www.guition.com)
