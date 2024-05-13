@@ -5,7 +5,7 @@
     => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
        performance with added layers
 [ ] move sprite index from render_sprite struct to sprite saving:
-    nlayers * nsprites * 2 bytes - nsprites*2 --- 1020 B in 3 layers x 255 sprites
+    nlayers * nsprites * sizeof(sprite_ix) - nsprites * sizeof(sprite_ix) --- 510 B in 3 layers x 255 sprites
     => not considering padding and engine code which is platform independent vs main.cpp
        which is platform dependent and the render list is due to scanline by scanline rendering
 [ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
