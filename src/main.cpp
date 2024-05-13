@@ -178,7 +178,7 @@ void loop() {
 
 // sprites to be rendered divided in layers
 struct render_sprite_entry {
-  sprite *spr = nullptr; // pointer
+  sprite *spr = nullptr;
   sprite_ix ix = 0; // index in sprite array
 };
 
