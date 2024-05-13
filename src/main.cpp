@@ -270,7 +270,6 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
         // not within scanline
         continue;
       }
-      const int spr_ix = spr_it->ix;
       // pointer to sprite image to be rendered
       uint8_t const *spr_img_ptr = spr->img;
       // extract sprite flip
@@ -330,7 +329,7 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
             }
           }
           // set pixel collision value to sprite index
-          *collision_pixel = sprite_ix(spr_ix);
+          *collision_pixel = sprite_ix(spr_it->ix);
         }
         spr_img_ptr += spr_img_ptr_inc;
         collision_pixel++;
