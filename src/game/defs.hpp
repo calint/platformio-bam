@@ -11,7 +11,7 @@ static constexpr uint8_t display_orientation = 0;
 
 // lock dt to 32 ms per frame (~31 fps) for deterministic behavior
 // set 0 to use measured dt
-static constexpr int clk_locked_dt_ms = 32;
+static constexpr int clk_locked_dt_ms = BAM_TIME_STEP_MS;
 
 // update rate of fps calculation
 // 0 to update fps every frame and make no output
