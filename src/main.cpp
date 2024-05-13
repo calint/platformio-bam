@@ -178,13 +178,12 @@ void loop() {
 
 // sprites to be rendered divided in layers
 struct render_sprite_entry {
-  sprite_ix ix = 0;
-  sprite *spr = nullptr;
+  sprite *spr = nullptr; // pointer
+  sprite_ix ix = 0; // index in sprite array
 };
 
 // list of sprites to render by layer
-static render_sprite_entry render_sprite_entries[sprites_layers]
-                                                 [sprites_count];
+static render_sprite_entry render_sprite_entries[sprites_layers][sprites_count];
 // pointers to end of list in 'render_sprite_entries'
 static render_sprite_entry *render_sprite_entries_end[sprites_layers];
 
@@ -199,6 +198,7 @@ static inline void build_render_sprites_lists() {
   for (int i = 0; i < sprites_layers; i++) {
     render_sprite_entries_end[i] = render_sprite_entries[i];
   }
+  // build entries lists
   sprite *spr = sprites.all_list();
   const int len = sprites.all_list_len();
   // note. "constexpr int len" does not compile
@@ -262,12 +262,12 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
   //       rendering
 
   for (int layer = 0; layer < sprites_layers; layer++) {
-    render_sprite_entry *spr_it = render_sprite_entries[layer];
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
-    for (; spr_it < spr_it_end; ++spr_it) {
+    for (render_sprite_entry *spr_it = render_sprite_entries[layer];
+         spr_it < spr_it_end; ++spr_it) {
       const sprite *spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
-        // not within scanline or
+        // not within scanline
         continue;
       }
       const int spr_ix = spr_it->ix;
