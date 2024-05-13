@@ -1,8 +1,9 @@
-[ ] optimize sprite rendering considering layers to O(N) instead of sprite_layers*O(N):
+[x] optimize sprite rendering considering layers to O(N) instead of sprite_layers*O(N):
     sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
     sprite *sprites_to_be_rendered_end[sprite_layers]
     one pass through sprites to build the lists
-    => improved performance 46 FPS on JC...
+    => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
+       performance with added layers
 [ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
     bitwise comparison of layers between sprites at collision detection
 [ ] game_object: position relative to tile map or screen
