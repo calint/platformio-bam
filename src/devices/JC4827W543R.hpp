@@ -11,12 +11,6 @@
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 
-// set orientation related
-#define NV3041A_MADCTL_MY 0x80
-#define NV3041A_MADCTL_MX 0x40
-#define NV3041A_MADCTL_MV 0x20
-#define NV3041A_MADCTL_ML 0x10
-
 class JC4827W543R final : public device {
   // maximum for this device
   static constexpr int dma_max_transfer_b = 32768;
@@ -74,7 +68,9 @@ public:
     transaction_async_.flags = SPI_TRANS_MODE_QIO;
     transaction_async_.user = this;
 
-    // magic numbers from from Arduino_NV3041A
+    // magic numbers from:
+    // https://github.com/moononournation/Arduino_GFX/blob/master/src/display/Arduino_NV3041A.h
+    // decoded using manual at:
     // https://admin.osptek.com/uploads/NV_3041_A_Datasheet_V1_2_20221011_686486a221.pdf
     constexpr uint8_t init_commands[] = {
         0xff, 0xa5, // ?
@@ -255,6 +251,10 @@ private:
   }
 
   void set_rotation(uint8_t r) {
+    constexpr uint8_t NV3041A_MADCTL_MY = 0x80;
+    constexpr uint8_t NV3041A_MADCTL_MX = 0x40;
+    constexpr uint8_t NV3041A_MADCTL_MV = 0x20;
+
     switch (r) {
     case 1:
       r = NV3041A_MADCTL_MY | NV3041A_MADCTL_MV;
