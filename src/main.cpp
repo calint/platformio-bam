@@ -77,6 +77,8 @@ static sprite_ix *collision_map = nullptr;
 static int dma_busy = 0;
 static int dma_writes = 0;
 
+static void printf_renders_sprites_list_ram_usage();
+
 void setup() {
   Serial.begin(115200);
   sleep(1); // arbitrary wait for serial to connect
@@ -113,6 +115,7 @@ void setup() {
   printf("          tile map: %zu B\n", sizeof(tile_map));
   printf("           sprites: %zu B\n", sizeof(sprites));
   printf("           objects: %zu B\n", sizeof(objects));
+  printf_renders_sprites_list_ram_usage();
 
   device.init();
 
@@ -179,11 +182,18 @@ struct render_sprite_entry {
   sprite *spr = nullptr;
 };
 
+// list of sprites to rendered for the different layers
 static render_sprite_entry render_sprites_entries[sprites_layers]
                                                  [sprites_count];
 // pointers to end of list in 'render_sprites_entries'
 static render_sprite_entry *render_sprites_entries_end[sprites_layers];
 
+static inline void printf_renders_sprites_list_ram_usage() {
+  printf("    render sprites: %zu B\n",
+         sizeof(render_sprites_entries) + sizeof(render_sprites_entries_end));
+}
+
+// only used in 'render(...)'
 static inline void build_render_sprites_lists() {
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprites_layers; i++) {
