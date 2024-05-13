@@ -9,8 +9,7 @@
 // 0: portrait, 1: landscape
 static constexpr uint8_t display_orientation = 0;
 
-// lock dt to 32 ms per frame (~31 fps) for deterministic behavior
-// set 0 to use measured dt
+// engine time step in milliseconds 0 to use calculated
 static constexpr int clk_locked_dt_ms = BAM_TIME_STEP_MS;
 
 // update rate of fps calculation
