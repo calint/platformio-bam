@@ -265,7 +265,7 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
     for (render_sprite_entry *spr_it = render_sprite_entries[layer];
          spr_it < spr_it_end; ++spr_it) {
-      const sprite *spr = spr_it->spr;
+      sprite const *spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
         // not within scanline
         continue;
