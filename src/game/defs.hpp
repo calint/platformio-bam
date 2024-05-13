@@ -31,9 +31,8 @@ static constexpr int sprite_height = 16;
 
 // number of layers of sprites
 // note. number of layers deteriorates performance
-//       with 230 sprites on device cyd 1 layer: ~30 fps, 2 layers: ~28 fps
-// 0: ground, 1: air
-static constexpr int sprites_layers = 2;
+// 0: ground, 1: air, 2: overlay
+static constexpr int sprites_layers = 4;
 
 // number of tile images
 static constexpr int tiles_count = 256;

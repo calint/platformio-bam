@@ -173,6 +173,36 @@ void loop() {
   engine_loop();
 }
 
+// sprites to be rendered divided in layers
+static sprite *render_sprites[sprites_layers][sprites_count];
+static sprite **render_sprites_end[sprites_layers];
+static int render_sprites_ix[sprites_layers][sprites_count];
+
+static inline void build_render_sprites_lists() {
+  int *render_sprites_ix_end[sprites_layers]; // un-initialized ok
+
+  // set end of lists pointers to start of lists
+  for (int i = 0; i < sprites_layers; i++) {
+    render_sprites_end[i] = render_sprites[i];
+    render_sprites_ix_end[i] = render_sprites_ix[i];
+  }
+  sprite *spr = sprites.all_list();
+  const int len = sprites.all_list_len();
+  // note. "constexpr int len" does not compile
+  for (int i = 0; i < len; i++, spr++) {
+    if (!spr->img || spr->scr_x <= -sprite_width ||
+        spr->scr_x >= display_width) {
+      // sprite has no image or
+      // is outside the screen x-wise
+      continue;
+    }
+    *render_sprites_end[spr->layer] = spr;
+    ++render_sprites_end[spr->layer];
+    *render_sprites_ix_end[spr->layer] = i;
+    ++render_sprites_ix_end[spr->layer];
+  }
+}
+
 // renders a scanline
 // note. inline because it is only called from one location in render(...)
 static inline void render_scanline(uint16_t *render_buf_ptr,
@@ -219,17 +249,13 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
   //       rendering
 
   for (int layer = 0; layer < sprites_layers; layer++) {
-    sprite *spr = sprites.all_list();
-    const int len = sprites.all_list_len();
-    // note. "constexpr int len" does not compile
-    for (int i = 0; i < len; i++, spr++) {
-      if (spr->layer != layer || !spr->img || spr->scr_y > scanline_y ||
-          spr->scr_y + sprite_height <= scanline_y ||
-          spr->scr_x <= -sprite_width || spr->scr_x >= display_width) {
-        // sprite not in current layer or
-        // sprite has no image or
+    sprite **spr_it = render_sprites[layer];
+    sprite **spr_it_end = render_sprites_end[layer];
+    int *spr_ix_it = render_sprites_ix[layer];
+    for (; spr_it < spr_it_end; ++spr_it, ++spr_ix_it) {
+      const sprite *spr = *spr_it;
+      if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
         // not within scanline or
-        // is outside the screen x-wise
         continue;
       }
       // pointer to sprite image to be rendered
@@ -291,7 +317,7 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
             }
           }
           // set pixel collision value to sprite index
-          *collision_pixel = sprite_ix(i);
+          *collision_pixel = sprite_ix(*spr_ix_it);
         }
         spr_img_ptr += spr_img_ptr_inc;
         collision_pixel++;
@@ -341,6 +367,7 @@ static void render(const int x, const int y) {
   uint16_t *dma_buf = render_buf_ptr;
   // for all lines on display
   int remaining_y = display_height;
+  build_render_sprites_lists();
   while (remaining_y) {
     // render from tiles map and sprites to the 'render_buf_ptr'
     int render_n_tile_lines =
@@ -389,8 +416,8 @@ static void render(const int x, const int y) {
     remaining_y -= render_n_scanlines;
     tiles_map_row_ptr += tile_map_width;
   }
-  // if 'display_height' is not evenly divisible by 'dma_n_scanlines' there will
-  // be remaining scanlines to write
+  // if 'display_height' is not evenly divisible by 'dma_n_scanlines' there
+  // will be remaining scanlines to write
   constexpr int dma_n_scanlines_trailing = display_height % dma_n_scanlines;
   if (dma_n_scanlines_trailing) {
     dma_writes++;

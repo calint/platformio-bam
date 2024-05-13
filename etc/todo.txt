@@ -1,7 +1,8 @@
-[x] fix time rollover bug
-    => dt would become huge so it is capped to 0.1 s
-[x] investigate if chip revision is 0 indeed and PSRAM bug is possible
-[ ] investigate SPI_MAX_DMA_LEN which is 4092 but more seems to be possible without error
+[ ] optimize sprite rendering considering layers to O(N) instead of sprite_layers*O(N):
+    sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
+    sprite *sprites_to_be_rendered_end[sprite_layers]
+    one pass through sprites to build the lists
+    => improved performance 46 FPS on JC...
 [ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
     bitwise comparison of layers between sprites at collision detection
 [ ] game_object: position relative to tile map or screen
@@ -21,6 +22,13 @@
     vaddf(result, a, b, 4);
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
+[x] fix time rollover bug
+    => dt would become huge so it is capped to 0.1 s
+[x] investigate if chip revision is 0 indeed and PSRAM bug is possible
+[x] investigate SPI_MAX_DMA_LEN which is 4092 but more seems to be possible without error
+    => more than SPI_MAX_DMA_LEN can be transferred without error
+       on JC4827W543R 32768 B
+       on ESP32_2432S028R more than that but with rendering errors
 [x] check sprite collisions between sprites that are in the same layer
 [x] use object **const end = objects.store.allocated_list_end();
 [x] o1store: Serial.printf
