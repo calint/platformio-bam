@@ -4,6 +4,7 @@
     one pass through sprites to build the list
     => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
        performance with added layers
+[ ] move sprite index from render_sprite struct to sprite saving (nlayers-1)*nsprites*2 bytes
 [ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
     bitwise comparison of layers between sprites at collision detection
 [ ] game_object: position relative to tile map or screen
