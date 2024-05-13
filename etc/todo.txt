@@ -1,7 +1,7 @@
-[x] optimize sprite rendering considering layers to O(N):
+[x] optimize sprite rendering from 'layers * sprites * O(scanlines)' to 'sprites * O(scanlines)'
     sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
     sprite *sprites_to_be_rendered_end[sprite_layers]
-    one pass through sprites to build the lists
+    one pass through sprites to build the list
     => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
        performance with added layers
 [ ] sprite layers as bit field. layer #1 0b001, #2 0b010, #3 0b100 etc
