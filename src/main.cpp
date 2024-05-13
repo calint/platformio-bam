@@ -77,7 +77,7 @@ static sprite_ix *collision_map = nullptr;
 static int dma_busy = 0;
 static int dma_writes = 0;
 
-static void printf_renders_sprites_list_ram_usage();
+static void printf_render_sprite_entries_alg_ram_usage();
 
 void setup() {
   Serial.begin(115200);
@@ -115,7 +115,7 @@ void setup() {
   printf("          tile map: %zu B\n", sizeof(tile_map));
   printf("           sprites: %zu B\n", sizeof(sprites));
   printf("           objects: %zu B\n", sizeof(objects));
-  printf_renders_sprites_list_ram_usage();
+  printf_render_sprite_entries_alg_ram_usage();
 
   device.init();
 
@@ -182,22 +182,22 @@ struct render_sprite_entry {
   sprite *spr = nullptr;
 };
 
-// list of sprites to rendered for the different layers
-static render_sprite_entry render_sprites_entries[sprites_layers]
+// list of sprites to render by layer
+static render_sprite_entry render_sprite_entries[sprites_layers]
                                                  [sprites_count];
-// pointers to end of list in 'render_sprites_entries'
-static render_sprite_entry *render_sprites_entries_end[sprites_layers];
+// pointers to end of list in 'render_sprite_entries'
+static render_sprite_entry *render_sprite_entries_end[sprites_layers];
 
-static inline void printf_renders_sprites_list_ram_usage() {
+static inline void printf_render_sprite_entries_alg_ram_usage() {
   printf("    render sprites: %zu B\n",
-         sizeof(render_sprites_entries) + sizeof(render_sprites_entries_end));
+         sizeof(render_sprite_entries) + sizeof(render_sprite_entries_end));
 }
 
 // only used in 'render(...)'
 static inline void build_render_sprites_lists() {
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprites_layers; i++) {
-    render_sprites_entries_end[i] = render_sprites_entries[i];
+    render_sprite_entries_end[i] = render_sprite_entries[i];
   }
   sprite *spr = sprites.all_list();
   const int len = sprites.all_list_len();
@@ -209,10 +209,10 @@ static inline void build_render_sprites_lists() {
       // is outside the screen x-wise
       continue;
     }
-    render_sprite_entry *rse = render_sprites_entries_end[spr->layer];
+    render_sprite_entry *rse = render_sprite_entries_end[spr->layer];
     rse->ix = i;
     rse->spr = spr;
-    ++render_sprites_entries_end[spr->layer];
+    ++render_sprite_entries_end[spr->layer];
   }
 }
 
@@ -262,8 +262,8 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
   //       rendering
 
   for (int layer = 0; layer < sprites_layers; layer++) {
-    render_sprite_entry *spr_it = render_sprites_entries[layer];
-    render_sprite_entry *spr_it_end = render_sprites_entries_end[layer];
+    render_sprite_entry *spr_it = render_sprite_entries[layer];
+    render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
     for (; spr_it < spr_it_end; ++spr_it) {
       const sprite *spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
