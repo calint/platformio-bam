@@ -43,5 +43,7 @@ a.k.a. cheap-black-display (CBD)
   - https://github.com/Bodmer/TFT_eSPI#V2.5.43
 
 ## videos
+| ESP32-2432S028R | JC4827W543R |
+| --------------- | ----------- |
+| <video width="240" height="320" src="https://github.com/calint/platformio-bam/assets/1920811/d234e4ba-01aa-4f43-8f1c-133e20ed7eb2"></video> | <video width="240" height="320" src="https://github.com/calint/platformio-bam/assets/1920811/a64f1edb-97bc-4003-bf15-1a5ae7824af0"></video> |
 
-<video width="240" height="320" src="https://github.com/calint/JC4827W543R/assets/1920811/8b5c0ccf-73d2-4392-b81a-12377bdd7c0d"></video>
