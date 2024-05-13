@@ -1,4 +1,4 @@
-[x] optimize sprite rendering considering layers to O(N) instead of sprite_layers*O(N):
+[x] optimize sprite rendering considering layers to O(N):
     sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
     sprite *sprites_to_be_rendered_end[sprite_layers]
     one pass through sprites to build the lists
