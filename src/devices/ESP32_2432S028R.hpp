@@ -34,9 +34,11 @@ public:
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  void dma_write_bytes(uint8_t *data, uint32_t len) override {
-    display.pushPixelsDMA(reinterpret_cast<uint16_t *>(data),
-                          len / sizeof(uint16_t));
+  void dma_write_bytes(uint8_t const *data, uint32_t len) override {
+    // note. api to TFT_eSPI requires non-const data in case bytes are swapped
+    display.pushPixelsDMA(
+        reinterpret_cast<uint16_t *>(const_cast<uint8_t *>(data)),
+        len / sizeof(uint16_t));
   }
 
   auto dma_is_busy() -> bool override { return display.dmaBusy(); }

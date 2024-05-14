@@ -193,7 +193,7 @@ public:
     async_busy_ = false;
   }
 
-  void dma_write_bytes(uint8_t *data, uint32_t len) override {
+  void dma_write_bytes(uint8_t const *data, uint32_t len) override {
     dma_wait_for_completion();
 
     transaction_async_.tx_buffer = data;
