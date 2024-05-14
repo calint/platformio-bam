@@ -28,4 +28,10 @@ Checks: '
     clang-analyzer-*,
     concurrency-*,
     performance-*,
+    google-*,
+    -google-readability-casting, # int(x) is more readable than static_cast<int>(x)
+    misc-*,
+    -misc-non-private-member-variables-in-classes, # public members ok
+    -misc-const-correctness, # reports ESP_ERROR_CHECK
+    -misc-no-recursion, # allow recursions
 '

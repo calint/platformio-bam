@@ -49,7 +49,7 @@ static auto main_init() -> void {
 
 // callback when screen is touched, happens before 'render(...)'
 static auto main_on_touch(const int16_t x, const int16_t y,
-                          const int16_t z) -> void {
+                          [[maybe_unused]] const int16_t pressure) -> void {
   // keep track of when the previous bullet was fired
   static clk::time last_fire_ms = 0;
 
