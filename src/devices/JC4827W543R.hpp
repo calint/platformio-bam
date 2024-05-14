@@ -16,7 +16,7 @@ class JC4827W543R final : public device {
   static constexpr int dma_max_transfer_b = 32768;
   static constexpr int nv3041a_max_clock_freq = 32000000;
   // init touch screen
-  SPIClass hspi{HSPI}; // note. VSPI is used by the display
+  SPIClass spi2{SPI2_HOST};
   XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
 
 public:
@@ -156,8 +156,8 @@ public:
     digitalWrite(TFT_BL, HIGH);
 
     // start the spi for the touch screen and init the library
-    hspi.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
-    touch_screen.begin(hspi);
+    spi2.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
+    touch_screen.begin(spi2);
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
   }
 
