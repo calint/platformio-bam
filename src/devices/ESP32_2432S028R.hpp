@@ -13,7 +13,7 @@ class ESP32_2432S028R final : public device {
   XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
 
 public:
-  void init() override {
+  auto init() -> void override {
     // start the spi for the touch screen and init the library
     hspi.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
     touch_screen.begin(hspi);
@@ -30,11 +30,12 @@ public:
     return touch_screen.tirqTouched() && touch_screen.touched();
   }
 
-  void display_get_touch(uint16_t &x, uint16_t &y, uint8_t &pressure) override {
+  auto display_get_touch(uint16_t &x, uint16_t &y,
+                         uint8_t &pressure) -> void override {
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  void dma_write_bytes(uint8_t const *data, uint32_t len) override {
+  auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
     // note. TFT_eSPI requires non-const data in case bytes are swapped
     display.pushPixelsDMA(
         reinterpret_cast<uint16_t *>(const_cast<uint8_t *>(data)),
@@ -43,5 +44,5 @@ public:
 
   auto dma_is_busy() -> bool override { return display.dmaBusy(); }
 
-  void dma_wait_for_completion() override { return display.dmaWait(); }
+  auto dma_wait_for_completion() -> void override { return display.dmaWait(); }
 };

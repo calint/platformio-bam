@@ -51,7 +51,7 @@ public:
   }
 
   // called before rendering the sprites
-  void pre_render() override {
+  auto pre_render() -> void override {
     spr->scr_x = int16_t(x);
     spr->scr_y = int16_t(y);
   }
@@ -68,5 +68,5 @@ public:
   }
 
   // called from 'on_collision' if object has died due to collision
-  virtual void on_death_by_collision() {}
+  virtual auto on_death_by_collision() -> void {}
 };

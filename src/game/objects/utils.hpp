@@ -35,7 +35,7 @@ public:
     }
   }
 
-  void pre_render(game_object *obj) {
+  auto pre_render(game_object *obj) -> void {
     obj->spr->scr_x = int16_t(obj->x - sprite_width);
     obj->spr->scr_y = int16_t(obj->y - sprite_height);
     sprs[0]->scr_x = int16_t(obj->x);
@@ -47,9 +47,9 @@ public:
   }
 };
 
-static void create_fragments(const float orig_x, const float orig_y,
+static auto create_fragments(const float orig_x, const float orig_y,
                              const int count, const float speed,
-                             const clk::time life_time_ms) {
+                             const clk::time life_time_ms) -> void {
   for (int i = 0; i < count; i++) {
     fragment *frg = new (objects.allocate_instance()) fragment{};
     frg->die_at_ms = clk.ms + life_time_ms;

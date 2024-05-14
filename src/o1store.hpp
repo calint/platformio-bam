@@ -70,13 +70,14 @@ public:
     free_ptr_++;
     *alloc_ptr_ = inst;
     inst->alloc_ptr = alloc_ptr_;
-    // note. needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be written
+    // note. needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
+    // written
     alloc_ptr_++;
     return inst;
   }
 
   // adds instance to list of instances to be freed with 'apply_free()'
-  void free_instance(Type *inst) {
+  auto free_instance(Type *inst) -> void {
     if (del_ptr_ >= del_end_) {
       printf("!!! o1store %d: free overrun\n", StoreId);
       exit(1);
@@ -86,7 +87,7 @@ public:
   }
 
   // deallocates the instances that have been freed
-  void apply_free() {
+  auto apply_free() -> void {
     for (Type **it = del_bgn_; it < del_ptr_; it++) {
       Type *inst_deleted = *it;
       alloc_ptr_--;

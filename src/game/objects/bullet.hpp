@@ -31,7 +31,7 @@ public:
     return false;
   }
 
-  void on_death_by_collision() override {
+  auto on_death_by_collision() -> void override {
     fragment *frg = new (objects.allocate_instance()) fragment{};
     frg->die_at_ms = clk.ms + 250;
     frg->x = x;

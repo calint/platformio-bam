@@ -18,7 +18,7 @@ public:
     health = 100;
   }
 
-  void pre_render() override { sprs.pre_render(this); }
+  auto pre_render() -> void override { sprs.pre_render(this); }
 
   auto update() -> bool override {
     if (game_object::update()) {
@@ -42,7 +42,7 @@ public:
     return game_object::on_collision(obj);
   }
 
-  void on_death_by_collision() override {
+  auto on_death_by_collision() -> void override {
     create_fragments(x, y, 32, 150, 2000);
   }
 };

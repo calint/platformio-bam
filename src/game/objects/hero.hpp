@@ -83,11 +83,11 @@ public:
     return false;
   }
 
-  void on_death_by_collision() override {
+  auto on_death_by_collision() -> void override {
     create_fragments(x, y, 16, 150, 2000);
   }
 
-  void pre_render() override {
+  auto pre_render() -> void override {
     game_object::pre_render();
 
     // set position of additional sprites

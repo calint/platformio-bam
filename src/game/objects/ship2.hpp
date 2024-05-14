@@ -57,7 +57,7 @@ public:
     return false;
   }
 
-  void on_death_by_collision() override {
+  auto on_death_by_collision() -> void override {
     upgrade *upg = new (objects.allocate_instance()) upgrade{};
     upg->x = x;
     upg->y = y;

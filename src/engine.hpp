@@ -88,7 +88,7 @@ public:
   virtual auto update() -> bool { return false; }
 
   // called before rendering the sprites
-  virtual void pre_render() {}
+  virtual auto pre_render() -> void {}
 };
 
 using object_store =
@@ -96,7 +96,7 @@ using object_store =
 
 class objects : public object_store {
 public:
-  void update() {
+  auto update() -> void {
     object **const end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
@@ -109,7 +109,7 @@ public:
     }
   }
 
-  void pre_render() {
+  auto pre_render() -> void {
     object **const end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
@@ -144,8 +144,8 @@ public:
 
   // called at setup with current time, frames per seconds calculation
   // interval and optional fixed frame delta time
-  void init(const time time_ms, const int interval_of_fps_calculation_ms,
-            const int locked_dt_ms) {
+  auto init(const time time_ms, const int interval_of_fps_calculation_ms,
+            const int locked_dt_ms) -> void {
     interval_ms_ = interval_of_fps_calculation_ms;
     if (locked_dt_ms) {
       locked_dt_ms_ = locked_dt_ms;
@@ -182,20 +182,20 @@ public:
 } static clk{};
 
 // callback from 'main.cpp'
-static void engine_init() {
+static auto engine_init() -> void {
   // set random seed for deterministic behavior
   srand(random_seed);
 }
 
 // forward declaration of platform specific function
-static void render(int x, int y);
+static auto render(int x, int y) -> void;
 
 // forward declaration of user provided callback
-static void main_on_frame_completed();
+static auto main_on_frame_completed() -> void;
 
 // callback from 'main.cpp'
 // render and update the state of the engine
-static void engine_loop() {
+static auto engine_loop() -> void {
   // prepare objects for render
   objects.pre_render();
 
@@ -222,26 +222,26 @@ template <typename T> static constexpr int max_size_of_type() {
 }
 
 template <typename T, typename U, typename... Args>
-static constexpr int max_size_of_type() {
+static constexpr auto max_size_of_type() -> int {
   return sizeof(T) > max_size_of_type<U, Args...>()
              ? sizeof(T)
              : max_size_of_type<U, Args...>();
 }
 
 // returns a random float
-static float random_float(const float min, const float max) {
+static auto random_float(const float min, const float max) -> float {
   constexpr float rand_max_inv = 1.0f / float(RAND_MAX);
   return (max - min) * float(rand()) * rand_max_inv + min;
 }
 
 // returns x on display for raw touch value x
-static float display_x_for_touch(const int16_t x) {
+static auto display_x_for_touch(const int16_t x) -> float {
   static constexpr float fact_x = float(display_width) / touch_screen_range_x;
   return float(x - touch_screen_min_x) * fact_x;
 }
 
 // returns y on display for raw touch value y
-static float display_y_for_touch(const int16_t y) {
+static auto display_y_for_touch(const int16_t y) -> float {
   static constexpr float fact_y = float(display_height) / touch_screen_range_y;
   return float(y - touch_screen_min_y) * fact_y;
 }

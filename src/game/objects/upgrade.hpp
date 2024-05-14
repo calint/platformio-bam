@@ -31,7 +31,7 @@ public:
     return false;
   }
 
-  void on_death_by_collision() override {
+  auto on_death_by_collision() -> void override {
     upgrade_picked *up = new (objects.allocate_instance()) upgrade_picked{};
     up->x = x;
     up->y = y;

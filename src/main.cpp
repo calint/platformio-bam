@@ -77,9 +77,9 @@ static sprite_ix *collision_map = nullptr;
 static int dma_busy = 0;
 static int dma_writes = 0;
 
-static void printf_render_sprite_entries_alg_ram_usage();
+static auto printf_render_sprite_entries_alg_ram_usage() -> void;
 
-void setup() {
+auto setup() -> void {
   Serial.begin(115200);
   sleep(1); // arbitrary wait for serial to connect
 
@@ -156,7 +156,7 @@ void setup() {
   heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 }
 
-void loop() {
+auto loop() -> void {
   if (clk.on_frame(clk::time(millis()))) {
     // note. not in 'engine_loop()' due to dependency on 'millis()'
     printf("t=%06u  fps=%02d  dma=%03d  objs=%03d  sprs=%03d\n", clk.ms,
@@ -187,13 +187,13 @@ static render_sprite_entry render_sprite_entries[sprites_layers][sprites_count];
 // pointers to end of list in 'render_sprite_entries'
 static render_sprite_entry *render_sprite_entries_end[sprites_layers];
 
-static inline void printf_render_sprite_entries_alg_ram_usage() {
+static inline auto printf_render_sprite_entries_alg_ram_usage() -> void {
   printf("    render sprites: %zu B\n",
          sizeof(render_sprite_entries) + sizeof(render_sprite_entries_end));
 }
 
 // only used in 'render(...)'
-static inline void build_render_sprites_lists() {
+static inline auto build_render_sprites_lists() -> void {
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprites_layers; i++) {
     render_sprite_entries_end[i] = render_sprite_entries[i];
@@ -218,12 +218,11 @@ static inline void build_render_sprites_lists() {
 
 // renders a scanline
 // note. inline because it is only called from one location in render(...)
-static inline void render_scanline(uint16_t *render_buf_ptr,
-                                   sprite_ix *collision_map_row_ptr, int tile_x,
-                                   int tile_x_fract,
-                                   tile_ix const *tiles_map_row_ptr,
-                                   const int16_t scanline_y,
-                                   const int tile_line_times_tile_width) {
+static inline auto
+render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
+                int tile_x, int tile_x_fract, tile_ix const *tiles_map_row_ptr,
+                const int16_t scanline_y,
+                const int tile_line_times_tile_width) -> void {
 
   // used later by sprite renderer to overwrite tiles pixels
   uint16_t *scanline_ptr = render_buf_ptr;
@@ -340,12 +339,12 @@ static inline void render_scanline(uint16_t *render_buf_ptr,
 }
 
 // returns number of shifts to convert a 2^n number to 1
-static constexpr int count_right_shifts_until_1(int num) {
+static constexpr auto count_right_shifts_until_1(int num) -> int {
   return (num <= 1) ? 0 : 1 + count_right_shifts_until_1(num >> 1);
 }
 
 // renders tile map and sprites
-static void render(const int x, const int y) {
+static auto render(const int x, const int y) -> void {
   dma_busy = dma_writes = 0;
 
   // clear collisions map

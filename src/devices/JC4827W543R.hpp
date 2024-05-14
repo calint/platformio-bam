@@ -20,7 +20,7 @@ class JC4827W543R final : public device {
   XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
 
 public:
-  void init() override {
+  auto init() -> void override {
     // config 'chip select' pin and disable it
     pinMode(TFT_CS, OUTPUT);
     bus_chip_select_disable();
@@ -161,15 +161,16 @@ public:
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
   }
 
-  bool display_is_touched() override {
+  auto display_is_touched() -> bool override {
     return touch_screen.tirqTouched() && touch_screen.touched();
   }
 
-  void display_get_touch(uint16_t &x, uint16_t &y, uint8_t &pressure) override {
+  auto display_get_touch(uint16_t &x, uint16_t &y,
+                         uint8_t &pressure) -> void override {
     touch_screen.readData(&x, &y, &pressure);
   }
 
-  bool dma_is_busy() override {
+  auto dma_is_busy() -> bool override {
     if (!async_busy_) {
       return false;
     }
@@ -181,7 +182,7 @@ public:
     return async_busy_;
   }
 
-  void dma_wait_for_completion() override {
+  auto dma_wait_for_completion() -> void override {
     if (!async_busy_) {
       return;
     }
@@ -193,7 +194,7 @@ public:
     async_busy_ = false;
   }
 
-  void dma_write_bytes(uint8_t const *data, uint32_t len) override {
+  auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
     dma_wait_for_completion();
 
     transaction_async_.tx_buffer = data;
@@ -205,20 +206,20 @@ public:
   }
 
 private:
-  static void pre_transaction_cb(spi_transaction_t *trans) {
+  static auto pre_transaction_cb(spi_transaction_t *trans) -> void {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
     dev->bus_chip_select_enable();
   }
 
-  static void post_transaction_cb(spi_transaction_t *trans) {
+  static auto post_transaction_cb(spi_transaction_t *trans) -> void {
     JC4827W543R *dev = static_cast<JC4827W543R *>(trans->user);
     dev->bus_chip_select_disable();
   }
 
-  void bus_chip_select_enable() { digitalWrite(TFT_CS, LOW); }
-  void bus_chip_select_disable() { digitalWrite(TFT_CS, HIGH); }
+  auto bus_chip_select_enable() -> void { digitalWrite(TFT_CS, LOW); }
+  auto bus_chip_select_disable() -> void { digitalWrite(TFT_CS, HIGH); }
 
-  void bus_write_c8(uint8_t cmd) {
+  auto bus_write_c8(uint8_t cmd) -> void {
     transaction_.flags = SPI_TRANS_MULTILINE_CMD | SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
@@ -227,7 +228,7 @@ private:
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
-  void bus_write_c8d8(uint8_t cmd, uint8_t data) {
+  auto bus_write_c8d8(uint8_t cmd, uint8_t data) -> void {
     transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                          SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
@@ -237,7 +238,7 @@ private:
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
-  void bus_write_c8d16d16(uint8_t cmd, uint16_t data1, uint16_t data2) {
+  auto bus_write_c8d16d16(uint8_t cmd, uint16_t data1, uint16_t data2) -> void {
     transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                          SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
@@ -250,7 +251,7 @@ private:
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
-  void set_rotation(uint8_t r) {
+  auto set_rotation(uint8_t r) -> void {
     constexpr uint8_t NV3041A_MADCTL_MY = 0x80;
     constexpr uint8_t NV3041A_MADCTL_MX = 0x40;
     constexpr uint8_t NV3041A_MADCTL_MV = 0x20;
@@ -272,7 +273,8 @@ private:
     bus_write_c8d8(0x36, r);
   }
 
-  void set_write_address_window(int16_t x, int16_t y, uint16_t w, uint16_t h) {
+  auto set_write_address_window(int16_t x, int16_t y, uint16_t w,
+                                uint16_t h) -> void {
     bus_write_c8d16d16(0x2a, x, x + w - 1);
     bus_write_c8d16d16(0x2b, y, y + h - 1);
     bus_write_c8(0x2c);
