@@ -29,7 +29,7 @@ public:
   }
 
   ~sprites_2x2() {
-    for (sprite *&spr : sprs) {
+    for (sprite *spr : sprs) {
       spr->img = nullptr;
       sprites.free(spr);
     }
