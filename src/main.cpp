@@ -196,7 +196,7 @@ static inline auto printf_render_sprite_entries_alg_ram_usage() -> void {
 static inline auto build_render_sprites_lists() -> void {
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprites_layers; i++) {
-    render_sprite_entries_end[i] = render_sprite_entries[i];
+    render_sprite_entries_end[i] = &render_sprite_entries[i][0];
   }
   // build entries lists
   sprite *spr = sprites.all_list();

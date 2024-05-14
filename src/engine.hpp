@@ -217,7 +217,7 @@ static auto engine_loop() -> void {
 
 // used for static assert of object sizes and config
 // 'object_instance_max_size_B'
-template <typename T> static constexpr int max_size_of_type() {
+template <typename T> static constexpr auto max_size_of_type() -> int {
   return sizeof(T);
 }
 
