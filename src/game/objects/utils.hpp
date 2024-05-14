@@ -16,7 +16,7 @@ public:
     obj->spr->layer = layer;
     obj->spr->flip = 0;
     // additional 3 sprites
-    for (auto &spr : sprs) {
+    for (sprite *&spr : sprs) {
       spr = sprites.alloc();
       spr->obj = obj;
       spr->layer = layer;
@@ -29,7 +29,7 @@ public:
   }
 
   ~sprites_2x2() {
-    for (auto &spr : sprs) {
+    for (sprite *&spr : sprs) {
       spr->img = nullptr;
       sprites.free(spr);
     }
