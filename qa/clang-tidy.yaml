@@ -1,0 +1,17 @@
+Checks: '
+    -*,
+    cppcoreguidelines-*,
+    -cppcoreguidelines-avoid-magic-numbers,
+    -cppcoreguidelines-pro-type-union-access,
+    -cppcoreguidelines-non-private-member-variables-in-classes,
+    -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+    -cppcoreguidelines-pro-bounds-constant-array-index,
+    -cppcoreguidelines-pro-type-reinterpret-cast,
+    -cppcoreguidelines-owning-memory,
+    bugprone-*,
+    -bugprone-easily-swappable-parameters,
+    modernize-*,
+    misc-const-correctness,
+    readability-convert-member-functions-to-static,
+    google-readability-casting
+'

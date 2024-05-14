@@ -223,7 +223,7 @@ private:
     transaction_.flags = SPI_TRANS_MULTILINE_CMD | SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
-    transaction_.tx_buffer = NULL;
+    transaction_.tx_buffer = nullptr;
     transaction_.length = 0;
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }

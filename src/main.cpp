@@ -328,7 +328,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
             }
           }
           // set pixel collision value to sprite index
-          *collision_pixel = sprite_ix(spr_it->ix);
+          *collision_pixel = spr_it->ix;
         }
         spr_img_ptr += spr_img_ptr_inc;
         collision_pixel++;
@@ -381,7 +381,7 @@ static auto render(const int x, const int y) -> void {
   build_render_sprites_lists();
   while (remaining_y) {
     // render from tiles map and sprites to the 'render_buf_ptr'
-    int render_n_tile_lines =
+    const int render_n_tile_lines =
         remaining_y < tile_height ? remaining_y : tile_height;
     // prepare loop variables
     int render_n_scanlines = 0;

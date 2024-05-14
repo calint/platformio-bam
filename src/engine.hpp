@@ -79,7 +79,7 @@ public:
   // note. used to declare interest in collisions with objects whose
   //       'col_bits' bitwise AND with this 'col_mask' is not 0
 
-  virtual ~object() {}
+  virtual ~object() = default;
   // note. 'delete obj' is not allowed since memory is managed by 'o1store'
 
   // returns true if object has died
