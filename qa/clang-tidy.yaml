@@ -23,7 +23,7 @@ Checks: '
     -bugprone-implicit-widening-of-multiplication-result, # cannot fix that
     -bugprone-narrowing-conversions, # known consequences
     modernize-*,
-    -modernize-avoid-c-arrays, # some as cppcoreguidelines
+    -modernize-avoid-c-arrays, # same as cppcoreguidelines
     -modernize-use-auto, # reduces readability
     clang-analyzer-*,
     concurrency-*,
