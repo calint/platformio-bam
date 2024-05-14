@@ -14,9 +14,11 @@ Checks: '
     -cppcoreguidelines-avoid-non-const-global-variables, # globals ok
     -cppcoreguidelines-pro-bounds-array-to-pointer-decay, # necessary
     -cppcoreguidelines-narrowing-conversions, # ok
+    -cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays # multidimensional arrays ar awkward
     bugprone-*,
     -bugprone-easily-swappable-parameters, # it is ok
     -bugprone-implicit-widening-of-multiplication-result, # cannot fix that
     -bugprone-narrowing-conversions, # known consequences
-    modernize-*
+    modernize-*,
+    -modernize-avoid-c-arrays # cppcoreguidelines comment
 '
