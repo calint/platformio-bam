@@ -42,7 +42,7 @@ static auto main_init() -> void {
   tile_map_dy = -16;
 
   // create default hero
-  hero *hro = new (objects.allocate_instance()) hero{};
+  hero *hro = new (objects.alloc()) hero{};
   hro->x = display_width / 2 - sprite_width / 2;
   hro->y = 30;
 }
@@ -56,7 +56,7 @@ static auto main_on_touch(const int16_t x, const int16_t y,
   // fire eight times a second
   if (clk.ms - last_fire_ms > 125) {
     last_fire_ms = clk.ms;
-    if (object *mem = objects.allocate_instance()) {
+    if (object *mem = objects.alloc()) {
       bullet *blt = new (mem) bullet{};
       blt->x = display_x_for_touch(x);
       blt->y = display_y_for_touch(y);
@@ -146,7 +146,7 @@ static auto main_on_frame_completed() -> void {
   }
 
   if (!game_state.hero_is_alive) {
-    hero *hro = new (objects.allocate_instance()) hero{};
+    hero *hro = new (objects.alloc()) hero{};
     hro->x = random_float(0, display_width);
     hro->y = 30;
     hro->dx = random_float(-64, 64);
@@ -169,7 +169,7 @@ static auto main_wave_1() -> void {
   float x = 0;
   float y = -sprite_height;
   for (int i = 0; i < count; i++) {
-    ship1 *shp = new (objects.allocate_instance()) ship1{};
+    ship1 *shp = new (objects.alloc()) ship1{};
     shp->x = x;
     shp->y = y;
     shp->dy = 50;
@@ -184,7 +184,7 @@ static auto main_wave_2() -> void {
   float x = 0;
   float y = -sprite_height;
   for (int i = 0; i < count; i++, x += dx) {
-    ship1 *shp = new (objects.allocate_instance()) ship1{};
+    ship1 *shp = new (objects.alloc()) ship1{};
     shp->x = x;
     shp->y = y;
     shp->dy = 50;
@@ -199,7 +199,7 @@ static auto main_wave_3() -> void {
   for (int j = 0; j < count_y; j++, y -= 24) {
     float x = 0;
     for (int i = 0; i < count_x; i++, x += dx) {
-      ship1 *shp = new (objects.allocate_instance()) ship1{};
+      ship1 *shp = new (objects.alloc()) ship1{};
       shp->x = x;
       shp->y = y;
       shp->dy = 50;
@@ -208,13 +208,13 @@ static auto main_wave_3() -> void {
 }
 
 static auto main_wave_4() -> void {
-  ufo2 *ufo = new (objects.allocate_instance()) ufo2{};
+  ufo2 *ufo = new (objects.alloc()) ufo2{};
   ufo->x = display_width / 2;
   ufo->y = -sprite_height;
   ufo->dy = 5;
 
   {
-    ship2 *shp = new (objects.allocate_instance()) ship2{};
+    ship2 *shp = new (objects.alloc()) ship2{};
     shp->x = -sprite_width;
     shp->y = -sprite_height;
     shp->dy = 25;
@@ -223,7 +223,7 @@ static auto main_wave_4() -> void {
     shp->ddx = 10;
   }
   {
-    ship2 *shp = new (objects.allocate_instance()) ship2{};
+    ship2 *shp = new (objects.alloc()) ship2{};
     shp->x = display_width;
     shp->y = -sprite_height;
     shp->dy = 25;
@@ -239,7 +239,7 @@ static auto main_wave_5() -> void {
   for (int j = 0; j < 12; j++, y -= 10) {
     float x = 0;
     for (int i = 0; i < 19; i++, x += dx) {
-      ship1 *shp = new (objects.allocate_instance()) ship1{};
+      ship1 *shp = new (objects.alloc()) ship1{};
       shp->x = x;
       shp->y = y;
       shp->dy = 30;

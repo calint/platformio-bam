@@ -12,7 +12,7 @@ public:
     col_bits = cb_fragment;
     col_mask = cb_none;
 
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[2];
     spr->layer = 2;

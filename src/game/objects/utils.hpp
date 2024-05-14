@@ -11,13 +11,13 @@ class sprites_2x2 final {
 public:
   sprites_2x2(game_object *obj, const int top_left_index_in_16_sprites_row,
               const uint8_t layer) {
-    obj->spr = sprites.allocate_instance();
+    obj->spr = sprites.alloc();
     obj->spr->obj = obj;
     obj->spr->layer = layer;
     obj->spr->flip = 0;
     // additional 3 sprites
     for (int i = 0; i < 3; i++) {
-      sprs[i] = sprites.allocate_instance();
+      sprs[i] = sprites.alloc();
       sprs[i]->obj = obj;
       sprs[i]->layer = layer;
       sprs[i]->flip = 0;
@@ -31,7 +31,7 @@ public:
   ~sprites_2x2() {
     for (int i = 0; i < 3; i++) {
       sprs[i]->img = nullptr;
-      sprites.free_instance(sprs[i]);
+      sprites.free(sprs[i]);
     }
   }
 
@@ -51,7 +51,7 @@ static auto create_fragments(const float orig_x, const float orig_y,
                              const int count, const float speed,
                              const clk::time life_time_ms) -> void {
   for (int i = 0; i < count; i++) {
-    fragment *frg = new (objects.allocate_instance()) fragment{};
+    fragment *frg = new (objects.alloc()) fragment{};
     frg->die_at_ms = clk.ms + life_time_ms;
     frg->x = orig_x;
     frg->y = orig_y;

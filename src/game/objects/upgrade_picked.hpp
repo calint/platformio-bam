@@ -9,7 +9,7 @@ class upgrade_picked final : public game_object {
 
 public:
   upgrade_picked() : game_object{upgrade_picked_cls} {
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[9];
     spr->layer = 1;

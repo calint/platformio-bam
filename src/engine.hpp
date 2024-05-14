@@ -71,7 +71,7 @@ class object {
 public:
   object **alloc_ptr;
   // note. no default value since it would overwrite the 'o1store' assigned
-  //       value at 'allocate_instance()'
+  //       value at 'alloc()'
 
   object *col_with = nullptr;
   collision_bits col_bits = 0;
@@ -104,7 +104,7 @@ public:
       object *obj = *it;
       if (obj->update()) {
         obj->~object();
-        free_instance(obj);
+        free(obj);
       }
     }
   }

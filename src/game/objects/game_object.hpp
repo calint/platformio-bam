@@ -28,7 +28,7 @@ public:
   ~game_object() override {
     // turn off and free sprite
     spr->img = nullptr;
-    sprites.free_instance(spr);
+    sprites.free(spr);
   }
 
   // returns true if object has died

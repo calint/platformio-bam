@@ -10,7 +10,7 @@ public:
     col_bits = cb_hero;
     col_mask = cb_enemy_bullet;
 
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[5];
     spr->layer = 1;

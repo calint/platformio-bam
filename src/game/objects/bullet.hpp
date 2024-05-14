@@ -12,7 +12,7 @@ public:
     col_mask = cb_hero;
     damage = 1;
 
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[1];
     spr->layer = 1;
@@ -32,7 +32,7 @@ public:
   }
 
   auto on_death_by_collision() -> void override {
-    fragment *frg = new (objects.allocate_instance()) fragment{};
+    fragment *frg = new (objects.alloc()) fragment{};
     frg->die_at_ms = clk.ms + 250;
     frg->x = x;
     frg->y = y;

@@ -18,7 +18,7 @@ public:
     col_bits = cb_hero;
     col_mask = cb_enemy_bullet;
 
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[6];
     spr->layer = 1;
@@ -58,7 +58,7 @@ public:
   }
 
   auto on_death_by_collision() -> void override {
-    upgrade *upg = new (objects.allocate_instance()) upgrade{};
+    upgrade *upg = new (objects.alloc()) upgrade{};
     upg->x = x;
     upg->y = y;
     upg->dy = 30;

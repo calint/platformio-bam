@@ -24,19 +24,19 @@ public:
 
     health = 10;
 
-    spr = sprites.allocate_instance();
+    spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[0];
     spr->layer = 1; // put in top layer
     spr->flip = 0;
 
-    spr_left = sprites.allocate_instance();
+    spr_left = sprites.alloc();
     spr_left->obj = this;
     spr_left->img = sprite_imgs[0];
     spr_left->layer = 1;
     spr_left->flip = 0;
 
-    spr_right = sprites.allocate_instance();
+    spr_right = sprites.alloc();
     spr_right->obj = this;
     spr_right->img = sprite_imgs[0];
     spr_right->layer = 1;
@@ -50,9 +50,9 @@ public:
   ~hero() override {
     // turn off and free sprites
     spr_left->img = nullptr;
-    sprites.free_instance(spr_left);
+    sprites.free(spr_left);
     spr_right->img = nullptr;
-    sprites.free_instance(spr_right);
+    sprites.free(spr_right);
 
     game_state.hero_is_alive = false;
   }
@@ -72,7 +72,7 @@ public:
     }
 
     if (clk.ms - last_upgrade_deployed_ms > upgrade_deploy_interval_ms) {
-      upgrade *upg = new (objects.allocate_instance()) upgrade{};
+      upgrade *upg = new (objects.alloc()) upgrade{};
       upg->x = x;
       upg->y = y;
       upg->dy = 30;

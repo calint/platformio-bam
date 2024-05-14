@@ -62,7 +62,7 @@ public:
 
   // allocates an instance
   // returns nullptr if instance could not be allocated
-  auto allocate_instance() -> Type * {
+  auto alloc() -> Type * {
     if (free_ptr_ >= free_end_) {
       return nullptr;
     }
@@ -77,7 +77,7 @@ public:
   }
 
   // adds instance to list of instances to be freed with 'apply_free()'
-  auto free_instance(Type *inst) -> void {
+  auto free(Type *inst) -> void {
     if (del_ptr_ >= del_end_) {
       printf("!!! o1store %d: free overrun\n", StoreId);
       exit(1);

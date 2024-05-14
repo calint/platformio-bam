@@ -31,7 +31,7 @@ public:
   }
 
   auto on_collision(game_object *obj) -> bool override {
-    ship2 *shp = new (objects.allocate_instance()) ship2{};
+    ship2 *shp = new (objects.alloc()) ship2{};
     shp->x = obj->x;
     shp->y = obj->y - sprite_height;
     shp->dx = random_float(-100, 100);
