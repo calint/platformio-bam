@@ -16,11 +16,11 @@ public:
     obj->spr->layer = layer;
     obj->spr->flip = 0;
     // additional 3 sprites
-    for (int i = 0; i < 3; i++) {
-      sprs[i] = sprites.alloc();
-      sprs[i]->obj = obj;
-      sprs[i]->layer = layer;
-      sprs[i]->flip = 0;
+    for (sprite *spr : sprs) {
+      spr = sprites.alloc();
+      spr->obj = obj;
+      spr->layer = layer;
+      spr->flip = 0;
     }
     obj->spr->img = sprite_imgs[top_left_index_in_16_sprites_row];
     sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
@@ -29,9 +29,9 @@ public:
   }
 
   ~sprites_2x2() {
-    for (int i = 0; i < 3; i++) {
-      sprs[i]->img = nullptr;
-      sprites.free(sprs[i]);
+    for (sprite *spr : sprs) {
+      spr->img = nullptr;
+      sprites.free(spr);
     }
   }
 
