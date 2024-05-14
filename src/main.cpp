@@ -233,7 +233,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
   while (remaining_x) {
     // pointer to tile image to render
     uint8_t const *tile_img_ptr =
-        tiles[*tiles_map_ptr] + tile_line_times_tile_width + tile_x_fract;
+        &tiles[*tiles_map_ptr][0] + tile_line_times_tile_width + tile_x_fract;
     // calculate number of pixels to render
     int render_n_pixels = 0;
     if (tile_x_fract) {
@@ -262,7 +262,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
 
   for (int layer = 0; layer < sprites_layers; layer++) {
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
-    for (render_sprite_entry *spr_it = render_sprite_entries[layer];
+    for (render_sprite_entry *spr_it = &render_sprite_entries[layer][0];
          spr_it < spr_it_end; ++spr_it) {
       sprite const *spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
@@ -364,7 +364,7 @@ static auto render(const int x, const int y) -> void {
   // current scanline screen y
   int16_t scanline_y = 0;
   // pointer to start of current row of tiles
-  tile_ix const *tiles_map_row_ptr = tile_map[tile_y];
+  tile_ix const *tiles_map_row_ptr = &tile_map[tile_y][0];
   // pointer to collision map starting at top left of screen
   sprite_ix *collision_map_row_ptr = collision_map;
   // keeps track of how many scanlines have been rendered since last DMA

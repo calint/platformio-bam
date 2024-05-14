@@ -1,18 +1,17 @@
 Checks: '
     -*,
     cppcoreguidelines-*,
-    -cppcoreguidelines-avoid-magic-numbers, # device implementations use too many of those
-    -cppcoreguidelines-pro-type-union-access, # ?
+    -cppcoreguidelines-avoid-magic-numbers, # device implementations use too many
+    -cppcoreguidelines-pro-type-union-access, # "driver/spi_master.h" uses unions
     -cppcoreguidelines-non-private-member-variables-in-classes, # public members ok
     -cppcoreguidelines-pro-bounds-pointer-arithmetic, # pointer shenanigans necessary
     -cppcoreguidelines-pro-bounds-constant-array-index, # indexing in arrays necessary
     -cppcoreguidelines-pro-type-reinterpret-cast, # too useful
     -cppcoreguidelines-owning-memory, # does not work well with o1store
-    -cppcoreguidelines-pro-type-vararg, # printf
+    -cppcoreguidelines-pro-type-vararg, # using printf
     -cppcoreguidelines-init-variables, # too many false positives, relying on compiler
     -cppcoreguidelines-pro-type-const-cast, # one such necessary in device implementation ESP32-2432S028R
     -cppcoreguidelines-avoid-non-const-global-variables, # globals ok
-    -cppcoreguidelines-pro-bounds-array-to-pointer-decay, # necessary
     -cppcoreguidelines-narrowing-conversions, # ok
     -cppcoreguidelines-avoid-c-arrays, # multidimensional arrays are awkward
     -cppcoreguidelines-prefer-member-initializer, # not always preferred regarding readability
