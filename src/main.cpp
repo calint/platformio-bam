@@ -21,6 +21,8 @@
 // allocated at runtime as heap.
 // -- https://stackoverflow.com/questions/71085927/how-to-extend-esp32-heap-size
 
+// note. esp32 s3 can allocate more than 160 KB
+
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 
