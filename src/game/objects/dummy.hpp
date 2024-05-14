@@ -12,7 +12,7 @@ public:
     if (game_object::update()) {
       return true;
     }
-    if (x >= display_width) {
+    if (x >= display_width || x - sprite_width <= 0) {
       return true;
     }
     return false;
