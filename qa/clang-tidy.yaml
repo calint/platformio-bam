@@ -1,6 +1,5 @@
 # from https://clang.llvm.org/extra/clang-tidy/
 Checks: '
-    -*,
     cppcoreguidelines-*,
     -cppcoreguidelines-avoid-magic-numbers, # device implementations use too many
     -cppcoreguidelines-pro-type-union-access, # "driver/spi_master.h" uses unions
