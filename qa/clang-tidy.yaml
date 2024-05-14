@@ -1,3 +1,4 @@
+# from https://clang.llvm.org/extra/clang-tidy/
 Checks: '
     -*,
     cppcoreguidelines-*,
@@ -24,4 +25,7 @@ Checks: '
     modernize-*,
     -modernize-avoid-c-arrays, # some as cppcoreguidelines
     -modernize-use-auto, # reduces readability
+    clang-analyzer-*,
+    concurrency-*,
+    performance-*,
 '
