@@ -11,7 +11,7 @@ public:
   // check if display is touched
   virtual auto display_is_touched() -> bool = 0;
 
-  // if touched, get x, y with values between 0 and 4096
+  // if touched, get x, y with values between 0 and 4096 and pressure
   virtual auto display_get_touch(uint16_t &x, uint16_t &y,
                                  uint8_t &pressure) -> void = 0;
 
@@ -21,6 +21,6 @@ public:
   // returns true if DMA transaction is active
   virtual auto dma_is_busy() -> bool = 0;
 
-  // wait for previous transaction to complete or just return if none active
+  // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
 };
