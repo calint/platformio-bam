@@ -151,7 +151,7 @@ auto setup() -> void {
   printf_render_sprite_entries_alg_ram_usage();
 
   device.init();
-
+  
   dma_buffers.init();
 
   collision_map = static_cast<sprite_ix *>(heap_caps_calloc(

@@ -16,7 +16,6 @@ class ESP32_2432S028R final : public device {
 public:
   auto init() -> void override {
     spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-
     if (!SD.begin(SD_CS, spi3, 10000000)) {
       printf("* no SD card\n");
     }
