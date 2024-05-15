@@ -1,6 +1,7 @@
 [ ] #define O1STORE_DEBUG to check for double free, index out of bounds
 [ ] JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
-[ ] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
+[x] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
+    => dma buffer swap when odd number of renders per screen
 [ ] game_object: position relative to tile map or screen
 [ ] several sets of tiles cycled for animation
 [ ] o1store: new_ list optimizing apply by putting new instances in deleted slots

@@ -55,11 +55,11 @@ static ESP32_2432S028R device{};
 
 // number of scanlines to render before DMA transfer
 static constexpr int dma_n_scanlines = 8;
-// note. performance on device:
+// note. performance on device (scanlines:FPS):
 //  ESP32-2432S028R:
-//    1: 23 fps, 2: 27 fps, 4: 29 fps, 8: 31 fps, 16: 31 fps, 32: 32 fps
+//    1:23, 2:27, 4:29, 8:31, 16:31, 32:32, 64:32
 //  JC4827W543R:
-//    1: 27 fps, 2: 35 fps, 4: 41 fps, 8: 44 fps, 16: 47 fps, 32: 48 fps
+//    1:27, 2:35, 4:41, 8:44, 16:47, 32:48, 64:hw limit exceeded
 
 // alternating buffers for rendering scanlines while DMA is active
 // allocated in 'setup()'
@@ -67,6 +67,10 @@ static constexpr int dma_buf_size_B =
     sizeof(uint16_t) * display_width * dma_n_scanlines;
 static uint16_t *dma_buf_1 = nullptr;
 static uint16_t *dma_buf_2 = nullptr;
+// DMA buffer being rendered
+static uint16_t *dma_buf_render = nullptr;
+// toggle to switch between DMA buffers
+static bool dma_buf_toggle = false;
 
 // pixel precision collision detection between on screen sprites
 // allocated in 'setup()'
@@ -129,6 +133,7 @@ auto setup() -> void {
     printf("!!! could not allocate DMA buffers\n");
     exit(1);
   }
+  dma_buf_render = dma_buf_1;
 
   collision_map = static_cast<sprite_ix *>(heap_caps_calloc(
       display_width * display_height, sizeof(sprite_ix), MALLOC_CAP_INTERNAL));
@@ -372,12 +377,8 @@ static auto render(const int x, const int y) -> void {
   // keeps track of how many scanlines have been rendered since last DMA
   // transfer
   int dma_scanline_count = 0;
-  // select first buffer for rendering
-  uint16_t *render_buf_ptr = dma_buf_1;
-  // which dma buffer to use next
-  bool dma_buf_use_first = false;
-  // pointer to the buffer that DMA will copy to screen
-  uint16_t *dma_buf = render_buf_ptr;
+  // buffer to render
+  uint16_t *render_buf_ptr = dma_buf_render;
   // for all lines on display
   int remaining_y = display_height;
   build_render_sprites_lists();
@@ -414,12 +415,13 @@ static auto render(const int x, const int y) -> void {
         dma_writes++;
         dma_busy += device.dma_is_busy() ? 1 : 0;
         device.dma_write_bytes(
-            reinterpret_cast<uint8_t *>(dma_buf),
+            reinterpret_cast<uint8_t *>(dma_buf_render),
             uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
         dma_scanline_count = 0;
         // swap to the other render buffer
-        dma_buf = render_buf_ptr = dma_buf_use_first ? dma_buf_1 : dma_buf_2;
-        dma_buf_use_first = !dma_buf_use_first;
+        dma_buf_render = render_buf_ptr =
+            dma_buf_toggle ? dma_buf_1 : dma_buf_2;
+        dma_buf_toggle = !dma_buf_toggle;
       }
     }
     tile_y++;
@@ -433,7 +435,10 @@ static auto render(const int x, const int y) -> void {
     dma_writes++;
     dma_busy += device.dma_is_busy() ? 1 : 0;
     device.dma_write_bytes(
-        reinterpret_cast<uint8_t *>(dma_buf),
+        reinterpret_cast<uint8_t *>(dma_buf_render),
         uint32_t(display_width * dma_n_scanlines_trailing * sizeof(uint16_t)));
+    // swap to the other render buffer
+    dma_buf_render = dma_buf_toggle ? dma_buf_1 : dma_buf_2;
+    dma_buf_toggle = !dma_buf_toggle;
   }
 }
