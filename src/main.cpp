@@ -61,16 +61,44 @@ static constexpr int dma_n_scanlines = 8;
 //  JC4827W543R:
 //    1:27, 2:35, 4:41, 8:44, 16:47, 32:48, 64:hw limit exceeded
 
-// alternating buffers for rendering scanlines while DMA is active
-// allocated in 'setup()'
+// size of a DMA buffer
 static constexpr int dma_buf_size_B =
     sizeof(uint16_t) * display_width * dma_n_scanlines;
-static uint16_t *dma_buf_1 = nullptr;
-static uint16_t *dma_buf_2 = nullptr;
-// DMA buffer being rendered
-static uint16_t *dma_buf_render = nullptr;
-// toggle to switch between DMA buffers
-static bool dma_buf_toggle = false;
+
+// implements buffer swapping
+class dma_buffers final {
+public:
+  auto init() -> void {
+    buf_1_ = static_cast<uint16_t *>(
+        heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
+    buf_2_ = static_cast<uint16_t *>(
+        heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
+    if (!buf_1_ || !buf_2_) {
+      printf("!!! could not allocate DMA buffers\n");
+      exit(1);
+    }
+    buf_current_ = buf_1_;
+  }
+
+  auto current_buffer() -> uint16_t * { return buf_current_; }
+
+  auto swap() -> uint16_t * {
+    // swap to the other render buffer
+    buf_current_ = toggle_ ? buf_1_ : buf_2_;
+    toggle_ = !toggle_;
+    return buf_current_;
+  }
+
+private:
+  // alternating buffers for rendering scanlines while DMA is active
+  // allocated in 'setup()'
+  uint16_t *buf_1_ = nullptr;
+  uint16_t *buf_2_ = nullptr;
+  // DMA buffer being rendered
+  uint16_t *buf_current_ = nullptr;
+  // toggle to switch between DMA buffers
+  bool toggle_ = true;
+} static dma_buffers{};
 
 // pixel precision collision detection between on screen sprites
 // allocated in 'setup()'
@@ -125,15 +153,7 @@ auto setup() -> void {
 
   device.init();
 
-  dma_buf_1 = static_cast<uint16_t *>(
-      heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
-  dma_buf_2 = static_cast<uint16_t *>(
-      heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
-  if (!dma_buf_1 || !dma_buf_2) {
-    printf("!!! could not allocate DMA buffers\n");
-    exit(1);
-  }
-  dma_buf_render = dma_buf_1;
+  dma_buffers.init();
 
   collision_map = static_cast<sprite_ix *>(heap_caps_calloc(
       display_width * display_height, sizeof(sprite_ix), MALLOC_CAP_INTERNAL));
@@ -378,7 +398,7 @@ static auto render(const int x, const int y) -> void {
   // transfer
   int dma_scanline_count = 0;
   // buffer to render
-  uint16_t *render_buf_ptr = dma_buf_render;
+  uint16_t *render_buf_ptr = dma_buffers.current_buffer();
   // for all lines on display
   int remaining_y = display_height;
   build_render_sprites_lists();
@@ -415,30 +435,27 @@ static auto render(const int x, const int y) -> void {
         dma_writes++;
         dma_busy += device.dma_is_busy() ? 1 : 0;
         device.dma_write_bytes(
-            reinterpret_cast<uint8_t *>(dma_buf_render),
+            reinterpret_cast<uint8_t *>(dma_buffers.current_buffer()),
             uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
-        dma_scanline_count = 0;
         // swap to the other render buffer
-        dma_buf_render = render_buf_ptr =
-            dma_buf_toggle ? dma_buf_1 : dma_buf_2;
-        dma_buf_toggle = !dma_buf_toggle;
+        render_buf_ptr = dma_buffers.swap();
+        dma_scanline_count = 0;
       }
     }
     tile_y++;
     remaining_y -= render_n_scanlines;
     tiles_map_row_ptr += tile_map_width;
   }
-  // if 'display_height' is not evenly divisible by 'dma_n_scanlines' there
+  // if 'display_height' is not evenly divisible by 'n_scanlines' there
   // will be remaining scanlines to write
   constexpr int dma_n_scanlines_trailing = display_height % dma_n_scanlines;
   if (dma_n_scanlines_trailing) {
     dma_writes++;
     dma_busy += device.dma_is_busy() ? 1 : 0;
     device.dma_write_bytes(
-        reinterpret_cast<uint8_t *>(dma_buf_render),
+        reinterpret_cast<uint8_t *>(dma_buffers.current_buffer()),
         uint32_t(display_width * dma_n_scanlines_trailing * sizeof(uint16_t)));
     // swap to the other render buffer
-    dma_buf_render = dma_buf_toggle ? dma_buf_1 : dma_buf_2;
-    dma_buf_toggle = !dma_buf_toggle;
+    dma_buffers.swap();
   }
 }
