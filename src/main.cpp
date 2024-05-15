@@ -83,20 +83,15 @@ public:
   auto current_buffer() -> uint16_t * { return buf_current_; }
 
   auto swap() -> uint16_t * {
-    // swap to the other render buffer
     buf_current_ = toggle_ ? buf_1_ : buf_2_;
     toggle_ = !toggle_;
     return buf_current_;
   }
 
 private:
-  // alternating buffers for rendering scanlines while DMA is active
-  // allocated in 'setup()'
   uint16_t *buf_1_ = nullptr;
   uint16_t *buf_2_ = nullptr;
-  // DMA buffer being rendered
   uint16_t *buf_current_ = nullptr;
-  // toggle to switch between DMA buffers
   bool toggle_ = true;
 } static dma_buffers{};
 
