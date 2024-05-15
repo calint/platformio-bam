@@ -1,14 +1,12 @@
+[ ] #define O1STORE_DEBUG to check for double free, index out of bounds
 [ ] devices/JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
 [ ] devices/ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) works
 [ ] game_object: position relative to tile map or screen
 [ ] several sets of tiles cycled for animation
-[ ] o1store: ? inst_deleted->~object() at apply_free()
-[ ] render_scanline(...) consider looping through allocated sprites instead of all
 [ ] o1store: new_ list optimizing apply by putting new instances in deleted slots
     without swapping. if len(del_)>len(add_) no swaps will be made.
     concession is another list of size Size of pointers to instances
 [ ] o1store: consider a minimal implementation of 'span' to return allocated list
-[ ] #define O1STORE_DEBUG to check for double free, index out of bounds
 [ ] vectorized functions:
     #include <esp32-hal-vector.h>
     float a[4] = {1.5, 2.5, 3.5, 4.5};
@@ -17,6 +15,8 @@
     vaddf(result, a, b, 4);
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
+[-] o1store: ? inst_deleted->~object() at apply_free()
+[x] render_scanline(...) consider looping through allocated sprites instead of all
 [x] optimize sprite rendering from 'layers * sprites * O(scanlines)' to 'sprites * O(scanlines)'
     sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
     sprite *sprites_to_be_rendered_end[sprite_layers]
