@@ -26,6 +26,9 @@
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 
+#include "FS.h"
+#include "SD.h"
+#include "SPI.h"
 #include "hal/efuse_hal.h"
 #include <Arduino.h>
 
@@ -107,6 +110,7 @@ static int dma_busy = 0;
 static int dma_writes = 0;
 
 static auto printf_render_sprite_entries_alg_ram_usage() -> void;
+static auto test_sd_card() -> void;
 
 auto setup() -> void {
   Serial.begin(115200);
@@ -174,6 +178,8 @@ auto setup() -> void {
   printf("     free heap mem: %u B\n", ESP.getFreeHeap());
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
   printf("----------------------------------------------------------\n");
+
+  test_sd_card();
 
   heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 }
@@ -452,5 +458,19 @@ static auto render(const int x, const int y) -> void {
         uint32_t(display_width * dma_n_scanlines_trailing * sizeof(uint16_t)));
     // swap to the other render buffer
     dma_buffers.swap();
+  }
+}
+
+static auto test_sd_card() -> void {
+  char const txt[] = "hello world again!\n";
+  if (!device.sd_write("/test2.txt", txt, sizeof(txt))) {
+    printf("!!! could not store");
+    return;
+  }
+  char buf[100];
+  int n = device.sd_read("/test2.txt", buf, sizeof(buf));
+  printf("bytes read: %d\n", n);
+  if (n != -1) {
+    printf("%s", buf);
   }
 }

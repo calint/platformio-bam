@@ -5,19 +5,23 @@
 #include "../device.hpp"
 #include <SPI.h>
 #include <TFT_eSPI.h>
-#include <XPT2046_Touchscreen.h>
+#include <XPT2046_Bitbang.h>
 
 class ESP32_2432S028R final : public device {
   TFT_eSPI display{};
   SPIClass spi3{SPI3_HOST};
-  XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
+  XPT2046_Bitbang touch_screen{TOUCH_MOSI, TOUCH_MISO, TOUCH_SCK, TOUCH_CS};
+  TouchPoint touch{};
 
 public:
   auto init() -> void override {
-    // start the spi for the touch screen and init the library
-    spi3.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
-    touch_screen.begin(spi3);
-    touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
+    spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
+
+    if (!SD.begin(SD_CS, spi3, 10000000)) {
+      printf("* no SD card\n");
+    }
+
+    touch_screen.begin();
 
     // initiate display
     display.init();
@@ -27,12 +31,16 @@ public:
   }
 
   auto display_is_touched() -> bool override {
-    return touch_screen.tirqTouched() && touch_screen.touched();
+    touch = touch_screen.getTouch();
+    return touch.zRaw != 0;
   }
 
   auto display_get_touch(uint16_t &x, uint16_t &y,
                          uint8_t &pressure) -> void override {
-    touch_screen.readData(&x, &y, &pressure);
+    // flip x and y for display orientation
+    x = 4096 - touch.yRaw;
+    y = touch.xRaw;
+    pressure = touch.zRaw;
   }
 
   auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
@@ -46,4 +54,26 @@ public:
   auto dma_is_busy() -> bool override { return display.dmaBusy(); }
 
   auto dma_wait_for_completion() -> void override { return display.dmaWait(); }
+
+  auto sd_read(char const *path, char *buf, int buf_len) -> int override {
+    File file = SD.open(path);
+    if (!file) {
+      return -1;
+    }
+    const size_t n = file.read((uint8_t *)buf, buf_len);
+    file.close();
+    return n;
+  }
+
+  auto sd_write(char const *path, char const *buf,
+                int buf_len) -> bool override {
+    File file = SD.open(path, FILE_WRITE);
+    if (!file) {
+      return false;
+    }
+    const size_t n = file.write((uint8_t *)buf, buf_len);
+    const bool ok = n == buf_len;
+    file.close();
+    return ok;
+  }
 };

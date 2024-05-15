@@ -23,4 +23,8 @@ public:
 
   // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
+
+  virtual auto sd_read(char const *path, char *buf, int buf_len) -> int;
+
+  virtual auto sd_write(char const *path, char const *buf, int buf_len) -> bool;
 };

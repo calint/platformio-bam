@@ -17,7 +17,8 @@ class JC4827W543R final : public device {
   static constexpr int nv3041a_max_clock_freq = 32000000;
   // init touch screen
   SPIClass spi2{SPI2_HOST};
-  XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
+  // XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
+  XPT2046_Touchscreen touch_screen{TOUCH_CS};
 
 public:
   auto init() -> void override {
@@ -156,14 +157,16 @@ public:
     digitalWrite(TFT_BL, HIGH);
 
     // start the spi for the touch screen and init the library
-    spi2.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
+    spi2.begin(TOUCH_SCK, TOUCH_MISO, TOUCH_MOSI);
     touch_screen.begin(spi2);
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
+
+    if (!SD.begin(SD_CS, spi2, 10000000)) {
+      printf("* no SD card\n");
+    }
   }
 
-  auto display_is_touched() -> bool override {
-    return touch_screen.tirqTouched() && touch_screen.touched();
-  }
+  auto display_is_touched() -> bool override { return touch_screen.touched(); }
 
   auto display_get_touch(uint16_t &x, uint16_t &y,
                          uint8_t &pressure) -> void override {
@@ -203,6 +206,28 @@ public:
     async_busy_ = true;
     ESP_ERROR_CHECK(spi_device_queue_trans(device_handle_, &transaction_async_,
                                            portMAX_DELAY));
+  }
+
+  auto sd_read(char const *path, char *buf, int buf_len) -> int override {
+    File file = SD.open(path);
+    if (!file) {
+      return -1;
+    }
+    const size_t n = file.read((uint8_t *)buf, buf_len);
+    file.close();
+    return n;
+  }
+
+  auto sd_write(char const *path, char const *buf,
+                int buf_len) -> bool override {
+    File file = SD.open(path, FILE_WRITE);
+    if (!file) {
+      return false;
+    }
+    const size_t n = file.write((uint8_t *)buf, buf_len);
+    const bool ok = n == buf_len;
+    file.close();
+    return ok;
   }
 
 private:
