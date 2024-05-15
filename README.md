@@ -44,6 +44,6 @@ a.k.a. cheap-black-device (CBD)
   - tool-esptoolpy @ 1.40501.0 (4.5.1) 
   - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
 * dependencies:
-  - https://github.com/PaulStoffregen/XPT2046_Touchscreen#v1.4
-  - https://github.com/Bodmer/TFT_eSPI#V2.5.43
+  - https://github.com/Bodmer/TFT_eSPI/releases/tag/V2.5.43
+  - https://github.com/PaulStoffregen/XPT2046_Touchscreen/releases/tag/v1.4
 
