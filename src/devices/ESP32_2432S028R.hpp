@@ -37,6 +37,7 @@ public:
 
   auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
     // note. TFT_eSPI requires non-const data in case bytes are swapped
+    // note. pushPixelsDMA(...) waits for previous transaction to complete
     display.pushPixelsDMA(
         reinterpret_cast<uint16_t *>(const_cast<uint8_t *>(data)),
         len / sizeof(uint16_t));

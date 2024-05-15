@@ -5,6 +5,7 @@
     => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
        performance with added layers
 [ ] devices/JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
+[ ] devices/ESP32_2432S028R.hpp: check why dma_n_scalines=64 is error although pushPixels(...) works
 [ ] game_object: position relative to tile map or screen
 [ ] several sets of tiles cycled for animation
 [ ] o1store: ? inst_deleted->~object() at apply_free()

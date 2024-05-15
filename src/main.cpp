@@ -57,9 +57,9 @@ static ESP32_2432S028R device{};
 static constexpr int dma_n_scanlines = 8;
 // note. performance on device:
 //  ESP32-2432S028R:
-//    1: 25 fps, 2: 28 fps, 4: 29 fps, 8: 31 fps, 16: 31 fps, 32: 31 fps
+//    1: 23 fps, 2: 27 fps, 4: 29 fps, 8: 31 fps, 16: 31 fps, 32: 32 fps
 //  JC4827W543R:
-//    1: 26 fps, 2: 32 fps, 4: 35 fps, 8: 37 fps, 16: 38 fps, 32: 39 fps
+//    1: 27 fps, 2: 35 fps, 4: 41 fps, 8: 44 fps, 16: 47 fps, 32: 48 fps
 
 // alternating buffers for rendering scanlines while DMA is active
 // allocated in 'setup()'
@@ -416,9 +416,6 @@ static auto render(const int x, const int y) -> void {
         device.dma_write_bytes(
             reinterpret_cast<uint8_t *>(dma_buf),
             uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
-        // bus.writeBytes(
-        //     reinterpret_cast<uint8_t *>(dma_buf),
-        //     uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
         dma_scanline_count = 0;
         // swap to the other render buffer
         dma_buf = render_buf_ptr = dma_buf_use_first ? dma_buf_1 : dma_buf_2;
@@ -438,8 +435,5 @@ static auto render(const int x, const int y) -> void {
     device.dma_write_bytes(
         reinterpret_cast<uint8_t *>(dma_buf),
         uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
-    // bus.writeBytes(
-    //     reinterpret_cast<uint8_t *>(dma_buf),
-    //     uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
   }
 }
