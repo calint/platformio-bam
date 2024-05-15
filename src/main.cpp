@@ -434,6 +434,6 @@ static auto render(const int x, const int y) -> void {
     dma_busy += device.dma_is_busy() ? 1 : 0;
     device.dma_write_bytes(
         reinterpret_cast<uint8_t *>(dma_buf),
-        uint32_t(display_width * dma_n_scanlines * sizeof(uint16_t)));
+        uint32_t(display_width * dma_n_scanlines_trailing * sizeof(uint16_t)));
   }
 }
