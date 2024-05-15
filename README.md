@@ -35,7 +35,7 @@ a.k.a. cheap-black-device (CBD)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## development environment
-* Visual Code 1.89.0  - decent performance
+* Visual Code 1.89.1
 * PlatformIO 6.1.15
 * Espressif 32 (6.6.0) > Espressif ESP32 Dev Module
 * esp-idf 4.4 patch 6
