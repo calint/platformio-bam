@@ -188,8 +188,8 @@ auto loop() -> void {
   if (clk.on_frame(clk::time(millis()))) {
     // note. not in 'engine_loop()' due to dependency on 'millis()'
     printf("t=%06u  fps=%02d  dma=%03d  objs=%03d  sprs=%03d\n", clk.ms,
-           clk.fps, dma_busy * 100 / dma_writes, objects.allocated_list_len(),
-           sprites.allocated_list_len());
+           clk.fps, dma_busy * 100 / (dma_writes ? dma_writes : 1),
+           objects.allocated_list_len(), sprites.allocated_list_len());
   }
 
   if (device.display_is_touched()) {
@@ -464,7 +464,7 @@ static auto render(const int x, const int y) -> void {
 static auto test_sd_card() -> void {
   char const txt[] = "hello world again!\n";
   if (!device.sd_write("/test2.txt", txt, sizeof(txt))) {
-    printf("!!! could not store");
+    printf("!!! could not store\n");
     return;
   }
   char buf[100];

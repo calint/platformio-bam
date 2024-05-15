@@ -1,0 +1,112 @@
+[platformio]
+; default_envs = JC4827W543R
+default_envs = ESP32_2432S028R
+
+[env]
+platform = espressif32
+framework = arduino
+board_build.partitions = huge_app.csv
+
+monitor_speed = 115200
+monitor_filters = esp32_exception_decoder, log2file
+
+upload_speed = 921600
+
+build_unflags = -O0 -O1 -O2 -Os -Ofast -Og -Oz
+build_flags =
+    ; log level (0: none, 1: error, 2: warning, 3: info, 4: debug, 5: verbose)
+    -D CORE_DEBUG_LEVEL=5
+    ; maximum optimization
+    -O3
+build_src_flags =
+    -Wfatal-errors -Werror=return-type
+    -Wall -Wextra -Wunused-variable -Wuninitialized
+    -flifetime-dse=1 ; fixes o1store::alloc()...inst->alloc_ptr optimization issue
+
+check_tool = clangtidy
+check_flags = clangtidy: --config-file=qa/clang-tidy.yaml
+
+; --------------------------------------------------------------------------------------
+; --------------------------------------------------------------------------------------
+; --------------------------------------------------------------------------------------
+
+[env:ESP32_2432S028R]
+board = esp32dev
+build_flags =
+    ${env.build_flags}
+    ; device config
+    -D DEVICE_ESP32_2432S028R
+    ; setup TFT_eSPI
+    ; manufacturer provided settings for 'User_Setup.h'
+    -D USER_SETUP_LOADED
+    -D ILI9341_2_DRIVER
+    -D TFT_ORIENTATION=0  ; natural display oriention for this device is portrait
+    -D TFT_WIDTH=240
+    -D TFT_HEIGHT=320
+    ; setup XPT2046_Touchscreen
+    -D TOUCH_IRQ=36
+    -D TOUCH_MOSI=32
+    -D TOUCH_MISO=39
+    -D TOUCH_SCK=25
+    -D TOUCH_CS=33
+    ; calibration of touch screen
+    -D TOUCH_MIN_X=240
+    -D TOUCH_MAX_X=4000
+    -D TOUCH_MIN_Y=0
+    -D TOUCH_MAX_Y=4096
+    ; setup SD card
+    -D SD_MOSI=23
+    -D SD_MISO=19
+    -D SD_SCK=18
+    -D SD_CS=5
+    ; locked for ~31 fps
+    -D BAM_TIME_STEP_MS=32
+
+;lib_deps =
+;    https://github.com/TheNitek/XPT2046_Bitbang_Arduino_Library#v2.0.1
+;    https://github.com/Bodmer/TFT_eSPI#V2.5.43
+
+; --------------------------------------------------------------------------------------
+; --------------------------------------------------------------------------------------
+; --------------------------------------------------------------------------------------
+
+[env:JC4827W543R]
+board = esp32-s3-devkitm-1
+board_upload.flash_size = 4MB
+board_build.arduino.memory_type = qio_opi  ; enables PSRAM
+build_flags =
+    ${env.build_flags}
+    ; device config
+    -D DEVICE_JC4827W543R
+    ; setup NV3041A display
+    -D TFT_WIDTH=480
+    -D TFT_HEIGHT=272
+    -D TFT_ORIENTATION=1  ; natural display oriention for this device is landscape
+    -D TFT_CS=45
+    -D TFT_SCK=47
+    -D TFT_D0=21
+    -D TFT_D1=48
+    -D TFT_D2=40
+    -D TFT_D3=39
+    -D TFT_BL=1
+    ; setup touchscreen
+    -D TOUCH_IRQ=3
+    -D TOUCH_MOSI=11
+    -D TOUCH_MISO=13
+    -D TOUCH_SCK=12
+    -D TOUCH_CS=38
+    ; calibration of touch screen (mirror x)
+    -D TOUCH_MIN_X=3500
+    -D TOUCH_MAX_X=350
+    -D TOUCH_MIN_Y=300
+    -D TOUCH_MAX_Y=3800
+    ; setup SD card
+    -D SD_MOSI=11
+    -D SD_MISO=13
+    -D SD_SCK=12
+    -D SD_CS=10
+    ; locked for ~45 fps
+    -D BAM_TIME_STEP_MS=22
+
+;lib_deps =
+;    https://github.com/PaulStdoDooffregen/XPT2046_Touchscreen#v1.4
