@@ -1,11 +1,5 @@
-[x] optimize sprite rendering from 'layers * sprites * O(scanlines)' to 'sprites * O(scanlines)'
-    sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
-    sprite *sprites_to_be_rendered_end[sprite_layers]
-    one pass through sprites to build the list
-    => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
-       performance with added layers
 [ ] devices/JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
-[ ] devices/ESP32_2432S028R.hpp: check why dma_n_scalines=64 is error although pushPixels(...) works
+[ ] devices/ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) works
 [ ] game_object: position relative to tile map or screen
 [ ] several sets of tiles cycled for animation
 [ ] o1store: ? inst_deleted->~object() at apply_free()
@@ -23,6 +17,12 @@
     vaddf(result, a, b, 4);
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
+[x] optimize sprite rendering from 'layers * sprites * O(scanlines)' to 'sprites * O(scanlines)'
+    sprite *sprites_to_be_rendered[sprite_layers][sprites_count]
+    sprite *sprites_to_be_rendered_end[sprite_layers]
+    one pass through sprites to build the list
+    => improved performance 46 FPS on JC... 100% DMA wait, no noticeable decrease in
+       performance with added layers
 [-] move sprite index from render_sprite struct to sprite saving:
     nlayers * nsprites * sizeof(sprite_ix) - nsprites * sizeof(sprite_ix) --- 510 B in 3 layers x 255 sprites
     => not considering padding and engine code which is platform independent vs main.cpp
