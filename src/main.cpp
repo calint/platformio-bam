@@ -473,8 +473,9 @@ static auto test_sd_card() -> void {
   char buf[100];
   int n = device.sd_read("/test2.txt", buf, sizeof(buf));
   printf("bytes read: %d\n", n);
-  printf(" read text: %s\n", buf);
-  if (n != -1) {
-    printf("%s", buf);
+  if (n == -1) {
+    return;
   }
+  buf[n - 1] = 0; // make sure string is terminated
+  printf(" read text: %s\n", buf);
 }
