@@ -92,8 +92,7 @@ public:
   auto current_buffer() -> uint16_t * { return buf_current_; }
 
   auto swap() -> uint16_t * {
-    buf_current_ = toggle_ ? buf_1_ : buf_2_;
-    toggle_ = !toggle_;
+    buf_current_ = buf_current_ == buf_1_ ? buf_2_ : buf_1_;
     return buf_current_;
   }
 
@@ -101,7 +100,6 @@ private:
   uint16_t *buf_1_ = nullptr;
   uint16_t *buf_2_ = nullptr;
   uint16_t *buf_current_ = nullptr;
-  bool toggle_ = false;
 } static dma_buffers{};
 
 // pixel precision collision detection between on screen sprites
@@ -116,7 +114,9 @@ static int dma_busy = 0;
 static int dma_writes = 0;
 
 static auto printf_render_sprite_entries_alg_ram_usage() -> void;
-static auto test_sd_card() -> void;
+
+static auto test_sd() -> void;
+static auto test_spiff() -> void;
 
 auto setup() -> void {
   Serial.begin(115200);
@@ -185,7 +185,9 @@ auto setup() -> void {
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
   printf("----------------------------------------------------------\n");
 
-  test_sd_card();
+  test_spiff();
+
+  test_sd();
 
   heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 }
@@ -467,7 +469,9 @@ static auto render(const int x, const int y) -> void {
   }
 }
 
-static auto test_sd_card() -> void {
+static auto test_sd() -> void {
+  ESP_LOGD("bam", "test_sd");
+
   char const txt[] = "hello world!\n";
   if (!device.sd_write("/test2.txt", txt, sizeof(txt))) {
     printf("!!! could not store\n");
@@ -475,6 +479,19 @@ static auto test_sd_card() -> void {
   }
   char buf[100];
   const int n = device.sd_read("/test2.txt", buf, sizeof(buf));
+  printf("bytes read: %d\n", n);
+  if (n == -1) {
+    return;
+  }
+  buf[n - 1] = 0; // make sure string is terminated
+  printf(" read text: %s\n", buf);
+}
+
+static auto test_spiff() -> void {
+  ESP_LOGD("bam", "test_spiff");
+
+  char buf[100];
+  const int n = device.spiffs_read("/README.md", buf, sizeof(buf));
   printf("bytes read: %d\n", n);
   if (n == -1) {
     return;

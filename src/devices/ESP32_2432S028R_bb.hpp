@@ -7,6 +7,7 @@
 #include "../device.hpp"
 #include "hal/spi_types.h"
 #include <SPI.h>
+#include <SPIFFS.h>
 #include <bb_spi_lcd.h>
 
 class ESP32_2432S028R final : public device {
@@ -16,16 +17,20 @@ class ESP32_2432S028R final : public device {
 
 public:
   auto init() -> void override {
-    spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-    if (!SD.begin(SD_CS, spi3)) {
-      printf("* no SD card\n");
-    }
-
     // initiate display
     display.begin(DISPLAY_CYD);
     display.rtInit();
     display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     display.setAddrWindow(0, 0, display_width, display_height);
+
+    // spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
+    // if (!SD.begin(SD_CS, spi3)) {
+    //   printf("* no SD card\n");
+    // }
+
+    if (!SPIFFS.begin()) {
+      Serial.println("* no SPIFFS");
+    }
   }
 
   auto display_is_touched() -> bool override {
@@ -74,5 +79,18 @@ public:
     const bool ok = n == buf_len;
     file.close();
     return ok;
+  }
+
+  auto spiffs_read(char const *path, char *buf, int buf_len) -> int override {
+    File file = SPIFFS.open(path);
+    if (!file) {
+      return -1;
+    }
+
+    const size_t n = file.readBytes(buf, buf_len);
+
+    file.close();
+
+    return n;
   }
 };

@@ -24,11 +24,15 @@ public:
   // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
 
-  // reads a maximum of 'buf_len' from 'path' into 'buf'
+  // reads a maximum of 'buf_len' from 'path' into 'buf' from SD
   // returns number of bytes read or -1 if failed
   virtual auto sd_read(char const *path, char *buf, int buf_len) -> int;
 
-  // write 'buf_len' number of bytes from 'buf' to 'path'
+  // write 'buf_len' number of bytes from 'buf' to 'path' to SD
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len) -> bool;
+
+  // reads a maximum of 'buf_len' from 'path' into 'buf' from SPIFFS
+  // returns number of bytes read or -1 if failed
+  virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int;
 };

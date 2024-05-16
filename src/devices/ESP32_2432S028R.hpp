@@ -6,6 +6,7 @@
 
 #include "../device.hpp"
 #include <SPI.h>
+#include <SPIFFS.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>
 
@@ -24,8 +25,13 @@ public:
     display.setAddrWindow(0, 0, display_width, display_height);
 
     spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-    if (!SD.begin(SD_CS, spi3)) {
+
+    if (!SD.begin(SD_CS, spi3, 80000000)) {
       printf("* no SD card\n");
+    }
+
+    if (!SPIFFS.begin()) {
+      Serial.println("* no SPIFFS");
     }
 
     touch_screen.begin();
@@ -76,5 +82,18 @@ public:
     const bool ok = n == buf_len;
     file.close();
     return ok;
+  }
+
+  auto spiffs_read(char const *path, char *buf, int buf_len) -> int override {
+    File file = SPIFFS.open(path);
+    if (!file) {
+      return -1;
+    }
+
+    const size_t n = file.readBytes(buf, buf_len);
+
+    file.close();
+
+    return n;
   }
 };

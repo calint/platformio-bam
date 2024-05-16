@@ -8,6 +8,7 @@
 
 #include "../device.hpp"
 #include <SPI.h>
+#include <SPIFFS.h>
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 
@@ -164,8 +165,12 @@ public:
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
 
     // initiate the SD card
-    if (!SD.begin(SD_CS, spi2)) {
+    if (!SD.begin(SD_CS, spi2, 80000000)) {
       printf("* no SD card\n");
+    }
+
+    if (!SPIFFS.begin()) {
+      Serial.println("* no SPIFFS");
     }
   }
 
@@ -237,6 +242,19 @@ public:
     const bool ok = n == buf_len;
     file.close();
     return ok;
+  }
+
+  auto spiffs_read(char const *path, char *buf, int buf_len) -> int override {
+    File file = SPIFFS.open(path);
+    if (!file) {
+      return -1;
+    }
+
+    const size_t n = file.readBytes(buf,buf_len);
+    
+    file.close();
+
+    return n;
   }
 
 private:
