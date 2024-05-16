@@ -28,7 +28,7 @@ public:
   // returns number of bytes read or -1 if failed
   virtual auto sd_read(char const *path, char *buf, int buf_len) -> int;
 
-  // write  to SD 'buf_len' number of bytes from 'buf' to 'path'
+  // write to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len) -> bool;
 
