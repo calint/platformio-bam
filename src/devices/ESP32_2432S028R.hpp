@@ -24,7 +24,7 @@ public:
     display.setAddrWindow(0, 0, display_width, display_height);
 
     spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-    if (!SD.begin(SD_CS, spi3, 10000000)) {
+    if (!SD.begin(SD_CS, spi3)) {
       printf("* no SD card\n");
     }
 
