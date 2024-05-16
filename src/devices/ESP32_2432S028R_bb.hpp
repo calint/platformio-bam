@@ -16,14 +16,14 @@ class ESP32_2432S028R final : public device {
 
 public:
   auto init() -> void override {
-    // spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-    // if (!SD.begin(SD_CS, spi3)) {
-    //   printf("* no SD card\n");
-    // }
+    spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
+    if (!SD.begin(SD_CS, spi3)) {
+      printf("* no SD card\n");
+    }
 
     // initiate display
     display.begin(DISPLAY_CYD);
-    display.rtInit(TOUCH_MOSI, TOUCH_MISO, TOUCH_SCK, TOUCH_CS);
+    display.rtInit();
     display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     display.setAddrWindow(0, 0, display_width, display_height);
   }
@@ -41,16 +41,13 @@ public:
   }
 
   auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
-    // note. TFT_eSPI requires non-const data in case bytes are swapped
-    // note. pushPixelsDMA(...) waits for previous transaction to complete
+    // note. pushPixels(...) waits for previous transaction to complete
     display.pushPixels(
         reinterpret_cast<uint16_t *>(const_cast<uint8_t *>(data)),
         len / sizeof(uint16_t), DRAW_TO_LCD | DRAW_WITH_DMA);
   }
 
-  auto dma_is_busy() -> bool override {
-    return spilcdIsDMABusy();
-  }
+  auto dma_is_busy() -> bool override { return spilcdIsDMABusy(); }
 
   auto dma_wait_for_completion() -> void override {
     return;
