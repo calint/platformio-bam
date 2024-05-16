@@ -1,6 +1,8 @@
 #pragma once
 // display: ILI9341
 //     bus: SPI
+//
+// implements device using TFT_eSPI and XPT2046_Bitbang
 
 #include "../device.hpp"
 #include <SPI.h>

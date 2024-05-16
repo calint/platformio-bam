@@ -1,6 +1,8 @@
 #pragma once
 // display: ILI9341
 //     bus: SPI
+//
+// implements device using bb_spi_lcd
 
 #include "../device.hpp"
 #include "hal/spi_types.h"
