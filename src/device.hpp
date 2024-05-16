@@ -1,5 +1,5 @@
 #pragma once
-// abstraction of the device needed by 'main.cpp'
+// abstraction of the device used by 'main.cpp'
 
 class device {
 public:
@@ -24,15 +24,15 @@ public:
   // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
 
-  // reads a maximum of 'buf_len' from 'path' into 'buf' from SD
+  // read from SD a maximum of 'buf_len' into 'buf' from 'path' 
   // returns number of bytes read or -1 if failed
   virtual auto sd_read(char const *path, char *buf, int buf_len) -> int;
 
-  // write 'buf_len' number of bytes from 'buf' to 'path' to SD
+  // write  to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len) -> bool;
 
-  // reads a maximum of 'buf_len' from 'path' into 'buf' from SPIFFS
+  // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path' 
   // returns number of bytes read or -1 if failed
   virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int;
 };
