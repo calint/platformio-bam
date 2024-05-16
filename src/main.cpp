@@ -471,7 +471,7 @@ static auto test_sd_card() -> void {
     return;
   }
   char buf[100];
-  int n = device.sd_read("/test2.txt", buf, sizeof(buf));
+  const int n = device.sd_read("/test2.txt", buf, sizeof(buf));
   printf("bytes read: %d\n", n);
   if (n == -1) {
     return;
