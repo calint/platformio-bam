@@ -381,6 +381,7 @@ static constexpr auto count_right_shifts_until_1(int num) -> int {
 
 // renders tile map and sprites
 static auto render(const int x, const int y) -> void {
+  // clear stats for this frame
   dma_busy = dma_writes = 0;
 
   // clear collisions map
