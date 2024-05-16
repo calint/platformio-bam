@@ -101,7 +101,7 @@ private:
   uint16_t *buf_1_ = nullptr;
   uint16_t *buf_2_ = nullptr;
   uint16_t *buf_current_ = nullptr;
-  bool toggle_ = true;
+  bool toggle_ = false;
 } static dma_buffers{};
 
 // pixel precision collision detection between on screen sprites
