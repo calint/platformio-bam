@@ -465,7 +465,7 @@ static auto render(const int x, const int y) -> void {
 }
 
 static auto test_sd_card() -> void {
-  char const txt[] = "hello world again!\n";
+  char const txt[] = "hello world!\n";
   if (!device.sd_write("/test2.txt", txt, sizeof(txt))) {
     printf("!!! could not store\n");
     return;

@@ -15,18 +15,18 @@ class ESP32_2432S028R final : public device {
 
 public:
   auto init() -> void override {
+    // initiate display
+    display.init();
+    display.initDMA(true);
+    display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
+    display.setAddrWindow(0, 0, display_width, display_height);
+
     spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
     if (!SD.begin(SD_CS, spi3, 10000000)) {
       printf("* no SD card\n");
     }
 
     touch_screen.begin();
-
-    // initiate display
-    display.init();
-    display.initDMA(true);
-    display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
-    display.setAddrWindow(0, 0, display_width, display_height);
   }
 
   auto display_is_touched() -> bool override {

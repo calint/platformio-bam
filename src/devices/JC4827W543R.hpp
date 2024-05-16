@@ -17,8 +17,10 @@ class JC4827W543R final : public device {
   static constexpr int nv3041a_max_clock_freq = 32000000;
   // init touch screen
   SPIClass spi2{SPI2_HOST};
-  // XPT2046_Touchscreen touch_screen{TOUCH_CS, TOUCH_IRQ};
   XPT2046_Touchscreen touch_screen{TOUCH_CS};
+  uint16_t touch_screen_x = 0;
+  uint16_t touch_screen_y = 0;
+  uint8_t touch_screen_pressure = 0;
 
 public:
   auto init() -> void override {
@@ -161,16 +163,23 @@ public:
     touch_screen.begin(spi2);
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
 
-    if (!SD.begin(SD_CS, spi2, 10000000)) {
+    // initiate the SD card
+    if (!SD.begin(SD_CS, spi2)) {
       printf("* no SD card\n");
     }
   }
 
-  auto display_is_touched() -> bool override { return touch_screen.touched(); }
+  auto display_is_touched() -> bool override {
+    touch_screen.readData(&touch_screen_x, &touch_screen_y,
+                          &touch_screen_pressure);
+    return touch_screen_pressure != 0;
+  }
 
   auto display_get_touch(uint16_t &x, uint16_t &y,
                          uint8_t &pressure) -> void override {
-    touch_screen.readData(&x, &y, &pressure);
+    x = touch_screen_x;
+    y = touch_screen_y;
+    pressure = touch_screen_pressure;
   }
 
   auto dma_is_busy() -> bool override {
