@@ -54,7 +54,7 @@ static JC4827W543R device{};
 static ESP32_2432S028R device{};
 
 #elif DEVICE_ESP32_2432S028R_BB
-#include "devices/ESP32_2432S028R_bb.hpp"
+#include "devices/ESP32_2432S028R_BB.hpp"
 static ESP32_2432S028R device{};
 
 #else

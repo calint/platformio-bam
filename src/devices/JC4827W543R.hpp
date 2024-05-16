@@ -170,7 +170,7 @@ public:
     }
 
     if (!SPIFFS.begin()) {
-      Serial.println("* no SPIFFS");
+      printf("* no SPIFFS\n");
     }
   }
 

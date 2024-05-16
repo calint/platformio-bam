@@ -2,65 +2,62 @@
 // display: ILI9341
 //     bus: SPI
 //
-// implements device using TFT_eSPI and XPT2046_Bitbang
+// implements device using bb_spi_lcd
 
 #include "../device.hpp"
+#include "hal/spi_types.h"
 #include <SPI.h>
 #include <SPIFFS.h>
-#include <TFT_eSPI.h>
-#include <XPT2046_Bitbang.h>
+#include <bb_spi_lcd.h>
 
 class ESP32_2432S028R final : public device {
-  TFT_eSPI display{};
-  SPIClass spi3{SPI3_HOST};
-  XPT2046_Bitbang touch_screen{TOUCH_MOSI, TOUCH_MISO, TOUCH_SCK, TOUCH_CS};
-  TouchPoint touch{};
+  SPIClass vspi{VSPI};
+  BB_SPI_LCD display{};
+  TOUCHINFO touch_info{};
 
 public:
   auto init() -> void override {
     // initiate display
-    display.init();
-    display.initDMA(true);
+    display.begin(DISPLAY_CYD);
+    display.rtInit();
     display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
     display.setAddrWindow(0, 0, display_width, display_height);
 
-    spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-
-    if (!SD.begin(SD_CS, spi3, 80000000)) {
+    vspi.begin(SD_SCK, SD_MISO, SD_MOSI);
+    if (!SD.begin(SD_CS, vspi)) {
       printf("* no SD card\n");
     }
 
     if (!SPIFFS.begin()) {
-      printf("* no SPIFFS\n");
+      Serial.println("* no SPIFFS");
     }
-
-    touch_screen.begin();
   }
 
   auto display_is_touched() -> bool override {
-    touch = touch_screen.getTouch();
-    return touch.zRaw != 0;
+    return display.rtReadTouch(&touch_info);
   }
 
   auto display_get_touch(uint16_t &x, uint16_t &y,
                          uint8_t &pressure) -> void override {
-    // flip x and y for display orientation
-    x = 4096 - touch.yRaw;
-    y = touch.xRaw;
-    pressure = touch.zRaw;
+    x = (TFT_WIDTH - touch_info.x[0]) * 4096 / TFT_WIDTH;
+    y = touch_info.y[0] * 4096 / TFT_HEIGHT;
+    pressure = touch_info.pressure[0];
+    // ESP_LOGI("b", "x=%d   y=%d   p=%d", x, y, pressure);
   }
 
   auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
-    // note. TFT_eSPI requires non-const data in case bytes are swapped
-    // note. pushPixelsDMA(...) waits for previous transaction to complete
-    display.pushPixelsDMA(
+    // note. pushPixels(...) waits for previous transaction to complete
+    display.pushPixels(
         reinterpret_cast<uint16_t *>(const_cast<uint8_t *>(data)),
-        len / sizeof(uint16_t));
+        len / sizeof(uint16_t), DRAW_TO_LCD | DRAW_WITH_DMA);
   }
 
-  auto dma_is_busy() -> bool override { return display.dmaBusy(); }
+  auto dma_is_busy() -> bool override { return spilcdIsDMABusy(); }
 
-  auto dma_wait_for_completion() -> void override { return display.dmaWait(); }
+  auto dma_wait_for_completion() -> void override {
+    return;
+    // spilcdWaitDMA();
+  }
 
   auto sd_read(char const *path, char *buf, int buf_len) -> int override {
     File file = SD.open(path);
