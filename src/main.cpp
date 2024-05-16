@@ -154,7 +154,7 @@ auto setup() -> void {
   printf_render_sprite_entries_alg_ram_usage();
 
   device.init();
-  
+
   dma_buffers.init();
 
   collision_map = static_cast<sprite_ix *>(heap_caps_calloc(
@@ -473,6 +473,7 @@ static auto test_sd_card() -> void {
   char buf[100];
   int n = device.sd_read("/test2.txt", buf, sizeof(buf));
   printf("bytes read: %d\n", n);
+  printf(" read text: %s\n", buf);
   if (n != -1) {
     printf("%s", buf);
   }
