@@ -1,19 +1,39 @@
 {
-    "activeFile": "",
+    "activeFile": "map.tmx",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
-        "/home/c/tmp/map/tiles.tsx": {
+        "": {
             "scaleInDock": 1
         },
+        "map.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 161.3333333333333,
+                "y": 971.3333333333333
+            }
+        },
         "tiles.tsx": {
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         }
     },
+    "last.imagePath": "../resources-from-png",
     "openFiles": [
+        "map.tmx",
+        "tiles.tsx"
     ],
     "project": "project.tiled-project",
     "recentFiles": [
-        "tiles.tsx"
-    ]
+        "tiles.tsx",
+        "map.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
 }
