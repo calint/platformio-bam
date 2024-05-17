@@ -11,7 +11,8 @@ table of contents (in include order by program file):
 * `defs.hpp` constants used by engine, game objects and `main.hpp`
 
 appendix:
-* `png-to-resources/extract.sh` tool for extracting resources from png files
+* `resources-from-png/extract.sh` tool for extracting resources from png files
+* `resources-from-tmx/extract.sh` tool for extracting tile map resource 
 
 # overview
 
