@@ -1,1 +1,1 @@
-# file in spiffs
+# files in spiffs
