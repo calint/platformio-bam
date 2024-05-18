@@ -1,6 +1,9 @@
 #pragma once
 // abstraction of the device used by 'main.cpp'
 
+#include <SPI.h>
+#include <SPIFFS.h>
+
 class device {
 public:
   virtual ~device() = default;
@@ -24,15 +27,67 @@ public:
   // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
 
-  // read from SD a maximum of 'buf_len' into 'buf' from 'path' 
+  // read from SD a maximum of 'buf_len' into 'buf' from 'path'
   // returns number of bytes read or -1 if failed
-  virtual auto sd_read(char const *path, char *buf, int buf_len) -> int;
+  virtual auto sd_read(char const *path, char *buf, int buf_len) -> int {
+    File file = SD.open(path);
+    if (!file) {
+      return -1;
+    }
+    const size_t n = file.read((uint8_t *)buf, buf_len);
+    file.close();
+    return n;
+  }
 
   // write to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
-  virtual auto sd_write(char const *path, char const *buf, int buf_len) -> bool;
+  virtual auto sd_write(char const *path, char const *buf,
+                        int buf_len) -> bool {
+    File file = SD.open(path, FILE_WRITE);
+    if (!file) {
+      return false;
+    }
+    const size_t n = file.write((uint8_t *)buf, buf_len);
+    const bool ok = n == buf_len;
+    file.close();
+    return ok;
+  }
 
-  // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path' 
+  // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path'
   // returns number of bytes read or -1 if failed
-  virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int;
+  virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int {
+    File file = SPIFFS.open(path);
+    if (!file) {
+      return -1;
+    }
+    const size_t n = file.readBytes(buf, buf_len);
+    file.close();
+    return n;
+  }
+
+  // write to SPIFFS 'buf_len' number of bytes from 'buf' to 'path'
+  // returns true if ok
+  virtual auto spiffs_write(char const *path, char const *buf,
+                            int buf_len) -> bool {
+    File file = SPIFFS.open(path, "w");
+    if (!file) {
+      return false;
+    }
+    const size_t n = file.write((uint8_t const *)buf, buf_len);
+    file.close();
+    return n == buf_len;
+  }
+
+protected:
+  // initiate SD and SPIFFS, print if not available
+  virtual auto init_sd_spiffs(SPIClass &spi, uint8_t sd_cs,
+                              int sd_bus_freq = 4000000) -> void {
+    if (!SD.begin(sd_cs, spi, sd_bus_freq)) {
+      printf("* no SD card\n");
+    }
+
+    if (!SPIFFS.begin()) {
+      printf("* no SPIFFS\n");
+    }
+  }
 };

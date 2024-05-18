@@ -8,7 +8,6 @@
 
 #include "../device.hpp"
 #include <SPI.h>
-#include <SPIFFS.h>
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 
@@ -164,14 +163,7 @@ public:
     touch_screen.begin(spi2);
     touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
 
-    // initiate the SD card
-    if (!SD.begin(SD_CS, spi2, 80000000)) {
-      printf("* no SD card\n");
-    }
-
-    if (!SPIFFS.begin()) {
-      printf("* no SPIFFS\n");
-    }
+    init_sd_spiffs(spi2, SD_CS, 80000000);
   }
 
   auto display_is_touched() -> bool override {
@@ -220,41 +212,6 @@ public:
     async_busy_ = true;
     ESP_ERROR_CHECK(spi_device_queue_trans(device_handle_, &transaction_async_,
                                            portMAX_DELAY));
-  }
-
-  auto sd_read(char const *path, char *buf, int buf_len) -> int override {
-    File file = SD.open(path);
-    if (!file) {
-      return -1;
-    }
-    const size_t n = file.read((uint8_t *)buf, buf_len);
-    file.close();
-    return n;
-  }
-
-  auto sd_write(char const *path, char const *buf,
-                int buf_len) -> bool override {
-    File file = SD.open(path, FILE_WRITE);
-    if (!file) {
-      return false;
-    }
-    const size_t n = file.write((uint8_t *)buf, buf_len);
-    const bool ok = n == buf_len;
-    file.close();
-    return ok;
-  }
-
-  auto spiffs_read(char const *path, char *buf, int buf_len) -> int override {
-    File file = SPIFFS.open(path);
-    if (!file) {
-      return -1;
-    }
-
-    const size_t n = file.readBytes(buf,buf_len);
-    
-    file.close();
-
-    return n;
   }
 
 private:

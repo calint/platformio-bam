@@ -7,7 +7,6 @@
 #include "../device.hpp"
 #include "hal/spi_types.h"
 #include <SPI.h>
-#include <SPIFFS.h>
 #include <bb_spi_lcd.h>
 
 class ESP32_2432S028R final : public device {
@@ -24,13 +23,8 @@ public:
     display.setAddrWindow(0, 0, display_width, display_height);
 
     vspi.begin(SD_SCK, SD_MISO, SD_MOSI);
-    if (!SD.begin(SD_CS, vspi)) {
-      printf("* no SD card\n");
-    }
 
-    if (!SPIFFS.begin()) {
-      Serial.println("* no SPIFFS");
-    }
+    init_sd_spiffs(vspi, SD_CS, 80000000);
   }
 
   auto display_is_touched() -> bool override {
@@ -57,40 +51,5 @@ public:
   auto dma_wait_for_completion() -> void override {
     return;
     // spilcdWaitDMA();
-  }
-
-  auto sd_read(char const *path, char *buf, int buf_len) -> int override {
-    File file = SD.open(path);
-    if (!file) {
-      return -1;
-    }
-    const size_t n = file.read((uint8_t *)buf, buf_len);
-    file.close();
-    return n;
-  }
-
-  auto sd_write(char const *path, char const *buf,
-                int buf_len) -> bool override {
-    File file = SD.open(path, FILE_WRITE);
-    if (!file) {
-      return false;
-    }
-    const size_t n = file.write((uint8_t *)buf, buf_len);
-    const bool ok = n == buf_len;
-    file.close();
-    return ok;
-  }
-
-  auto spiffs_read(char const *path, char *buf, int buf_len) -> int override {
-    File file = SPIFFS.open(path);
-    if (!file) {
-      return -1;
-    }
-
-    const size_t n = file.readBytes(buf, buf_len);
-
-    file.close();
-
-    return n;
   }
 };
