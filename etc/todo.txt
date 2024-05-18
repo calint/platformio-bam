@@ -1,5 +1,5 @@
 [ ] #define O1STORE_DEBUG to check for double free, index out of bounds
-[ ] device.hpp: consider implementing sd_x and spiffs_x in the abstract class
+[ ] device.hpp: consider implementing sd_x and spiffs_x in the abstract class (DRY)
 [ ] JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
 [x] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
     => dma buffer swap when odd number of renders per screen
