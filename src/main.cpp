@@ -67,18 +67,18 @@ static constexpr int dma_n_scanlines = 8;
 //  JC4827W543R:
 //    1:27, 2:35, 4:41, 8:44, 16:47, 32:48, 64:hw limit exceeded
 
-// size of a DMA buffer
-static constexpr int dma_buf_size_B =
-    sizeof(uint16_t) * display_width * dma_n_scanlines;
-
 // implements buffer swapping
 class dma_buffers final {
 public:
+  // size of a DMA buffer
+  static constexpr int buf_size_B =
+      sizeof(uint16_t) * display_width * dma_n_scanlines;
+
   auto init() -> void {
     buf_1_ = static_cast<uint16_t *>(
-        heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
+        heap_caps_calloc(1, buf_size_B, MALLOC_CAP_DMA));
     buf_2_ = static_cast<uint16_t *>(
-        heap_caps_calloc(1, dma_buf_size_B, MALLOC_CAP_DMA));
+        heap_caps_calloc(1, buf_size_B, MALLOC_CAP_DMA));
     if (!buf_1_ || !buf_2_) {
       printf("!!! could not allocate DMA buffers\n");
       exit(1);
@@ -173,7 +173,7 @@ auto setup() -> void {
   main_init();
 
   printf("------------------- on heap ------------------------------\n");
-  printf("   DMA buf 1 and 2: %d B\n", 2 * dma_buf_size_B);
+  printf("   DMA buf 1 and 2: %d B\n", 2 * dma_buffers::buf_size_B);
   printf("      sprites data: %d B\n", sprites.allocated_data_size_B());
   printf("      objects data: %d B\n", objects.allocated_data_size_B());
   printf("     collision map: %d B\n", collision_map_size_B);
