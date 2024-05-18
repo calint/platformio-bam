@@ -9,13 +9,10 @@ if len(sys.argv) < 3:
 input_file = sys.argv[1]
 newline_sep_every_nth_line = int(sys.argv[2])
 
-tree = ET.parse(input_file)
-root = tree.getroot()
-layer = root.find('layer')
-data = layer.find('data').text.strip().split(',')
-
+root = ET.parse(input_file).getroot()
 width = int(root.attrib['width'])
 height = int(root.attrib['height'])
+data = root.find('layer').find('data').text.strip().split(',')
 
 for row in range(height):
     row_data = []
