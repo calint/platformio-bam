@@ -1,6 +1,7 @@
 #pragma once
 // abstraction of the device used by 'main.cpp'
 
+#include <SD.h>
 #include <SPI.h>
 #include <SPIFFS.h>
 

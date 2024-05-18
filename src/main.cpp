@@ -26,9 +26,6 @@
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 
-#include "FS.h"
-#include "SD.h"
-#include "SPI.h"
 #include "hal/efuse_hal.h"
 #include <Arduino.h>
 
