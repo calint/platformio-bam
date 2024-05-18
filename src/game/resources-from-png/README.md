@@ -16,9 +16,9 @@
 ![export to png](readme-2.png)
 
 ## extracting resources
-script `extract.sh` will overwrite files in `game/resources/`
+script `update.sh` will overwrite files in `game/resources/`
 
-if necessary, change size of tiles and sprites in `extract.sh`
+if necessary, change size of tiles and sprites in `update.sh`
 
 note. check that transparency pixel is index 0
 
