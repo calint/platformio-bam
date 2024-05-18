@@ -24,6 +24,5 @@ for row in range(height):
         row_data.append(int(tile_id) - 1)
     row_str = '{' + ','.join(map(str, row_data)) + '},'
     print(row_str)
-    if newline_sep_every_nth_line:
-        if (row + 1) % newline_sep_every_nth_line == 0:
-            print('')
+    if newline_sep_every_nth_line and (row + 1) % newline_sep_every_nth_line == 0:
+        print('')
