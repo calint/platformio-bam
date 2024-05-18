@@ -17,16 +17,13 @@ data = layer.find('data').text.strip().split(',')
 width = int(root.attrib['width'])
 height = int(root.attrib['height'])
 
-c_array = []
 for row in range(height):
     row_data = []
     for col in range(width):
         tile_id = data[row * width + col]
         row_data.append(int(tile_id) - 1)
     row_str = '{' + ','.join(map(str, row_data)) + '},'
-    c_array.append(row_str)
+    print(row_str)
     if newline_sep_every_nth_line:
         if (row + 1) % newline_sep_every_nth_line == 0:
-            c_array.append('')
-
-print('\n'.join(c_array))
+            print('')
