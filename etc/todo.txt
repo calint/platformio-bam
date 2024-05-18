@@ -1,9 +1,5 @@
 [ ] #define O1STORE_DEBUG to check for double free, index out of bounds
-[x] device.hpp: consider implementing sd_x and spiffs_x in the abstract class (DRY)
-    => protected virtual init_sd_spiffs(...)
 [ ] JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
-[x] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
-    => dma buffer swap when odd number of renders per screen
 [ ] game_object: position relative to tile map or screen
 [ ] several sets of tiles cycled for animation
 [ ] o1store: new_ list optimizing apply by putting new instances in deleted slots
@@ -18,6 +14,10 @@
     vaddf(result, a, b, 4);
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
+[x] device.hpp: consider implementing sd_x and spiffs_x in the abstract class (DRY)
+    => protected virtual init_sd_spiffs(...)
+[x] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
+    => dma buffer swap when odd number of renders per screen
 [-] o1store: ? inst_deleted->~object() at apply_free()
 [x] render_scanline(...) consider looping through allocated sprites instead of all
 [x] optimize sprite rendering from 'layers * sprites * O(scanlines)' to 'sprites * O(scanlines)'
