@@ -67,6 +67,7 @@ protected:
     }
   }
 
+private:
   auto fs_write(FS &fs, char const *path, char const *buf, int buf_len,
                 char const *mode = FILE_WRITE) -> bool {
     File file = fs.open(path, mode);
