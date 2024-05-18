@@ -115,8 +115,8 @@ static int dma_writes = 0;
 
 static auto printf_render_sprite_entries_alg_ram_usage() -> void;
 
-// static auto test_sd() -> void;
-// static auto test_spiff() -> void;
+static auto test_sd() -> void;
+static auto test_spiff() -> void;
 
 auto setup() -> void {
   Serial.begin(115200);
@@ -185,8 +185,8 @@ auto setup() -> void {
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
   printf("----------------------------------------------------------\n");
 
-  // test_spiff();
-  // test_sd();
+  test_spiff();
+  test_sd();
 
   heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 }
@@ -469,49 +469,51 @@ static auto render(const int x, const int y) -> void {
   }
 }
 
-// static auto test_sd() -> void {
-//   ESP_LOGD("bam", "test_sd");
+static auto test_sd() -> void {
+  ESP_LOGD("bam", "test_sd");
 
-//   ESP_LOGD("bam", "write '/test.txt'");
-//   char const txt[] = "hello world!";
-//   if (!device.sd_write("/test.txt", txt, sizeof(txt))) {
-//     ESP_LOGD("bam", "!!! could not store");
-//     return;
-//   }
-//   char buf[100];
-//   const int n = device.sd_read("/test.txt", buf, sizeof(buf));
-//   ESP_LOGD("bam", "bytes read: %d", n);
-//   if (n == -1) {
-//     return;
-//   }
-//   buf[n - 1] = 0; // make sure string is terminated
-//   ESP_LOGD("bam", " read text: %s", buf);
-// }
+  ESP_LOGD("bam", "write '/test.txt'");
+  char const txt[] = "hello world!";
+  if (!device.sd_write("/test.txt", txt, sizeof(txt) - 1)) {
+    // -1 to exclude '\0'
+    ESP_LOGD("bam", "!!! could not store");
+    return;
+  }
+  char buf[100];
+  const int n = device.sd_read("/test.txt", buf, sizeof(buf));
+  ESP_LOGD("bam", "bytes read: %d", n);
+  if (n == -1) {
+    return;
+  }
+  buf[n == sizeof(buf) ? n - 1 : n] = '\0'; // make sure string is terminated
+  ESP_LOGD("bam", " read text: %s", buf);
+}
 
-// static auto test_spiff() -> void {
-//   ESP_LOGD("bam", "test_spiff");
+static auto test_spiff() -> void {
+  ESP_LOGD("bam", "test_spiff");
 
-//   char buf[100];
-//   int n = device.spiffs_read("/README.md", buf, sizeof(buf));
-//   ESP_LOGD("bam", "bytes read from '/README.md': %d", n);
-//   if (n == -1) {
-//     return;
-//   }
-//   buf[n - 1] = 0; // make sure string is terminated
-//   ESP_LOGD("bam", " read text: %s", buf);
+  char buf[100];
+  int n = device.spiffs_read("/README.md", buf, sizeof(buf));
+  ESP_LOGD("bam", "bytes read from '/README.md': %d", n);
+  if (n == -1) {
+    return;
+  }
+  buf[n == sizeof(buf) ? n - 1 : n] = '\0'; // make sure string is terminated
+  ESP_LOGD("bam", " read text: %s", buf);
 
-//   ESP_LOGD("bam", "write to '/test.txt'");
-//   char const txt[] = "hello world!";
-//   if (!device.spiffs_write("/test.txt", txt, sizeof(txt))) {
-//     ESP_LOGD("bam", "!!! could not write");
-//     return;
-//   }
+  ESP_LOGD("bam", "write to '/test.txt'");
+  char const txt[] = "hello world!";
+  if (!device.spiffs_write("/test.txt", txt, sizeof(txt) - 1)) {
+    // -1 to exclude '\0'
+    ESP_LOGD("bam", "!!! could not write to SPIFFS");
+    return;
+  }
 
-//   n = device.spiffs_read("/test.txt", buf, sizeof(buf));
-//   ESP_LOGD("bam", "bytes read: %d", n);
-//   if (n == -1) {
-//     return;
-//   }
-//   buf[n - 1] = 0; // make sure string is terminated
-//   ESP_LOGD("bam", " read text: %s", buf);
-// }
+  n = device.spiffs_read("/test.txt", buf, sizeof(buf));
+  ESP_LOGD("bam", "bytes read: %d", n);
+  if (n == -1) {
+    return;
+  }
+  buf[n == sizeof(buf) ? n - 1 : n] = '\0'; // make sure string is terminated
+  ESP_LOGD("bam", " read text: %s", buf);
+}

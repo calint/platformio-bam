@@ -41,9 +41,9 @@ public:
 
   // write to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
-  virtual auto sd_write(char const *path, char const *buf,
-                        int buf_len) -> bool {
-    File file = SD.open(path, FILE_WRITE);
+  virtual auto sd_write(char const *path, char const *buf, int buf_len,
+                        char const *mode = FILE_WRITE) -> bool {
+    File file = SD.open(path, mode);
     if (!file) {
       return false;
     }
@@ -60,16 +60,16 @@ public:
     if (!file) {
       return -1;
     }
-    const size_t n = file.readBytes(buf, buf_len);
+    const size_t n = file.read((uint8_t *)buf, buf_len);
     file.close();
     return n;
   }
 
   // write to SPIFFS 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
-  virtual auto spiffs_write(char const *path, char const *buf,
-                            int buf_len) -> bool {
-    File file = SPIFFS.open(path, "w");
+  virtual auto spiffs_write(char const *path, char const *buf, int buf_len,
+                            char const *mode = FILE_WRITE) -> bool {
+    File file = SPIFFS.open(path, mode);
     if (!file) {
       return false;
     }
