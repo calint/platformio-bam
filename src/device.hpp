@@ -31,52 +31,27 @@ public:
   // read from SD a maximum of 'buf_len' into 'buf' from 'path'
   // returns number of bytes read or -1 if failed
   virtual auto sd_read(char const *path, char *buf, int buf_len) -> int {
-    File file = SD.open(path);
-    if (!file) {
-      return -1;
-    }
-    const size_t n = file.read((uint8_t *)buf, buf_len);
-    file.close();
-    return n;
+    return fs_read(SD, path, buf, buf_len);
   }
 
   // write to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len,
                         char const *mode = FILE_WRITE) -> bool {
-    File file = SD.open(path, mode);
-    if (!file) {
-      return false;
-    }
-    const size_t n = file.write((uint8_t *)buf, buf_len);
-    const bool ok = n == buf_len;
-    file.close();
-    return ok;
+    return fs_write(SD, path, buf, buf_len);
   }
 
   // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path'
   // returns number of bytes read or -1 if failed
   virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int {
-    File file = SPIFFS.open(path);
-    if (!file) {
-      return -1;
-    }
-    const size_t n = file.read((uint8_t *)buf, buf_len);
-    file.close();
-    return n;
+    return fs_read(SPIFFS, path, buf, buf_len);
   }
 
   // write to SPIFFS 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto spiffs_write(char const *path, char const *buf, int buf_len,
                             char const *mode = FILE_WRITE) -> bool {
-    File file = SPIFFS.open(path, mode);
-    if (!file) {
-      return false;
-    }
-    const size_t n = file.write((uint8_t const *)buf, buf_len);
-    file.close();
-    return n == buf_len;
+    return fs_write(SPIFFS, path, buf, buf_len);
   }
 
 protected:
@@ -90,5 +65,26 @@ protected:
     if (!SPIFFS.begin()) {
       printf("* no SPIFFS\n");
     }
+  }
+
+  auto fs_write(FS &fs, char const *path, char const *buf, int buf_len,
+                char const *mode = FILE_WRITE) -> bool {
+    File file = fs.open(path, mode);
+    if (!file) {
+      return false;
+    }
+    const size_t n = file.write((uint8_t const *)buf, buf_len);
+    file.close();
+    return n == buf_len;
+  }
+
+  auto fs_read(FS &fs, char const *path, char *buf, int buf_len) -> int {
+    File file = fs.open(path);
+    if (!file) {
+      return -1;
+    }
+    const size_t n = file.read((uint8_t *)buf, buf_len);
+    file.close();
+    return n;
   }
 };
