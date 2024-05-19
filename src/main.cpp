@@ -110,7 +110,7 @@ static sprite_ix *collision_map = nullptr;
 static int dma_busy = 0;
 static int dma_writes = 0;
 
-static auto printf_render_sprite_entries_alg_ram_usage() -> void;
+static auto printf_render_sprite_entries_ram_usage() -> void;
 
 static auto test_sd() -> void;
 static auto test_spiff() -> void;
@@ -151,7 +151,7 @@ auto setup() -> void {
   printf("          tile map: %zu B\n", sizeof(tile_map));
   printf("           sprites: %zu B\n", sizeof(sprites));
   printf("           objects: %zu B\n", sizeof(objects));
-  printf_render_sprite_entries_alg_ram_usage();
+  printf_render_sprite_entries_ram_usage();
 
   device.init();
 
@@ -219,7 +219,7 @@ static render_sprite_entry render_sprite_entries[sprites_layers][sprites_count];
 // pointers to end of list in 'render_sprite_entries'
 static render_sprite_entry *render_sprite_entries_end[sprites_layers];
 
-static inline auto printf_render_sprite_entries_alg_ram_usage() -> void {
+static inline auto printf_render_sprite_entries_ram_usage() -> void {
   printf("    render sprites: %zu B\n",
          sizeof(render_sprite_entries) + sizeof(render_sprite_entries_end));
 }
