@@ -75,6 +75,7 @@ static constexpr int random_seed = 0;
 
 // enumeration of game object classes
 // defined in 'objects/*'
+// note. note 'enum class' because of code ergonomics
 enum object_class : uint8_t {
   hero_cls,
   bullet_cls,

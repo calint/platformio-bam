@@ -28,10 +28,10 @@ public:
     }
     switch (moving_direction) {
     case 1: // right
-      if (x < display_width - sprite_width) {
+      if (x <= display_width - sprite_width) {
         if (clk.ms > anim_last_frame_ms + anim_ms) {
           spr->img = (spr->img == spr_img_still) ? spr_img_walk : spr_img_still;
-          spr->flip = 0;
+          spr->flip = 0;   
           x += walk_speed;
           anim_last_frame_ms = clk.ms;
         }
