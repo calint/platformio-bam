@@ -84,7 +84,8 @@ enum object_class : uint8_t {
   ship2_cls,
   upgrade_cls,
   upgrade_picked_cls,
-  ufo2_cls
+  ufo2_cls,
+  ben_cls
 };
 
 // size that fits any instance of game object

@@ -7,12 +7,14 @@
 // then the game state
 #include "game_state.hpp"
 // then the objects
+#include "objects/ben.hpp"
 #include "objects/bullet.hpp"
 #include "objects/dummy.hpp"
 #include "objects/hero.hpp"
 #include "objects/ship1.hpp"
 #include "objects/ship2.hpp"
 #include "objects/ufo2.hpp"
+#include "objects/ben.hpp"
 // then other
 #include "objects/utils.hpp"
 
@@ -30,16 +32,21 @@ static auto main_init() -> void {
   printf("    upgrade_picked: %zu B\n", sizeof(upgrade_picked));
   printf("           upgrade: %zu B\n", sizeof(upgrade));
   printf("              ufo2: %zu B\n", sizeof(ufo2));
+  printf("               ben: %zu B\n", sizeof(ben));
 
   // assert that game object instances fit in object store slots
   static_assert(
       max_size_of_type<game_object, bullet, dummy, fragment, hero, ship1, ship2,
-                       upgrade_picked, upgrade, ufo2>() <=
+                       upgrade_picked, upgrade, ufo2, ben>() <=
       object_instance_max_size_B);
 
   // scrolling vertically from bottom up
   tile_map_y = tile_map_height * tile_height - display_height;
   tile_map_dy = -16;
+
+  ben *b = new (objects.alloc()) ben{};
+  b->x = 0;
+  b->y = 80;
 
   // create default hero
   hero *hro = new (objects.alloc()) hero{};
