@@ -59,7 +59,7 @@ protected:
   virtual auto init_sd_spiffs(SPIClass &spi, uint8_t sd_cs,
                               int sd_bus_freq = 4000000) -> void {
     if (!SD.begin(sd_cs, spi, sd_bus_freq)) {
-      printf("* no SD card\n");
+      printf("* no SD\n");
     }
 
     if (!SPIFFS.begin()) {
