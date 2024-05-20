@@ -11,10 +11,10 @@
 #include "objects/bullet.hpp"
 #include "objects/dummy.hpp"
 #include "objects/hero.hpp"
+#include "objects/ned.hpp"
 #include "objects/ship1.hpp"
 #include "objects/ship2.hpp"
 #include "objects/ufo2.hpp"
-#include "objects/ben.hpp"
 // then other
 #include "objects/utils.hpp"
 
@@ -44,9 +44,14 @@ static auto main_init() -> void {
   tile_map_y = tile_map_height * tile_height - display_height;
   tile_map_dy = -16;
 
-  ben *b = new (objects.alloc()) ben{};
-  b->x = 0;
-  b->y = 80;
+  ben *bn = new (objects.alloc()) ben{};
+  bn->x = 0;
+  bn->y = 80;
+
+  ned *nd = new (objects.alloc()) ned{};
+  nd->x = display_width - sprite_width;
+  nd->y = 80;
+  nd->moving_direction = 2;
 
   // create default hero
   hero *hro = new (objects.alloc()) hero{};
