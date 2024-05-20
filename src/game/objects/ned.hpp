@@ -17,11 +17,11 @@ class ned final : public game_object {
   animator animator_{};
 
 public:
-  uint8_t moving_direction = 0; // 0: still  1: right  2: left
+  int8_t moving_direction = 0; // 0: still  1: right  -1s: left
 
   ned() : game_object{ned_cls} {
     animator_.init(ned_animation_walk,
-                   sizeof(ned_animation_walk) / sizeof(animation_frame), false);
+                   sizeof(ned_animation_walk) / sizeof(animation_frame), true);
     moving_direction = 0;
     spr = sprites.alloc();
     spr->obj = this;
@@ -39,22 +39,22 @@ public:
         if (animator_.update()) {
           spr->img = animator_.sprite_image();
           spr->flip = 0;
-          x += animator_.displace_x();
+          x += moving_direction * animator_.displace_x();
           y += animator_.displace_y();
         }
       } else {
-        moving_direction = 2;
+        moving_direction = -1;
         animator_.reset();
         spr->img = animator_.sprite_image();
         spr->flip = 1;
       }
       break;
-    case 2: // left
+    case -1: // left
       if (x >= 0) {
         if (animator_.update()) {
           spr->img = animator_.sprite_image();
           spr->flip = 1;
-          x -= animator_.displace_x();
+          x += moving_direction * animator_.displace_x();
           y += animator_.displace_y();
         }
       } else {

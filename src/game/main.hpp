@@ -51,7 +51,7 @@ static auto main_init() -> void {
   ned *nd = new (objects.alloc()) ned{};
   nd->x = display_width - sprite_width;
   nd->y = 80;
-  nd->moving_direction = 2;
+  nd->moving_direction = -1;
 
   // create default hero
   hero *hro = new (objects.alloc()) hero{};
@@ -170,7 +170,8 @@ static auto main_on_frame_completed() -> void {
     wave_triggers[wave_triggers_ix].func();
     wave_triggers_ix++;
     if (wave_triggers_ix < wave_triggers_len) {
-      wave_triggers_next_y -= wave_triggers[wave_triggers_ix].since_last_wave_y;
+      wave_triggers_next_y -=
+      wave_triggers[wave_triggers_ix].since_last_wave_y;
     }
   }
 }
