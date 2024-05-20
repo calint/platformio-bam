@@ -17,14 +17,14 @@ struct animation_frame {
 
 class animator final {
   animation_frame const *frames_ = nullptr;
-  int frames_count_ = 0;
   clk::time next_frame_ms_ = 0;
-  int current_frame_ix_ = 0;
+  uint8_t frames_count_ = 0;
+  int8_t current_frame_ix_ = 0;
   int8_t frame_ix_dir_ = 1;
   bool back_forth_ = true;
 
 public:
-  auto init(animation_frame const *frames, int frames_count,
+  auto init(animation_frame const *frames, uint8_t frames_count,
             bool back_forth) -> void {
     frames_ = frames;
     frames_count_ = frames_count;
