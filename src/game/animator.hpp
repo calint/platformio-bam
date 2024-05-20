@@ -57,7 +57,6 @@ public:
         current_frame_ix_ = 0;
       }
     }
-    ESP_LOGD("b", "frame: %d  dir: %d", current_frame_ix_, frame_ix_dir_);
     next_frame_ms_ = clk.ms + frames_[current_frame_ix_].duration_ms;
     return true;
   }
