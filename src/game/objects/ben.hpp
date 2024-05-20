@@ -7,8 +7,9 @@
 #include "../animator.hpp"
 
 static constexpr animation_frame ben_animation_walk[]{
-    {&sprite_imgs[32][0], 500, 4, 0},
-    {&sprite_imgs[33][0], 500, 4, 0},
+    {&sprite_imgs[32][0], 200, 2, 0},
+    {&sprite_imgs[35][0], 200, 2, 0},
+    {&sprite_imgs[33][0], 200, 2, 0},
 };
 
 class ben final : public game_object {
@@ -18,7 +19,7 @@ class ben final : public game_object {
 public:
   ben() : game_object{ben_cls} {
     animator_.init(ben_animation_walk,
-                   sizeof(ben_animation_walk) / sizeof(animation_frame));
+                   sizeof(ben_animation_walk) / sizeof(animation_frame), true);
     moving_direction = 1;
     spr = sprites.alloc();
     spr->obj = this;

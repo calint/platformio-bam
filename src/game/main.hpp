@@ -41,8 +41,8 @@ static auto main_init() -> void {
       object_instance_max_size_B);
 
   // scrolling vertically from bottom up
-  tile_map_y = tile_map_height * tile_height - display_height;
-  tile_map_dy = -16;
+  // tile_map_y = tile_map_height * tile_height - display_height;
+  // tile_map_dy = -16;
 
   ben *b = new (objects.alloc()) ben{};
   b->x = 0;
@@ -160,14 +160,14 @@ static auto main_on_frame_completed() -> void {
   }
 
   // trigger waves
-  if (wave_triggers_ix < wave_triggers_len &&
-      wave_triggers_next_y >= tile_map_y) {
-    wave_triggers[wave_triggers_ix].func();
-    wave_triggers_ix++;
-    if (wave_triggers_ix < wave_triggers_len) {
-      wave_triggers_next_y -= wave_triggers[wave_triggers_ix].since_last_wave_y;
-    }
-  }
+  // if (wave_triggers_ix < wave_triggers_len &&
+  //     wave_triggers_next_y >= tile_map_y) {
+  //   wave_triggers[wave_triggers_ix].func();
+  //   wave_triggers_ix++;
+  //   if (wave_triggers_ix < wave_triggers_len) {
+  //     wave_triggers_next_y -= wave_triggers[wave_triggers_ix].since_last_wave_y;
+  //   }
+  // }
 }
 
 static auto main_wave_1() -> void {

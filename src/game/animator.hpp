@@ -20,11 +20,15 @@ class animator final {
   int frames_count_ = 0;
   clk::time next_frame_ms_ = 0;
   int current_frame_ix_ = 0;
+  int8_t frame_ix_dir_ = 1;
+  bool back_forth_ = true;
 
 public:
-  auto init(animation_frame const *frames, int frames_count) -> void {
+  auto init(animation_frame const *frames, int frames_count,
+            bool back_forth) -> void {
     frames_ = frames;
     frames_count_ = frames_count;
+    back_forth_ = back_forth;
     reset();
   }
 
@@ -37,10 +41,23 @@ public:
     if (clk.ms < next_frame_ms_) {
       return false;
     }
-    ++current_frame_ix_;
+    current_frame_ix_ += frame_ix_dir_;
     if (current_frame_ix_ >= frames_count_) {
-      current_frame_ix_ = 0;
+      if (back_forth_) {
+        frame_ix_dir_ = -1;
+        current_frame_ix_ -= 2;
+      } else {
+        current_frame_ix_ = 0;
+      }
+    } else if (current_frame_ix_ < 0) {
+      if (back_forth_) {
+        frame_ix_dir_ = 1;
+        current_frame_ix_ += 2;
+      } else {
+        current_frame_ix_ = 0;
+      }
     }
+    ESP_LOGD("b", "frame: %d  dir: %d", current_frame_ix_, frame_ix_dir_);
     next_frame_ms_ = clk.ms + frames_[current_frame_ix_].duration_ms;
     return true;
   }
