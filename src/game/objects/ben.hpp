@@ -22,7 +22,7 @@ public:
     moving_direction = 1;
     spr = sprites.alloc();
     spr->obj = this;
-    spr->img = animator_.current_sprite_image();
+    spr->img = animator_.sprite_image();
     spr->flip = 0;
   }
 
@@ -34,30 +34,30 @@ public:
     case 1: // right
       if (x <= display_width - sprite_width) {
         if (animator_.update()) {
-          spr->img = animator_.current_sprite_image();
+          spr->img = animator_.sprite_image();
           spr->flip = 0;
-          x += animator_.current_displace_x();
-          y += animator_.current_displace_y();
+          x += animator_.displace_x();
+          y += animator_.displace_y();
         }
       } else {
         moving_direction = 2;
         animator_.reset();
-        spr->img = animator_.current_sprite_image();
+        spr->img = animator_.sprite_image();
         spr->flip = 1;
       }
       break;
     case 2: // left
       if (x >= 0) {
         if (animator_.update()) {
-          spr->img = animator_.current_sprite_image();
+          spr->img = animator_.sprite_image();
           spr->flip = 1;
-          x -= animator_.current_displace_x();
-          y += animator_.current_displace_y();
+          x -= animator_.displace_x();
+          y += animator_.displace_y();
         }
       } else {
         moving_direction = 1;
         animator_.reset();
-        spr->img = animator_.current_sprite_image();
+        spr->img = animator_.sprite_image();
         spr->flip = 0;
       }
       break;
