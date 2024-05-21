@@ -14,7 +14,7 @@
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
 [x] game_object: position relative to tile map or screen
-    => adjusted in 'pre_render(...)'
+    => sprite position adjusted in 'pre_render(...)'
 [x] device.hpp: consider implementing sd_x and spiffs_x in the abstract class (DRY)
     => protected virtual init_sd_spiffs(...)
 [x] ESP32_2432S028R.hpp: check why dma_n_scalines=64 is broken although pushPixels(...) ok
