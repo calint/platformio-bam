@@ -37,7 +37,7 @@ public:
   // write to SD 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len,
-                        char const *mode = FILE_WRITE) -> bool {
+                        char const *mode) -> bool {
     return fs_write(SD, path, buf, buf_len, mode);
   }
 
@@ -50,14 +50,14 @@ public:
   // write to SPIFFS 'buf_len' number of bytes from 'buf' to 'path'
   // returns true if ok
   virtual auto spiffs_write(char const *path, char const *buf, int buf_len,
-                            char const *mode = FILE_WRITE) -> bool {
+                            char const *mode) -> bool {
     return fs_write(SPIFFS, path, buf, buf_len, mode);
   }
 
 protected:
   // initiate SD and SPIFFS, print if not available
-  virtual auto init_sd_spiffs(SPIClass &spi, uint8_t sd_cs,
-                              int sd_bus_freq = 4000000) -> void {
+  auto init_sd_spiffs(SPIClass &spi, uint8_t sd_cs,
+                      int sd_bus_freq = 4000000) -> void {
     if (!SD.begin(sd_cs, spi, sd_bus_freq)) {
       printf("* no SD\n");
     }
@@ -69,7 +69,7 @@ protected:
 
 private:
   auto fs_write(FS &fs, char const *path, char const *buf, int buf_len,
-                char const *mode = FILE_WRITE) -> bool {
+                char const *mode) -> bool {
     File file = fs.open(path, mode);
     if (!file) {
       return false;

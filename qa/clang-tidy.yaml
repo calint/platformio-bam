@@ -30,7 +30,6 @@ Checks: '
     performance-*,
     google-*,
     -google-readability-casting, # int(x) is more readable than static_cast<int>(x)
-    -google-default-arguments, # default arguments ok
     misc-*,
     -misc-non-private-member-variables-in-classes, # public members ok
     -misc-const-correctness, # reports ESP_ERROR_CHECK
