@@ -1,5 +1,4 @@
 #pragma once
-
 // implements sprite animation
 // note. maximum 127 frames in an animation
 
