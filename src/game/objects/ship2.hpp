@@ -6,7 +6,7 @@
 //
 #include "../animator.hpp"
 
-static constexpr animation_frame ship2_animation[]{
+static constexpr animator::frame ship2_animation[]{
     {&sprite_imgs[64][0], 500, 0, 0},
     {&sprite_imgs[65][0], 500, 0, 0},
 };
@@ -20,7 +20,7 @@ public:
     col_mask = cb_enemy_bullet;
 
     animator_.init(ship2_animation,
-                   sizeof(ship2_animation) / sizeof(animation_frame), true);
+                   sizeof(ship2_animation) / sizeof(animator::frame), true);
 
     spr = sprites.alloc();
     spr->obj = this;

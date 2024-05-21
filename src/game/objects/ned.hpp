@@ -6,7 +6,7 @@
 //
 #include "../animator.hpp"
 
-static constexpr animation_frame ned_animation_walk[]{
+static constexpr animator::frame ned_animation_walk[]{
     {&sprite_imgs[48][0], 150, 2, 0},
     {&sprite_imgs[49][0], 150, 2, 0},
     {&sprite_imgs[50][0], 150, 2, 0},
@@ -21,7 +21,7 @@ public:
 
   ned() : game_object{ned_cls} {
     animator_.init(ned_animation_walk,
-                   sizeof(ned_animation_walk) / sizeof(animation_frame), false);
+                   sizeof(ned_animation_walk) / sizeof(animator::frame), false);
     spr = sprites.alloc();
     spr->obj = this;
     spr->img = animator_.sprite_img();

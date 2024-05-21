@@ -2,21 +2,23 @@
 // implements sprite animation
 // note. maximum 127 frames in an animation
 
-struct animation_frame {
-  constexpr animation_frame(sprite_img _sprite_img, clk::time _duration_ms,
-                            float _displace_x, float _displace_y)
-      : spr_img{_sprite_img}, duration_ms{_duration_ms},
-        displace_x{_displace_x}, displace_y{_displace_y} {}
-
-  sprite_img spr_img = nullptr;
-  clk::time duration_ms = 0;
-  // displacement of object due to this frame
-  float displace_x = 0;
-  float displace_y = 0;
-};
-
 class animator final {
-  animation_frame const *frames_ = nullptr;
+public:
+  struct frame {
+    constexpr frame(sprite_img _sprite_img, clk::time _duration_ms,
+                    float _displace_x, float _displace_y)
+        : spr_img{_sprite_img}, duration_ms{_duration_ms},
+          displace_x{_displace_x}, displace_y{_displace_y} {}
+
+    sprite_img spr_img = nullptr;
+    clk::time duration_ms = 0;
+    // displacement of object due to this frame
+    float displace_x = 0;
+    float displace_y = 0;
+  };
+
+private:
+  frame const *frames_ = nullptr;
   clk::time next_frame_ms_ = 0;
   int8_t frames_count_ = 0;
   int8_t current_frame_ix_ = 0;
@@ -24,8 +26,7 @@ class animator final {
   bool ping_pong_ = false;  // back-and-forth animation
 
 public:
-  auto init(animation_frame const *frames, int8_t frames_count,
-            bool ping_pong) -> void {
+  auto init(frame const *frames, int8_t frames_count, bool ping_pong) -> void {
     frames_ = frames;
     frames_count_ = frames_count;
     ping_pong_ = ping_pong;
