@@ -38,6 +38,7 @@ public:
     next_frame_ms_ = clk.ms + frames_[0].duration_ms;
   }
 
+  // returns true if frame has changed
   auto update() -> bool {
     if (clk.ms < next_frame_ms_) {
       return false;
