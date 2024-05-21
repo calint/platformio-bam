@@ -1,15 +1,17 @@
 #pragma once
 
 // implements sprite animation
+// note. maximum 127 frames in an animation
 
 struct animation_frame {
-  constexpr animation_frame(uint8_t const *_sprite_image, int _duration_ms,
-                            float _displace_x, float _displace_y)
+  constexpr animation_frame(uint8_t const *_sprite_image,
+                            clk::time _duration_ms, float _displace_x,
+                            float _displace_y)
       : sprite_image{_sprite_image}, duration_ms{_duration_ms},
         displace_x{_displace_x}, displace_y{_displace_y} {}
 
   uint8_t const *sprite_image = nullptr;
-  int duration_ms = 0;
+  clk::time duration_ms = 0;
   // displacement of object due to this frame
   float displace_x = 0;
   float displace_y = 0;
@@ -18,22 +20,23 @@ struct animation_frame {
 class animator final {
   animation_frame const *frames_ = nullptr;
   clk::time next_frame_ms_ = 0;
-  uint8_t frames_count_ = 0;
+  int8_t frames_count_ = 0;
   int8_t current_frame_ix_ = 0;
-  int8_t frame_ix_dir_ = 1;
-  bool back_forth_ = false;
+  int8_t frame_ix_dir_ = 0; // forward: 1  backwards: -1
+  bool ping_pong_ = false;  // back-and-forth animation
 
 public:
-  auto init(animation_frame const *frames, uint8_t frames_count,
-            bool back_forth) -> void {
+  auto init(animation_frame const *frames, int8_t frames_count,
+            bool ping_pong) -> void {
     frames_ = frames;
     frames_count_ = frames_count;
-    back_forth_ = back_forth;
+    ping_pong_ = ping_pong;
     reset();
   }
 
   auto reset() -> void {
     current_frame_ix_ = 0;
+    frame_ix_dir_ = 1;
     next_frame_ms_ = clk.ms + frames_[0].duration_ms;
   }
 
@@ -43,18 +46,18 @@ public:
     }
     current_frame_ix_ += frame_ix_dir_;
     if (current_frame_ix_ >= frames_count_) {
-      if (back_forth_) {
+      if (ping_pong_) {
         frame_ix_dir_ = -1;
         current_frame_ix_ -= 2;
       } else {
         current_frame_ix_ = 0;
       }
     } else if (current_frame_ix_ < 0) {
-      if (back_forth_) {
+      if (ping_pong_) {
         frame_ix_dir_ = 1;
         current_frame_ix_ += 2;
       } else {
-        current_frame_ix_ = 0;
+        current_frame_ix_ = frames_count_ - 1;
       }
     }
     next_frame_ms_ = clk.ms + frames_[current_frame_ix_].duration_ms;
