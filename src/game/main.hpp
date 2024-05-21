@@ -102,8 +102,8 @@ struct wave_trigger {
   float since_last_wave_y = 0;
   wave_func_ptr func = nullptr;
 
-  constexpr wave_trigger(float y_, wave_func_ptr func_)
-      : since_last_wave_y{y_}, func{func_} {}
+  constexpr wave_trigger(float _y, wave_func_ptr _func)
+      : since_last_wave_y{_y}, func{_func} {}
   // note. constructor needed for C++11 to compile
 
 } static constexpr wave_triggers[] = {
