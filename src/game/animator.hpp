@@ -4,7 +4,7 @@
 
 class animator final {
 public:
-  struct frame {
+  struct frame final {
     constexpr frame(sprite_img _sprite_img, clk::time _duration_ms,
                     float _displace_x, float _displace_y)
         : spr_img{_sprite_img}, duration_ms{_duration_ms},
