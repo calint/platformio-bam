@@ -21,7 +21,7 @@ class animator final {
   uint8_t frames_count_ = 0;
   int8_t current_frame_ix_ = 0;
   int8_t frame_ix_dir_ = 1;
-  bool back_forth_ = true;
+  bool back_forth_ = false;
 
 public:
   auto init(animation_frame const *frames, uint8_t frames_count,

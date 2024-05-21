@@ -21,8 +21,7 @@ public:
 
   ned() : game_object{ned_cls} {
     animator_.init(ned_animation_walk,
-                   sizeof(ned_animation_walk) / sizeof(animation_frame), true);
-    moving_direction = 0;
+                   sizeof(ned_animation_walk) / sizeof(animation_frame), false);
     spr = sprites.alloc();
     spr->obj = this;
     spr->img = animator_.sprite_image();
