@@ -12,8 +12,8 @@ table of contents (in include order by program file):
 * `animator.hpp` support class implementing sprite animation
 
 appendix:
-* `resources-from-png/update.sh` tool for extracting resources from png files
-* `resources-from-tmx/update.sh` tool for extracting tile map resource 
+* `resources-from-png/update.sh` tool for extracting tile and sprite images resources from png files
+* `resources-from-tmx/update.sh` tool for extracting tile map resource
 
 # overview
 
