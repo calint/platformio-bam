@@ -249,7 +249,7 @@ static auto main_wave_4() -> void {
 static auto main_wave_5() -> void {
   float y = -float(sprite_height);
   constexpr float dx = display_width / 12;
-  for (int j = 0; j < 12; j++, y -= 10) {
+  for (int j = 0; j < 12; j++, y -= 16) {
     float x = 0;
     for (int i = 0; i < 19; i++, x += dx) {
       ship1 *shp = new (objects.alloc()) ship1{};
