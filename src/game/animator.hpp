@@ -4,13 +4,12 @@
 // note. maximum 127 frames in an animation
 
 struct animation_frame {
-  constexpr animation_frame(uint8_t const *_sprite_image,
-                            clk::time _duration_ms, float _displace_x,
-                            float _displace_y)
-      : sprite_image{_sprite_image}, duration_ms{_duration_ms},
+  constexpr animation_frame(sprite_img _sprite_img, clk::time _duration_ms,
+                            float _displace_x, float _displace_y)
+      : spr_img{_sprite_img}, duration_ms{_duration_ms},
         displace_x{_displace_x}, displace_y{_displace_y} {}
 
-  uint8_t const *sprite_image = nullptr;
+  sprite_img spr_img = nullptr;
   clk::time duration_ms = 0;
   // displacement of object due to this frame
   float displace_x = 0;
@@ -64,9 +63,7 @@ public:
     return true;
   }
 
-  auto sprite_image() -> uint8_t const * {
-    return frames_[current_frame_ix_].sprite_image;
-  }
+  auto sprite_img() -> sprite_img { return frames_[current_frame_ix_].spr_img; }
 
   auto displace_x() -> float { return frames_[current_frame_ix_].displace_x; }
 

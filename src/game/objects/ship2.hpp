@@ -24,7 +24,7 @@ public:
 
     spr = sprites.alloc();
     spr->obj = this;
-    spr->img = animator_.sprite_image();
+    spr->img = animator_.sprite_img();
     spr->layer = 1;
     spr->flip = 0;
   }
@@ -44,7 +44,7 @@ public:
     }
 
     if (animator_.update()) {
-      spr->img = animator_.sprite_image();
+      spr->img = animator_.sprite_img();
     }
 
     return false;

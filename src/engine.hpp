@@ -43,6 +43,8 @@ static constexpr uint8_t sprite_imgs[sprite_imgs_count]
 #include "game/resources/sprite_imgs.hpp"
                                     };
 
+using sprite_img = uint8_t const *;
+
 // the reserved 'sprite_ix' in 'collision_map' representing 'no sprite pixel'
 static constexpr sprite_ix sprite_ix_reserved =
     std::numeric_limits<sprite_ix>::max();
@@ -54,7 +56,7 @@ class sprite {
 public:
   sprite **alloc_ptr = nullptr;
   object *obj = nullptr;
-  uint8_t const *img = nullptr;
+  sprite_img img = nullptr;
   int16_t scr_x = 0;
   int16_t scr_y = 0;
   uint8_t layer = 0;

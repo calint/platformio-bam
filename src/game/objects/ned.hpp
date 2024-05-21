@@ -24,7 +24,7 @@ public:
                    sizeof(ned_animation_walk) / sizeof(animation_frame), false);
     spr = sprites.alloc();
     spr->obj = this;
-    spr->img = animator_.sprite_image();
+    spr->img = animator_.sprite_img();
     spr->flip = 0;
   }
 
@@ -36,7 +36,7 @@ public:
     case 1: // right
       if (x <= display_width - sprite_width) {
         if (animator_.update()) {
-          spr->img = animator_.sprite_image();
+          spr->img = animator_.sprite_img();
           spr->flip = 0;
           x += moving_direction * animator_.displace_x();
           y += animator_.displace_y();
@@ -44,14 +44,14 @@ public:
       } else {
         moving_direction = -1;
         animator_.reset();
-        spr->img = animator_.sprite_image();
+        spr->img = animator_.sprite_img();
         spr->flip = 1;
       }
       break;
     case -1: // left
       if (x >= 0) {
         if (animator_.update()) {
-          spr->img = animator_.sprite_image();
+          spr->img = animator_.sprite_img();
           spr->flip = 1;
           x += moving_direction * animator_.displace_x();
           y += animator_.displace_y();
@@ -59,7 +59,7 @@ public:
       } else {
         moving_direction = 1;
         animator_.reset();
-        spr->img = animator_.sprite_image();
+        spr->img = animator_.sprite_img();
         spr->flip = 0;
       }
       break;
