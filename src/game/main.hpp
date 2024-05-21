@@ -29,15 +29,16 @@ static auto main_init() -> void {
   printf("              hero: %zu B\n", sizeof(hero));
   printf("             ship1: %zu B\n", sizeof(ship1));
   printf("             ship2: %zu B\n", sizeof(ship2));
-  printf("    upgrade_picked: %zu B\n", sizeof(upgrade_picked));
   printf("           upgrade: %zu B\n", sizeof(upgrade));
+  printf("    upgrade_picked: %zu B\n", sizeof(upgrade_picked));
   printf("              ufo2: %zu B\n", sizeof(ufo2));
   printf("               ben: %zu B\n", sizeof(ben));
+  printf("               ned: %zu B\n", sizeof(ned));
 
   // assert that game object instances fit in object store slots
   static_assert(
       max_size_of_type<game_object, bullet, dummy, fragment, hero, ship1, ship2,
-                       upgrade_picked, upgrade, ufo2, ben>() <=
+                       upgrade, upgrade_picked, ufo2, ben, ned>() <=
       object_instance_max_size_B);
 
   // scrolling vertically from bottom up
@@ -170,8 +171,7 @@ static auto main_on_frame_completed() -> void {
     wave_triggers[wave_triggers_ix].func();
     wave_triggers_ix++;
     if (wave_triggers_ix < wave_triggers_len) {
-      wave_triggers_next_y -=
-      wave_triggers[wave_triggers_ix].since_last_wave_y;
+      wave_triggers_next_y -= wave_triggers[wave_triggers_ix].since_last_wave_y;
     }
   }
 }
