@@ -8,4 +8,4 @@ SIZE=16
 ./read-sprites.py $SIZE $SIZE sprites.png > ../resources/sprite_imgs.hpp
 
 ./read-palette.py tiles.png > ../resources/palette_tiles.hpp
-./read-sprites.py $SIZE $SIZE tiles.png > ../resources/tiles.hpp
+./read-sprites.py $SIZE $SIZE tiles.png > ../resources/tile_imgs.hpp

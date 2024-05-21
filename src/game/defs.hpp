@@ -26,7 +26,7 @@ using sprite_img_ix = uint8_t;
 // sprite dimensions
 static constexpr int sprite_width = 16;
 static constexpr int sprite_height = 16;
-// note. when changing dimensions update 'png-to-resources/extract.sh'
+// note. when changing dimensions update 'png-to-resources/update.sh'
 
 // number of layers of sprites
 // note. number of layers deteriorates performance
@@ -34,24 +34,24 @@ static constexpr int sprite_height = 16;
 static constexpr int sprites_layers = 3;
 
 // number of tile images
-static constexpr int tiles_count = 256;
-// defined in 'resources/tiles.hpp'
+static constexpr int tile_imgs_count = 256;
+// defined in 'resources/tile_imgs.hpp'
 
-// type used to index in the 'tiles' array from 'tile_map'
-using tile_ix = uint8_t;
+// type used to index in the 'tile_imgs' array from 'tile_map'
+using tile_img_ix = uint8_t;
 
 // tile dimensions
 static constexpr int tile_width = 16;
 static constexpr int tile_height = 16;
-// note. when changing dimensions update 'png-to-resources/extract.sh'
+// note. when changing dimensions update 'png-to-resources/update.sh'
 
 //
-// example configuration for more sprites and tiles
+// example configuration for more sprites and tile_imgs
 //
 // static constexpr int sprite_imgs_count = 512;
 // using sprite_img_ix = uint16_t;
-// static constexpr int tiles_count = 512;
-// using tile_ix = uint16_t;
+// static constexpr int tile_imgs_count = 512;
+// using tile_img_ix = uint16_t;
 
 // tile map dimension
 static constexpr int tile_map_width = 17;

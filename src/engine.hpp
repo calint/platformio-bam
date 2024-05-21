@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <limits>
 
-// palette used when rendering tiles
+// palette used when rendering tile_imgs
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note. lower and higher byte swapped
 static constexpr uint16_t palette_tiles[256]{
@@ -22,12 +22,12 @@ static constexpr uint16_t palette_sprites[256]{
 };
 
 // images used by tile map
-static constexpr uint8_t tiles[tiles_count][tile_width * tile_height]{
-#include "game/resources/tiles.hpp"
+static constexpr uint8_t tile_imgs[tile_imgs_count][tile_width * tile_height]{
+#include "game/resources/tile_imgs.hpp"
 };
 
 // initial tile map
-static tile_ix tile_map[tile_map_height][tile_map_width]{
+static tile_img_ix tile_map[tile_map_height][tile_map_width]{
 #include "game/resources/tile_map.hpp"
 };
 

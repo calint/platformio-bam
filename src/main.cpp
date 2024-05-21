@@ -143,11 +143,11 @@ auto setup() -> void {
   printf("------------------- object sizes -------------------------\n");
   printf("            sprite: %zu B\n", sizeof(sprite));
   printf("            object: %zu B\n", sizeof(object));
-  printf("              tile: %zu B\n", sizeof(tiles[0]));
+  printf("              tile: %zu B\n", sizeof(tile_imgs[0]));
   printf("          animator: %zu B\n", sizeof(animator));
   printf("------------------- in program memory --------------------\n");
   printf("     sprite images: %zu B\n", sizeof(sprite_imgs));
-  printf("       tile images: %zu B\n", sizeof(tiles));
+  printf("       tile images: %zu B\n", sizeof(tile_imgs));
   printf("------------------- globals ------------------------------\n");
   printf("          tile map: %zu B\n", sizeof(tile_map));
   printf("           sprites: %zu B\n", sizeof(sprites));
@@ -253,20 +253,20 @@ static inline auto build_render_sprites_lists() -> void {
 // note. inline because it is only called from one location in render(...)
 static inline auto
 render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
-                int tile_x, int tile_x_fract, tile_ix const *tiles_map_row_ptr,
+                int tile_x, int tile_x_fract, tile_img_ix const *tiles_map_row_ptr,
                 const int16_t scanline_y,
                 const int tile_line_times_tile_width) -> void {
 
-  // used later by sprite renderer to overwrite tiles pixels
+  // used later by sprite renderer to overwrite tile_imgs pixels
   uint16_t *scanline_ptr = render_buf_ptr;
   // pointer to first tile to render
-  tile_ix const *tiles_map_ptr = tiles_map_row_ptr + tile_x;
+  tile_img_ix const *tiles_map_ptr = tiles_map_row_ptr + tile_x;
   // for all horizontal pixels
   int remaining_x = display_width;
   while (remaining_x) {
     // pointer to tile image to render
     uint8_t const *tile_img_ptr =
-        &tiles[*tiles_map_ptr][0] + tile_line_times_tile_width + tile_x_fract;
+        &tile_imgs[*tiles_map_ptr][0] + tile_line_times_tile_width + tile_x_fract;
     // calculate number of pixels to render
     int render_n_pixels = 0;
     if (tile_x_fract) {
@@ -398,7 +398,7 @@ static auto render(const int x, const int y) -> void {
   // current scanline screen y
   int16_t scanline_y = 0;
   // pointer to start of current row of tiles
-  tile_ix const *tiles_map_row_ptr = &tile_map[tile_y][0];
+  tile_img_ix const *tiles_map_row_ptr = &tile_map[tile_y][0];
   // pointer to collision map starting at top left of screen
   sprite_ix *collision_map_row_ptr = collision_map;
   // keeps track of how many scanlines have been rendered since last DMA
