@@ -38,7 +38,7 @@ public:
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len,
                         char const *mode = FILE_WRITE) -> bool {
-    return fs_write(SD, path, buf, buf_len);
+    return fs_write(SD, path, buf, buf_len, mode);
   }
 
   // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path'
@@ -51,7 +51,7 @@ public:
   // returns true if ok
   virtual auto spiffs_write(char const *path, char const *buf, int buf_len,
                             char const *mode = FILE_WRITE) -> bool {
-    return fs_write(SPIFFS, path, buf, buf_len);
+    return fs_write(SPIFFS, path, buf, buf_len, mode);
   }
 
 protected:
