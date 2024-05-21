@@ -253,8 +253,8 @@ static inline auto build_render_sprites_lists() -> void {
 // note. inline because it is only called from one location in render(...)
 static inline auto
 render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
-                int tile_x, int tile_x_fract, tile_img_ix const *tiles_map_row_ptr,
-                const int16_t scanline_y,
+                int tile_x, int tile_x_fract,
+                tile_img_ix const *tiles_map_row_ptr, const int16_t scanline_y,
                 const int tile_line_times_tile_width) -> void {
 
   // used later by sprite renderer to overwrite tile_imgs pixels
@@ -265,8 +265,8 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
   int remaining_x = display_width;
   while (remaining_x) {
     // pointer to tile image to render
-    uint8_t const *tile_img_ptr =
-        &tile_imgs[*tiles_map_ptr][0] + tile_line_times_tile_width + tile_x_fract;
+    uint8_t const *tile_img_ptr = &tile_imgs[*tiles_map_ptr][0] +
+                                  tile_line_times_tile_width + tile_x_fract;
     // calculate number of pixels to render
     int render_n_pixels = 0;
     if (tile_x_fract) {
