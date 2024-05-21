@@ -20,15 +20,15 @@ public:
 private:
   frame const *frames_ = nullptr;
   clk::time next_frame_ms_ = 0;
-  int8_t frames_count_ = 0;
+  int8_t frame_count_ = 0;
   int8_t current_frame_ix_ = 0;
   int8_t frame_ix_dir_ = 0; // forward: 1  backwards: -1
   bool ping_pong_ = false;  // back-and-forth animation
 
 public:
-  auto init(frame const *frames, int8_t frames_count, bool ping_pong) -> void {
+  auto init(frame const *frames, int8_t frame_count, bool ping_pong) -> void {
     frames_ = frames;
-    frames_count_ = frames_count;
+    frame_count_ = frame_count;
     ping_pong_ = ping_pong;
     reset();
   }
@@ -45,7 +45,7 @@ public:
       return false;
     }
     current_frame_ix_ += frame_ix_dir_;
-    if (current_frame_ix_ >= frames_count_) {
+    if (current_frame_ix_ >= frame_count_) {
       if (ping_pong_) {
         frame_ix_dir_ = -1;
         current_frame_ix_ -= 2;
@@ -57,7 +57,7 @@ public:
         frame_ix_dir_ = 1;
         current_frame_ix_ += 2;
       } else {
-        current_frame_ix_ = frames_count_ - 1;
+        current_frame_ix_ = frame_count_ - 1;
       }
     }
     next_frame_ms_ = clk.ms + frames_[current_frame_ix_].duration_ms;

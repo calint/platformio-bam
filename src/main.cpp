@@ -144,6 +144,7 @@ auto setup() -> void {
   printf("            sprite: %zu B\n", sizeof(sprite));
   printf("            object: %zu B\n", sizeof(object));
   printf("              tile: %zu B\n", sizeof(tiles[0]));
+  printf("          animator: %zu B\n", sizeof(animator));
   printf("------------------- in program memory --------------------\n");
   printf("     sprite images: %zu B\n", sizeof(sprite_imgs));
   printf("             tiles: %zu B\n", sizeof(tiles));
