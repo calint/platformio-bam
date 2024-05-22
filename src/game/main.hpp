@@ -3,8 +3,9 @@
 // solves circular references between 'game_state' and game objects
 
 // reviewed: 2005-05-01
+// reviewed: 2005-05-22
 
-// then the game state
+// the game state
 #include "game_state.hpp"
 // then the objects
 #include "objects/ben.hpp"
@@ -20,7 +21,6 @@
 
 // callback from 'setup()'
 static auto main_init() -> void {
-  // output size of game object classes
   printf("------------------- game object sizes --------------------\n");
   printf("       game_object: %zu B\n", sizeof(game_object));
   printf("            bullet: %zu B\n", sizeof(bullet));
@@ -94,7 +94,7 @@ using wave_func_ptr = auto (*)() -> void;
 
 // eases placement of when waves should happen
 static constexpr auto
-y_for_screen_percentage(const float screen_percentage) -> float {
+y_for_screen_percentage(float screen_percentage) -> float {
   return float(display_height * screen_percentage / 100.0f);
 }
 
@@ -133,7 +133,7 @@ static float wave_triggers_next_y =
     wave_triggers_bottom_screen_y - wave_triggers[0].since_last_wave_y;
 
 // callback after frame has been rendered and objects updated
-// note. if objects are deleted see objects::update()
+// note. if objects are deleted see 'objects::update()'
 static auto main_on_frame_completed() -> void {
   // update x position in pixels in the tile map
   tile_map_x += tile_map_dx * clk.dt;
@@ -169,7 +169,7 @@ static auto main_on_frame_completed() -> void {
   if (wave_triggers_ix < wave_triggers_len &&
       wave_triggers_next_y >= tile_map_y) {
     wave_triggers[wave_triggers_ix].func();
-    wave_triggers_ix++;
+    ++wave_triggers_ix;
     if (wave_triggers_ix < wave_triggers_len) {
       wave_triggers_next_y -= wave_triggers[wave_triggers_ix].since_last_wave_y;
     }
@@ -181,7 +181,7 @@ static auto main_wave_1() -> void {
   constexpr int dx = display_width / count;
   float x = 0;
   float y = -sprite_height;
-  for (int i = 0; i < count; i++) {
+  for (int i = 0; i < count; ++i) {
     ship1 *shp = new (objects.alloc()) ship1{};
     shp->x = x;
     shp->y = y;
@@ -196,7 +196,7 @@ static auto main_wave_2() -> void {
   constexpr int dx = display_width / count;
   float x = 0;
   float y = -sprite_height;
-  for (int i = 0; i < count; i++, x += dx) {
+  for (int i = 0; i < count; ++i, x += dx) {
     ship1 *shp = new (objects.alloc()) ship1{};
     shp->x = x;
     shp->y = y;
@@ -209,9 +209,9 @@ static auto main_wave_3() -> void {
   constexpr int count_x = 10;
   constexpr int dx = display_width / count_x;
   float y = -sprite_height;
-  for (int j = 0; j < count_y; j++, y -= 24) {
+  for (int j = 0; j < count_y; ++j, y -= 24) {
     float x = 0;
-    for (int i = 0; i < count_x; i++, x += dx) {
+    for (int i = 0; i < count_x; ++i, x += dx) {
       ship1 *shp = new (objects.alloc()) ship1{};
       shp->x = x;
       shp->y = y;
@@ -249,9 +249,9 @@ static auto main_wave_4() -> void {
 static auto main_wave_5() -> void {
   float y = -float(sprite_height);
   constexpr float dx = display_width / 12;
-  for (int j = 0; j < 12; j++, y -= 16) {
+  for (int j = 0; j < 12; ++j, y -= 16) {
     float x = 0;
-    for (int i = 0; i < 19; i++, x += dx) {
+    for (int i = 0; i < 19; ++i, x += dx) {
       ship1 *shp = new (objects.alloc()) ship1{};
       shp->x = x;
       shp->y = y;
