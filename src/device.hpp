@@ -79,7 +79,8 @@ private:
     if (!file) {
       return false;
     }
-    size_t const n = file.write((uint8_t const *)buf, buf_len);
+    size_t const n =
+        file.write(reinterpret_cast<uint8_t const *>(buf), buf_len);
     file.close();
     return n == buf_len;
   }
@@ -89,7 +90,7 @@ private:
     if (!file) {
       return -1;
     }
-    size_t const n = file.read((uint8_t *)buf, buf_len);
+    size_t const n = file.read(reinterpret_cast<uint8_t *>(buf), buf_len);
     file.close();
     return n;
   }

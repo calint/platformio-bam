@@ -17,7 +17,6 @@ Checks: '
     -cppcoreguidelines-prefer-member-initializer, # not always preferred regarding readability
     -cppcoreguidelines-special-member-functions, # cleaner
     -cppcoreguidelines-pro-type-static-cast-downcast, # necessary without RTTI
-    -cppcoreguidelines-pro-type-cstyle-cast, # C style case ok
     bugprone-*,
     -bugprone-easily-swappable-parameters, # it is ok
     -bugprone-implicit-widening-of-multiplication-result, # cannot fix that
