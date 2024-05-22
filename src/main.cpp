@@ -25,6 +25,7 @@
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
+// reviewed: 2024-05-22
 
 #include "hal/efuse_hal.h"
 #include <Arduino.h>
@@ -123,16 +124,6 @@ auto setup() -> void {
   printf("            screen: %u x %u px\n", display_width, display_height);
   printf("     free heap mem: %u B\n", ESP.getFreeHeap());
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
-  // printf("------------------- type sizes ---------------------------\n");
-  // printf("              bool: %zu B\n", sizeof(bool));
-  // printf("              char: %zu B\n", sizeof(char));
-  // printf("             short: %zu B\n", sizeof(short));
-  // printf("               int: %zu B\n", sizeof(int));
-  // printf("              long: %zu B\n", sizeof(long));
-  // printf("         long long: %zu B\n", sizeof(long long));
-  // printf("             float: %zu B\n", sizeof(float));
-  // printf("            double: %zu B\n", sizeof(double));
-  // printf("             void*: %zu B\n", sizeof(void *));
   printf("------------------- object sizes -------------------------\n");
   printf("            sprite: %zu B\n", sizeof(sprite));
   printf("            object: %zu B\n", sizeof(object));
@@ -192,7 +183,6 @@ auto loop() -> void {
     uint16_t y = 0;
     uint8_t pressure = 0;
     device.display_get_touch(x, y, pressure);
-    // ESP_LOGI("b", "x=%d  y=%d  pressure=%d", x, y, pressure);
     main_on_touch(x, y, pressure);
   }
 
@@ -218,14 +208,14 @@ static inline auto printf_render_sprite_entries_ram_usage() -> void {
 // only used in 'render(...)'
 static inline auto build_render_sprites_lists() -> void {
   // set end of lists pointers to start of lists
-  for (int i = 0; i < sprite_layers; i++) {
+  for (int i = 0; i < sprite_layers; ++i) {
     render_sprite_entries_end[i] = &render_sprite_entries[i][0];
   }
   // build entries lists
   sprite *spr = sprites.all_list();
   const int len = sprites.all_list_len();
   // note. "constexpr int len" does not compile
-  for (int i = 0; i < len; i++, spr++) {
+  for (int i = 0; i < len; ++i, ++spr) {
     if (!spr->img || spr->scr_x <= -sprite_width ||
         spr->scr_x >= display_width) {
       // sprite has no image or
@@ -273,17 +263,19 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
     // decrease remaining pixels to render before using that variable
     remaining_x -= render_n_pixels;
     while (render_n_pixels--) {
-      *render_buf_ptr++ = palette_tiles[*tile_img_ptr++];
+      *render_buf_ptr = palette_tiles[*tile_img_ptr];
+      ++tile_img_ptr;
+      ++render_buf_ptr;
     }
     // next tile
-    tiles_map_ptr++;
+    ++tiles_map_ptr;
   }
 
   // render sprites
   // note. although grossly inefficient algorithm the DMA is mostly busy while
   //       rendering
 
-  for (int layer = 0; layer < sprite_layers; layer++) {
+  for (int layer = 0; layer < sprite_layers; ++layer) {
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
     for (render_sprite_entry *spr_it = &render_sprite_entries[layer][0];
          spr_it < spr_it_end; ++spr_it) {
@@ -354,8 +346,8 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
           *collision_pixel = spr_it->ix;
         }
         spr_img_ptr += spr_img_ptr_inc;
-        collision_pixel++;
-        scanline_dst_ptr++;
+        ++collision_pixel;
+        ++scanline_dst_ptr;
       }
     }
   }
@@ -422,14 +414,14 @@ static auto render(const int x, const int y) -> void {
       render_scanline(render_buf_ptr, collision_map_row_ptr, tile_x,
                       tile_x_fract, tiles_map_row_ptr, scanline_y,
                       tile_line_times_tile_width);
-      tile_line++;
+      ++tile_line;
       tile_line_times_tile_width += tile_width;
       render_buf_ptr += display_width;
       collision_map_row_ptr += display_width;
-      scanline_y++;
-      dma_scanline_count++;
+      ++scanline_y;
+      ++dma_scanline_count;
       if (dma_scanline_count == dma_n_scanlines) {
-        dma_writes++;
+        ++dma_writes;
         dma_busy += device.dma_is_busy() ? 1 : 0;
         device.dma_write_bytes(
             reinterpret_cast<uint8_t *>(dma_buffers.current_buffer()),
@@ -439,7 +431,7 @@ static auto render(const int x, const int y) -> void {
         dma_scanline_count = 0;
       }
     }
-    tile_y++;
+    ++tile_y;
     remaining_y -= render_n_scanlines;
     tiles_map_row_ptr += tile_map_width;
   }
@@ -447,7 +439,7 @@ static auto render(const int x, const int y) -> void {
   // will be remaining scanlines to write
   constexpr int dma_n_scanlines_trailing = display_height % dma_n_scanlines;
   if (dma_n_scanlines_trailing) {
-    dma_writes++;
+    ++dma_writes;
     dma_busy += device.dma_is_busy() ? 1 : 0;
     device.dma_write_bytes(
         reinterpret_cast<uint8_t *>(dma_buffers.current_buffer()),
