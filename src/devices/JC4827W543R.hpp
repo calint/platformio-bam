@@ -29,7 +29,7 @@ public:
     bus_chip_select_disable();
 
     // init bus
-    const spi_bus_config_t bus_cfg = {.data0_io_num = TFT_D0,
+    spi_bus_config_t const bus_cfg = {.data0_io_num = TFT_D0,
                                       .data1_io_num = TFT_D1,
                                       .sclk_io_num = TFT_SCK,
                                       .data2_io_num = TFT_D2,
@@ -45,7 +45,7 @@ public:
     ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO));
 
     // init graphics device
-    const spi_device_interface_config_t dev_cfg = {
+    spi_device_interface_config_t const dev_cfg = {
         .command_bits = 8,
         .address_bits = 24,
         .dummy_bits = 0,

@@ -213,7 +213,7 @@ static inline auto build_render_sprites_lists() -> void {
   }
   // build entries lists
   sprite *spr = sprites.all_list();
-  const int len = sprites.all_list_len();
+  int const len = sprites.all_list_len();
   // note. "constexpr int len" does not compile
   for (int i = 0; i < len; ++i, ++spr) {
     if (!spr->img || spr->scr_x <= -sprite_width ||
@@ -234,8 +234,8 @@ static inline auto build_render_sprites_lists() -> void {
 static inline auto
 render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
                 int tile_x, int tile_x_fract,
-                tile_img_ix const *tiles_map_row_ptr, const int16_t scanline_y,
-                const int tile_line_times_tile_width) -> void {
+                tile_img_ix const *tiles_map_row_ptr, int16_t const scanline_y,
+                int const tile_line_times_tile_width) -> void {
 
   // used later by sprite renderer to overwrite tile_imgs pixels
   uint16_t *scanline_ptr = render_buf_ptr;
@@ -287,8 +287,8 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
       // pointer to sprite image to be rendered
       uint8_t const *spr_img_ptr = spr->img;
       // extract sprite flip
-      const bool flip_horiz = spr->flip & 1;
-      const bool flip_vert = spr->flip & 2;
+      bool const flip_horiz = spr->flip & 1;
+      bool const flip_vert = spr->flip & 2;
       if (flip_vert) {
         spr_img_ptr += (sprite_height - 1) * sprite_width -
                        (scanline_y - spr->scr_y) * sprite_width;
@@ -300,7 +300,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
         spr_img_ptr += sprite_width - 1;
       }
       // increment to next sprite pixel to be rendered
-      const int spr_img_ptr_inc = flip_horiz ? -1 : 1;
+      int const spr_img_ptr_inc = flip_horiz ? -1 : 1;
       // pointer to destination of sprite data
       uint16_t *scanline_dst_ptr = scanline_ptr + spr->scr_x;
       // initial number of pixels to be rendered
@@ -325,7 +325,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
       object *obj = spr->obj;
       while (render_n_pixels--) {
         // write pixel from sprite data or skip if 0
-        const uint8_t color_ix = *spr_img_ptr;
+        uint8_t const color_ix = *spr_img_ptr;
         if (color_ix) {
           // if not transparent pixel
           *scanline_dst_ptr = palette_sprites[color_ix];
@@ -359,7 +359,7 @@ static constexpr auto count_right_shifts_until_1(int num) -> int {
 }
 
 // renders tile map and sprites
-static auto render(const int x, const int y) -> void {
+static auto render(int const x, int const y) -> void {
   // clear stats for this frame
   dma_busy = dma_writes = 0;
 
@@ -373,8 +373,8 @@ static auto render(const int x, const int y) -> void {
   constexpr int tile_height_shift = count_right_shifts_until_1(tile_height);
   constexpr int tile_width_and = (1 << tile_width_shift) - 1;
   constexpr int tile_height_and = (1 << tile_height_shift) - 1;
-  const int tile_x = x >> tile_width_shift;
-  const int tile_x_fract = x & tile_width_and;
+  int const tile_x = x >> tile_width_shift;
+  int const tile_x_fract = x & tile_width_and;
   int tile_y = y >> tile_height_shift;
   int tile_y_fract = y & tile_height_and;
   // current scanline screen y
@@ -393,7 +393,7 @@ static auto render(const int x, const int y) -> void {
   build_render_sprites_lists();
   while (remaining_y) {
     // render from tiles map and sprites to the 'render_buf_ptr'
-    const int render_n_tile_lines =
+    int const render_n_tile_lines =
         remaining_y < tile_height ? remaining_y : tile_height;
     // prepare loop variables
     int render_n_scanlines = 0;

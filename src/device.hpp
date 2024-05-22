@@ -79,7 +79,7 @@ private:
     if (!file) {
       return false;
     }
-    const size_t n = file.write((uint8_t const *)buf, buf_len);
+    size_t const n = file.write((uint8_t const *)buf, buf_len);
     file.close();
     return n == buf_len;
   }
@@ -89,7 +89,7 @@ private:
     if (!file) {
       return -1;
     }
-    const size_t n = file.read((uint8_t *)buf, buf_len);
+    size_t const n = file.read((uint8_t *)buf, buf_len);
     file.close();
     return n;
   }

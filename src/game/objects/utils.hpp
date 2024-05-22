@@ -9,8 +9,8 @@ class sprites_2x2 final {
   sprite *sprs[3];
 
 public:
-  sprites_2x2(game_object *obj, const int top_left_index_in_16_sprites_row,
-              const uint8_t layer) {
+  sprites_2x2(game_object *obj, int const top_left_index_in_16_sprites_row,
+              uint8_t const layer) {
     obj->spr = sprites.alloc();
     obj->spr->obj = obj;
     obj->spr->layer = layer;
@@ -47,9 +47,9 @@ public:
   }
 };
 
-static auto create_fragments(const float orig_x, const float orig_y,
-                             const int count, const float speed,
-                             const clk::time life_time_ms) -> void {
+static auto create_fragments(float const orig_x, float const orig_y,
+                             int const count, float const speed,
+                             clk::time const life_time_ms) -> void {
   for (int i = 0; i < count; i++) {
     fragment *frg = new (objects.alloc()) fragment{};
     frg->die_at_ms = clk.ms + life_time_ms;

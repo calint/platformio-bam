@@ -100,7 +100,7 @@ using object_store =
 class objects : public object_store {
 public:
   auto update() -> void {
-    object **const end = allocated_list_end();
+    const object *const *end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
     for (object **it = allocated_list(); it < end; ++it) {
@@ -113,7 +113,7 @@ public:
   }
 
   auto pre_render() -> void {
-    object **const end = allocated_list_end();
+    const object *const *end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
     for (object **it = allocated_list(); it < end; ++it) {
@@ -147,8 +147,8 @@ public:
 
   // called at setup with current time, frames per seconds calculation
   // interval and optional fixed frame delta time
-  auto init(const time time_ms, const int interval_of_fps_calculation_ms,
-            const int locked_dt_ms) -> void {
+  auto init(time const time_ms, int const interval_of_fps_calculation_ms,
+            int const locked_dt_ms) -> void {
     interval_ms_ = interval_of_fps_calculation_ms;
     if (locked_dt_ms) {
       locked_dt_ms_ = locked_dt_ms;
@@ -161,7 +161,7 @@ public:
 
   // called before every frame to update state
   // returns true if new frames per second calculation was done
-  auto on_frame(const time time_ms) -> bool {
+  auto on_frame(time const time_ms) -> bool {
     if (locked_dt_ms_) {
       ms += time(locked_dt_ms_);
     } else {
@@ -173,7 +173,7 @@ public:
       prv_ms_ = ms;
     }
     frames_rendered_since_last_update_++;
-    const time dt_ms = time_ms - last_fps_update_ms_;
+    time const dt_ms = time_ms - last_fps_update_ms_;
     if (dt_ms >= interval_ms_) {
       fps = frames_rendered_since_last_update_ * 1000 / dt_ms;
       frames_rendered_since_last_update_ = 0;
@@ -232,19 +232,19 @@ static constexpr auto max_size_of_type() -> int {
 }
 
 // returns a random float
-static auto random_float(const float min, const float max) -> float {
+static auto random_float(float const min, float const max) -> float {
   constexpr float rand_max_inv = 1.0f / float(RAND_MAX);
   return (max - min) * float(rand()) * rand_max_inv + min;
 }
 
 // returns x on display for raw touch value x
-static auto display_x_for_touch(const int16_t x) -> float {
+static auto display_x_for_touch(int16_t const x) -> float {
   static constexpr float fact_x = float(display_width) / touch_screen_range_x;
   return float(x - touch_screen_min_x) * fact_x;
 }
 
 // returns y on display for raw touch value y
-static auto display_y_for_touch(const int16_t y) -> float {
+static auto display_y_for_touch(int16_t const y) -> float {
   static constexpr float fact_y = float(display_height) / touch_screen_range_y;
   return float(y - touch_screen_min_y) * fact_y;
 }
