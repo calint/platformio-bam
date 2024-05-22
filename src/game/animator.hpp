@@ -5,8 +5,8 @@
 class animator final {
 public:
   struct frame final {
-    constexpr frame(sprite_img _sprite_img, clk::time _duration_ms,
-                    float _displace_x, float _displace_y)
+    constexpr frame(sprite_img const _sprite_img, clk::time const _duration_ms,
+                    float const _displace_x, float const _displace_y)
         : spr_img{_sprite_img}, duration_ms{_duration_ms},
           displace_x{_displace_x}, displace_y{_displace_y} {}
 
@@ -26,7 +26,8 @@ private:
   bool ping_pong_ = false;  // back-and-forth animation
 
 public:
-  auto init(frame const *frames, int8_t frame_count, bool ping_pong) -> void {
+  auto init(frame const *frames, int8_t const frame_count,
+            bool const ping_pong) -> void {
     frames_ = frames;
     frame_count_ = frame_count;
     ping_pong_ = ping_pong;

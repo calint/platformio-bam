@@ -67,7 +67,8 @@ static auto main_on_touch(int16_t const x, int16_t const y,
   static clk::time last_fire_ms = 0;
 
   // fire eight times a second
-  if (clk.ms - last_fire_ms > 125) {
+  if (clk.ms - last_fire_ms > 125) { // clear stats for this frame
+
     last_fire_ms = clk.ms;
     if (object *mem = objects.alloc()) {
       bullet *blt = new (mem) bullet{};
@@ -102,7 +103,7 @@ struct wave_trigger {
   float since_last_wave_y = 0;
   wave_func_ptr func = nullptr;
 
-  constexpr wave_trigger(float _y, wave_func_ptr _func)
+  constexpr wave_trigger(float const _y, wave_func_ptr const _func)
       : since_last_wave_y{_y}, func{_func} {}
   // note. constructor needed for C++11 to compile
 
