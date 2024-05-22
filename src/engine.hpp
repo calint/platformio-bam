@@ -100,7 +100,7 @@ using object_store =
 class objects : public object_store {
 public:
   auto update() -> void {
-    const object *const *end = allocated_list_end();
+    object const *const *end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
     for (object **it = allocated_list(); it < end; ++it) {
@@ -113,7 +113,7 @@ public:
   }
 
   auto pre_render() -> void {
-    const object *const *end = allocated_list_end();
+    object const *const *end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
     for (object **it = allocated_list(); it < end; ++it) {

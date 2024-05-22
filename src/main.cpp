@@ -15,6 +15,10 @@
 // variables are used where the bit width of the type is wide enough to fit the
 // largest value
 
+// note. const declarations are right-to-left convention
+
+// note. increments and decrements done prefix for compatibility with iterators
+
 // note. why some buffers are allocated at 'setup'
 // Due to a technical limitation, the maximum statically allocated DRAM usage is
 // 160KB. The remaining 160KB (for a total of 320KB of DRAM) can only be
@@ -279,7 +283,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
     for (render_sprite_entry *spr_it = &render_sprite_entries[layer][0];
          spr_it < spr_it_end; ++spr_it) {
-      sprite const *spr = spr_it->spr;
+      sprite const *const spr = spr_it->spr;
       if (spr->scr_y > scanline_y || spr->scr_y + sprite_height <= scanline_y) {
         // not within scanline
         continue;

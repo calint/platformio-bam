@@ -89,7 +89,7 @@ public:
 
   // deallocates the instances that have been freed
   auto apply_free() -> void {
-    for (Type **it = del_bgn_; it < del_ptr_; it++) {
+    for (Type **it = del_bgn_; it < del_ptr_; ++it) {
       Type *inst_deleted = *it;
       --alloc_ptr_;
       Type *inst_to_move = *alloc_ptr_;

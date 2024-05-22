@@ -73,7 +73,7 @@ protected:
   }
 
 private:
-  auto fs_write(FS &fs, char const *path, char const *buf, int buf_len,
+  auto fs_write(FS &fs, char const *path, char const *buf, int const buf_len,
                 char const *mode) -> bool {
     File file = fs.open(path, mode);
     if (!file) {
@@ -84,7 +84,7 @@ private:
     return n == buf_len;
   }
 
-  auto fs_read(FS &fs, char const *path, char *buf, int buf_len) -> int {
+  auto fs_read(FS &fs, char const *path, char *buf, int const buf_len) -> int {
     File file = fs.open(path);
     if (!file) {
       return -1;
