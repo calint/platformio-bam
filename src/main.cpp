@@ -3,7 +3,7 @@
 //
 // note. design decision of 'hpp' source files
 // * the program is one file split into logical sections using includes
-// * all globals are declared 'static'
+// * globals are declared 'static'
 // * increases optimization opportunities for the compiler
 // * directory 'game' contains the user code that interfaces with 'engine.hpp'
 // * order of include and content of 'defs.hpp', 'game_state.hpp', 'main.hpp'
