@@ -65,9 +65,15 @@ public:
     return true;
   }
 
-  auto sprite_img() -> sprite_img { return frames_[current_frame_ix_].spr_img; }
+  auto sprite_img() const -> sprite_img {
+    return frames_[current_frame_ix_].spr_img;
+  }
 
-  auto displace_x() -> float { return frames_[current_frame_ix_].displace_x; }
+  auto displace_x() const -> float {
+    return frames_[current_frame_ix_].displace_x;
+  }
 
-  auto displace_y() -> float { return frames_[current_frame_ix_].displace_y; }
+  auto displace_y() const -> float {
+    return frames_[current_frame_ix_].displace_y;
+  }
 };

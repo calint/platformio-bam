@@ -10,7 +10,6 @@ Checks: '
     -cppcoreguidelines-owning-memory, # does not work well with o1store
     -cppcoreguidelines-pro-type-vararg, # using printf
     -cppcoreguidelines-init-variables, # too many false positives, relying on compiler
-    -cppcoreguidelines-pro-type-const-cast, # one such necessary in device implementation ESP32-2432S028R
     -cppcoreguidelines-avoid-non-const-global-variables, # globals ok
     -cppcoreguidelines-narrowing-conversions, # ok
     -cppcoreguidelines-avoid-c-arrays, # multidimensional arrays are awkward
@@ -31,6 +30,5 @@ Checks: '
     -google-readability-casting, # int(x) is more readable than static_cast<int>(x)
     misc-*,
     -misc-non-private-member-variables-in-classes, # public members ok
-    -misc-const-correctness, # reports ESP_ERROR_CHECK
     -misc-no-recursion, # allow recursions
 '
