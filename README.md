@@ -37,7 +37,7 @@ a.k.a. cheap-black-device (CBD)
 ## development environment
 * Visual Code 1.89.1
 * PlatformIO 6.1.15
-* Espressif 32 (6.6.0) > Espressif ESP32 Dev Module
+* Espressif 32 (6.7.0) > Espressif ESP32 Dev Module
 * esp-idf 4.4 patch 6
 * packages:
   - framework-arduinoespressif32 @ 3.20014.231204 (2.0.14) 
