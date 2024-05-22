@@ -59,20 +59,29 @@ public:
     return fs_write(SPIFFS, path, buf, buf_len, mode);
   }
 
+  // returns true if SD card present and initiated
+  auto sd_present() -> bool { return sd_present_; }
+
+  // returns true is SPIFFS present and initiated
+  auto spiffs_present() -> bool { return spiffs_present_; }
+
 protected:
-  // initiate SD and SPIFFS, print if not available
+  // initiate SD and SPIFFS
   auto init_sd_spiffs(SPIClass &spi, uint8_t sd_cs,
                       int sd_bus_freq = 4000000) -> void {
-    if (!SD.begin(sd_cs, spi, sd_bus_freq)) {
-      printf("* no SD\n");
+    if (SD.begin(sd_cs, spi, sd_bus_freq)) {
+      sd_present_ = true;
     }
 
-    if (!SPIFFS.begin()) {
-      printf("* no SPIFFS\n");
+    if (SPIFFS.begin()) {
+      spiffs_present_ = true;
     }
   }
 
 private:
+  bool sd_present_ = false;
+  bool spiffs_present_ = false;
+
   auto fs_write(FS &fs, char const *path, char const *buf, int const buf_len,
                 char const *mode) -> bool {
     File file = fs.open(path, mode);
