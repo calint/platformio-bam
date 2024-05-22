@@ -147,6 +147,11 @@ auto setup() -> void {
 
   device.init();
 
+  printf("------------------- peripherals --------------------------\n");
+  printf("           SD card: %s\n", device.sd_present() ? "present" : "n/a");
+  printf("            SPIFFS: %s\n",
+         device.spiffs_present() ? "present" : "n/a");
+
   dma_buffers.init();
 
   collision_map = static_cast<sprite_ix *>(heap_caps_calloc(
