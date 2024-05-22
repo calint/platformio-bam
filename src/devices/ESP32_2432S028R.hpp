@@ -42,7 +42,8 @@ public:
     pressure = touch.zRaw;
   }
 
-  auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
+  auto dma_write_bytes(uint8_t const *data,
+                       uint32_t const len) -> void override {
     // note. TFT_eSPI requires non-const data in case bytes are swapped
     // note. pushPixelsDMA(...) waits for previous transaction to complete
     display.pushPixelsDMA(

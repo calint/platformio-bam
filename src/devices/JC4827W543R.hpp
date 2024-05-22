@@ -203,7 +203,8 @@ public:
     async_busy_ = false;
   }
 
-  auto dma_write_bytes(uint8_t const *data, uint32_t len) -> void override {
+  auto dma_write_bytes(uint8_t const *data,
+                       uint32_t const len) -> void override {
     dma_wait_for_completion();
 
     transaction_async_.tx_buffer = data;
@@ -228,7 +229,7 @@ private:
   auto bus_chip_select_enable() -> void { digitalWrite(TFT_CS, LOW); }
   auto bus_chip_select_disable() -> void { digitalWrite(TFT_CS, HIGH); }
 
-  auto bus_write_c8(uint8_t cmd) -> void {
+  auto bus_write_c8(uint8_t const cmd) -> void {
     transaction_.flags = SPI_TRANS_MULTILINE_CMD | SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
     transaction_.addr = static_cast<uint32_t>(cmd) << 8;
@@ -237,7 +238,7 @@ private:
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
-  auto bus_write_c8d8(uint8_t cmd, uint8_t data) -> void {
+  auto bus_write_c8d8(uint8_t const cmd, uint8_t const data) -> void {
     transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                          SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
@@ -247,7 +248,8 @@ private:
     ESP_ERROR_CHECK(spi_device_polling_transmit(device_handle_, &transaction_));
   }
 
-  auto bus_write_c8d16d16(uint8_t cmd, uint16_t data1, uint16_t data2) -> void {
+  auto bus_write_c8d16d16(uint8_t const cmd, uint16_t const data1,
+                          uint16_t const data2) -> void {
     transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                          SPI_TRANS_MULTILINE_ADDR;
     transaction_.cmd = 0x02;
@@ -282,8 +284,8 @@ private:
     bus_write_c8d8(0x36, r);
   }
 
-  auto set_write_address_window(int16_t x, int16_t y, uint16_t w,
-                                uint16_t h) -> void {
+  auto set_write_address_window(int16_t const x, int16_t const y,
+                                uint16_t const w, uint16_t const h) -> void {
     bus_write_c8d16d16(0x2a, x, x + w - 1);
     bus_write_c8d16d16(0x2b, y, y + h - 1);
     bus_write_c8(0x2c);
