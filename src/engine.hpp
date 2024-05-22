@@ -3,13 +3,14 @@
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
+// reviewed: 2024-05-22
 
 #include "o1store.hpp"
 
 #include <cstdint>
 #include <limits>
 
-// palette used when rendering tile_imgs
+// palette used when rendering tile images
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note. lower and higher byte swapped
 static constexpr uint16_t palette_tiles[256]{
@@ -22,7 +23,7 @@ static constexpr uint16_t palette_sprites[256]{
 };
 
 // images used by tile map
-static constexpr uint8_t tile_imgs[tile_imgs_count][tile_width * tile_height]{
+static constexpr uint8_t tile_imgs[tile_img_count][tile_width * tile_height]{
 #include "game/resources/tile_imgs.hpp"
 };
 
@@ -38,7 +39,7 @@ static float tile_map_y = 0;
 static float tile_map_dy = 0;
 
 // images used by sprites
-static constexpr uint8_t sprite_imgs[sprite_imgs_count]
+static constexpr uint8_t sprite_imgs[sprite_img_count]
                                     [sprite_width * sprite_height]{
 #include "game/resources/sprite_imgs.hpp"
                                     };
@@ -61,11 +62,11 @@ public:
   int16_t scr_y = 0;
   uint8_t layer = 0;
   // note. lower 'layer' number is rendered first
-  //       number of layers specified by 'sprites_layers'
+  //       number of layers specified by 'sprite_layers'
   uint8_t flip = 0; // bits: horiz: 0b01, vert: 0b10
 };
 
-using sprites_store = o1store<sprite, sprites_count, 1>;
+using sprites_store = o1store<sprite, sprite_count, 1>;
 
 static sprites_store sprites{};
 
@@ -102,7 +103,7 @@ public:
     object **const end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
-    for (object **it = allocated_list(); it < end; it++) {
+    for (object **it = allocated_list(); it < end; ++it) {
       object *obj = *it;
       if (obj->update()) {
         obj->~object();
@@ -115,7 +116,7 @@ public:
     object **const end = allocated_list_end();
     // note. important to get the 'end' outside the loop because objects may
     //       allocate new objects in the loop and that would change the 'end'
-    for (object **it = allocated_list(); it < end; it++) {
+    for (object **it = allocated_list(); it < end; ++it) {
       object *obj = *it;
       obj->pre_render();
     }

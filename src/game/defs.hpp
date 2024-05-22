@@ -3,13 +3,16 @@
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
+// reviewed: 2024-05-22
 
 #include <cstdint>
 
+// requested display mode
 // 0: portrait, 1: landscape
 static constexpr uint8_t display_orientation = 0;
 
-// engine time step in milliseconds 0 to use calculated
+// engine time step in milliseconds
+// 0 to calculate dt based on previous frame time
 static constexpr int clk_locked_dt_ms = BAM_TIME_STEP_MS;
 
 // update rate of fps calculation
@@ -17,7 +20,7 @@ static constexpr int clk_locked_dt_ms = BAM_TIME_STEP_MS;
 static constexpr int clk_fps_update_ms = 2000;
 
 // number of sprite images
-static constexpr int sprite_imgs_count = 256;
+static constexpr int sprite_img_count = 256;
 // defined in 'resources/sprite_imgs.hpp'
 
 // type used to index in the 'sprite_imgs' array
@@ -29,12 +32,11 @@ static constexpr int sprite_height = 16;
 // note. when changing dimensions update 'png-to-resources/update.sh'
 
 // number of layers of sprites
-// note. number of layers deteriorates performance
 // 0: ground, 1: air, 2: overlay
-static constexpr int sprites_layers = 3;
+static constexpr int sprite_layers = 3;
 
 // number of tile images
-static constexpr int tile_imgs_count = 256;
+static constexpr int tile_img_count = 256;
 // defined in 'resources/tile_imgs.hpp'
 
 // type used to index in the 'tile_imgs' array from 'tile_map'
@@ -48,9 +50,9 @@ static constexpr int tile_height = 16;
 //
 // example configuration for more sprites and tile_imgs
 //
-// static constexpr int sprite_imgs_count = 512;
+// static constexpr int sprite_img_count = 512;
 // using sprite_img_ix = uint16_t;
-// static constexpr int tile_imgs_count = 512;
+// static constexpr int tile_img_count = 512;
 // using tile_img_ix = uint16_t;
 
 // tile map dimension
@@ -65,7 +67,7 @@ using sprite_ix = uint8_t;
 // sprites available for allocation using 'sprites'
 // note. maximum is one less than limit of type 'sprite_ix' due to the reserved
 //       sprite index (maximum limit) used at collision detection
-static constexpr int sprites_count = 255;
+static constexpr int sprite_count = 255;
 
 // objects available for allocation using 'objects'
 static constexpr int objects_count = 255;
@@ -75,7 +77,7 @@ static constexpr int random_seed = 0;
 
 // enumeration of game object classes
 // defined in 'objects/*'
-// note. note 'enum class' because of code ergonomics
+// note. not 'enum class' because of code ergonomics
 enum object_class : uint8_t {
   hero_cls,
   bullet_cls,

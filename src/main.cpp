@@ -206,9 +206,9 @@ struct render_sprite_entry {
 };
 
 // list of sprites to render by layer
-static render_sprite_entry render_sprite_entries[sprites_layers][sprites_count];
+static render_sprite_entry render_sprite_entries[sprite_layers][sprite_count];
 // pointers to end of list in 'render_sprite_entries'
-static render_sprite_entry *render_sprite_entries_end[sprites_layers];
+static render_sprite_entry *render_sprite_entries_end[sprite_layers];
 
 static inline auto printf_render_sprite_entries_ram_usage() -> void {
   printf("    render sprites: %zu B\n",
@@ -218,7 +218,7 @@ static inline auto printf_render_sprite_entries_ram_usage() -> void {
 // only used in 'render(...)'
 static inline auto build_render_sprites_lists() -> void {
   // set end of lists pointers to start of lists
-  for (int i = 0; i < sprites_layers; i++) {
+  for (int i = 0; i < sprite_layers; i++) {
     render_sprite_entries_end[i] = &render_sprite_entries[i][0];
   }
   // build entries lists
@@ -283,7 +283,7 @@ render_scanline(uint16_t *render_buf_ptr, sprite_ix *collision_map_row_ptr,
   // note. although grossly inefficient algorithm the DMA is mostly busy while
   //       rendering
 
-  for (int layer = 0; layer < sprites_layers; layer++) {
+  for (int layer = 0; layer < sprite_layers; layer++) {
     render_sprite_entry *spr_it_end = render_sprite_entries_end[layer];
     for (render_sprite_entry *spr_it = &render_sprite_entries[layer][0];
          spr_it < spr_it_end; ++spr_it) {

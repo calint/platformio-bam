@@ -13,6 +13,7 @@
 //
 
 // reviewed: 2024-05-01
+// reviewed: 2024-05-22
 
 template <typename Type, const int Size, const int StoreId = 0,
           const int InstanceSizeInBytes = 0>
@@ -49,13 +50,13 @@ public:
 
     // write pointers to instances in the 'free' list
     Type *all_it = all_;
-    for (Type **free_it = free_bgn_; free_it < free_end_; free_it++) {
+    for (Type **free_it = free_bgn_; free_it < free_end_; ++free_it) {
       *free_it = all_it;
       if (InstanceSizeInBytes) {
         all_it = reinterpret_cast<Type *>(reinterpret_cast<char *>(all_it) +
                                           InstanceSizeInBytes);
       } else {
-        all_it++;
+        ++all_it;
       }
     }
   }
@@ -67,12 +68,12 @@ public:
       return nullptr;
     }
     Type *inst = *free_ptr_;
-    free_ptr_++;
+    ++free_ptr_;
     *alloc_ptr_ = inst;
     inst->alloc_ptr = alloc_ptr_;
     // note. needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
     // written
-    alloc_ptr_++;
+    ++alloc_ptr_;
     return inst;
   }
 
@@ -83,18 +84,18 @@ public:
       exit(1);
     }
     *del_ptr_ = inst;
-    del_ptr_++;
+    ++del_ptr_;
   }
 
   // deallocates the instances that have been freed
   auto apply_free() -> void {
     for (Type **it = del_bgn_; it < del_ptr_; it++) {
       Type *inst_deleted = *it;
-      alloc_ptr_--;
+      --alloc_ptr_;
       Type *inst_to_move = *alloc_ptr_;
       inst_to_move->alloc_ptr = inst_deleted->alloc_ptr;
       *(inst_deleted->alloc_ptr) = inst_to_move;
-      free_ptr_--;
+      --free_ptr_;
       *free_ptr_ = inst_deleted;
     }
     del_ptr_ = del_bgn_;

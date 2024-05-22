@@ -1,6 +1,8 @@
 #pragma once
 // abstraction of the device used by 'main.cpp'
 
+// reviewed: 2024-05-22
+
 #include <SD.h>
 #include <SPI.h>
 #include <SPIFFS.h>
@@ -15,7 +17,8 @@ public:
   // check if display is touched
   virtual auto display_is_touched() -> bool = 0;
 
-  // if touched, get x, y with values between 0 and 4096 and pressure
+  // if touched, get x, y values between 0 and 4095
+  // pressure between 0 and 255
   virtual auto display_get_touch(uint16_t &x, uint16_t &y,
                                  uint8_t &pressure) -> void = 0;
 
@@ -28,26 +31,28 @@ public:
   // wait for previous DMA transaction to complete or just return if none active
   virtual auto dma_wait_for_completion() -> void = 0;
 
-  // read from SD a maximum of 'buf_len' into 'buf' from 'path'
+  // read from SD path 'path' maximum 'buf_len' into 'buf'
   // returns number of bytes read or -1 if failed
   virtual auto sd_read(char const *path, char *buf, int buf_len) -> int {
     return fs_read(SD, path, buf, buf_len);
   }
 
-  // write to SD 'buf_len' number of bytes from 'buf' to 'path'
+  // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for write
+  // or append
   // returns true if ok
   virtual auto sd_write(char const *path, char const *buf, int buf_len,
                         char const *mode) -> bool {
     return fs_write(SD, path, buf, buf_len, mode);
   }
 
-  // read from SPIFFS a maximum of 'buf_len' into 'buf' from 'path'
+  // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
   // returns number of bytes read or -1 if failed
   virtual auto spiffs_read(char const *path, char *buf, int buf_len) -> int {
     return fs_read(SPIFFS, path, buf, buf_len);
   }
 
-  // write to SPIFFS 'buf_len' number of bytes from 'buf' to 'path'
+  // write to SPIFFS 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
+  // write or append
   // returns true if ok
   virtual auto spiffs_write(char const *path, char const *buf, int buf_len,
                             char const *mode) -> bool {

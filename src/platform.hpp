@@ -3,8 +3,10 @@
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
+// reviewed: 2024-05-22
 
 // display dimensions depending on orientation
+// using device natural orientation and requested orientation
 static constexpr int display_width =
     display_orientation == TFT_ORIENTATION ? TFT_WIDTH : TFT_HEIGHT;
 static constexpr int display_height =
