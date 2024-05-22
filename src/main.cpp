@@ -1,6 +1,7 @@
 //
 // bam game platform
 //
+
 // note. design decision of 'hpp' source files
 // * the program is one file split into logical sections using includes
 // * globals are declared 'static'
@@ -18,6 +19,8 @@
 // note. const declarations are right-to-left convention
 
 // note. increments and decrements done prefix for compatibility with iterators
+
+// note. auto is used when type declaration is too verbose such as iterators
 
 // note. why some buffers are allocated at 'setup'
 // Due to a technical limitation, the maximum statically allocated DRAM usage is
