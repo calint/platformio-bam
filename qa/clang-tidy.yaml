@@ -14,7 +14,6 @@ Checks: '
     -cppcoreguidelines-narrowing-conversions, # ok
     -cppcoreguidelines-avoid-c-arrays, # multidimensional arrays are awkward
     -cppcoreguidelines-prefer-member-initializer, # not always preferred regarding readability
-    -cppcoreguidelines-special-member-functions, # cleaner
     -cppcoreguidelines-pro-type-static-cast-downcast, # necessary without RTTI
     bugprone-*,
     -bugprone-easily-swappable-parameters, # it is ok
