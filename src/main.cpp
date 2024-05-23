@@ -219,7 +219,7 @@ static inline auto printf_render_sprite_entries_ram_usage() -> void {
 }
 
 // only used in 'render(...)'
-static inline auto build_render_sprites_lists() -> void {
+static inline auto update_render_sprite_lists() -> void {
   // set end of lists pointers to start of lists
   for (int i = 0; i < sprite_layer_count; ++i) {
     render_sprite_entries_end[i] = &render_sprite_entries[i][0];
@@ -403,7 +403,7 @@ static auto render(int const x, int const y) -> void {
   uint16_t *render_buf_ptr = dma_buffers.current_buffer();
   // for all lines on display
   int remaining_y = display_height;
-  build_render_sprites_lists();
+  update_render_sprite_lists();
   while (remaining_y) {
     // render from tiles map and sprites to the 'render_buf_ptr'
     int const render_n_tile_lines =
