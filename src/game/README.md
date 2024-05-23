@@ -1,9 +1,9 @@
 # game code
 
-intention:
+## intention
 * developing a toy game using platform-independent engine
 
-table of contents (in include order by program file):
+## table of contents (in include order by program file):
 * `main.hpp` setup initial game state, callbacks from engine, game logic
 * `objects/*` game objects
 * `game_state.hpp` used by game objects and `main.hpp`
@@ -11,7 +11,7 @@ table of contents (in include order by program file):
 * `defs.hpp` constants used by engine, game objects and `main.hpp`
 * `animator.hpp` support class implementing sprite animation
 
-appendix:
+## appendix:
 * `resources-from-png/update.sh` tool for extracting tile and sprite images resources from png files
 * `resources-from-tmx/update.sh` tool for extracting tile map resource
 
