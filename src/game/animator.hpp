@@ -16,6 +16,7 @@ public:
     // displacement of object due to this frame
     float displace_x = 0;
     float displace_y = 0;
+    // index in sprite images
     sprite_img_ix spr_img_ix = 0;
   };
 
