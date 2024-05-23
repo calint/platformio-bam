@@ -5,16 +5,18 @@
 class animator final {
 public:
   struct frame final {
-    constexpr frame(sprite_img const _sprite_img, clk::time const _duration_ms,
-                    float const _displace_x, float const _displace_y)
-        : spr_img{_sprite_img}, duration_ms{_duration_ms},
-          displace_x{_displace_x}, displace_y{_displace_y} {}
+    constexpr frame(sprite_img_ix const _sprite_img_ix,
+                    clk::time const _duration_ms, float const _displace_x,
+                    float const _displace_y)
+        : duration_ms{_duration_ms}, displace_x{_displace_x},
+          displace_y{_displace_y}, spr_img_ix{_sprite_img_ix} {}
+    // note. C++11 requires constructor
 
-    sprite_img spr_img = nullptr;
     clk::time duration_ms = 0;
     // displacement of object due to this frame
     float displace_x = 0;
     float displace_y = 0;
+    sprite_img_ix spr_img_ix = 0;
   };
 
 private:
@@ -66,7 +68,7 @@ public:
   }
 
   auto sprite_img() const -> sprite_img {
-    return frames_[current_frame_ix_].spr_img;
+    return &sprite_imgs[frames_[current_frame_ix_].spr_img_ix][0];
   }
 
   auto displace_x() const -> float {

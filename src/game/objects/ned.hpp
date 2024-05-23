@@ -7,10 +7,10 @@
 #include "../animator.hpp"
 
 static constexpr animator::frame ned_animation_walk[]{
-    {&sprite_imgs[48][0], 150, 2, 0},
-    {&sprite_imgs[49][0], 150, 2, 0},
-    {&sprite_imgs[50][0], 150, 2, 0},
-    {&sprite_imgs[51][0], 150, 2, 0},
+    {48, 150, 2, 0},
+    {49, 150, 2, 0},
+    {50, 150, 2, 0},
+    {51, 150, 2, 0},
 };
 
 class ned final : public game_object {

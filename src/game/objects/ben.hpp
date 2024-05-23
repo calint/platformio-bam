@@ -7,10 +7,10 @@
 #include "../animator.hpp"
 
 static constexpr animator::frame ben_animation_walk[]{
-    {&sprite_imgs[32][0], 300, 2, 0},
-    {&sprite_imgs[33][0], 300, 2, 0},
-    {&sprite_imgs[34][0], 300, 2, 0},
-    {&sprite_imgs[35][0], 300, 2, 0},
+    {32, 300, 2, 0},
+    {33, 300, 2, 0},
+    {34, 300, 2, 0},
+    {35, 300, 2, 0},
 };
 
 class ben final : public game_object {

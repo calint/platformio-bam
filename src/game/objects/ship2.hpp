@@ -7,8 +7,8 @@
 #include "../animator.hpp"
 
 static constexpr animator::frame ship2_animation[]{
-    {&sprite_imgs[64][0], 500, 0, 0},
-    {&sprite_imgs[65][0], 500, 0, 0},
+    {64, 500, 0, 0},
+    {65, 500, 0, 0},
 };
 
 class ship2 final : public game_object {
