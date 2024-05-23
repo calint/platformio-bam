@@ -11,7 +11,7 @@ class ufo2 final : public game_object {
   sprites_2x2 sprs;
 
 public:
-  ufo2() : game_object{ufo2_cls}, sprs{this, 10, 1} {
+  ufo2() : game_object{cls_ufo2}, sprs{this, 10, 1} {
     col_bits = cb_hero;
     col_mask = cb_enemy | cb_enemy_bullet;
 

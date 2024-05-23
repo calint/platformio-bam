@@ -8,7 +8,7 @@ class fragment final : public game_object {
 public:
   clk::time die_at_ms = 0;
 
-  fragment() : game_object{fragment_cls} {
+  fragment() : game_object{cls_fragment} {
     col_bits = cb_fragment;
     col_mask = cb_none;
 

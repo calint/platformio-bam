@@ -15,7 +15,7 @@ class ship2 final : public game_object {
   animator animator_{};
 
 public:
-  ship2() : game_object{ship2_cls} {
+  ship2() : game_object{cls_ship2} {
     col_bits = cb_hero;
     col_mask = cb_enemy_bullet;
 

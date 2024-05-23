@@ -79,17 +79,17 @@ static constexpr int random_seed = 0;
 // defined in 'objects/*'
 // note. not 'enum class' because of code ergonomics
 enum object_class : uint8_t {
-  hero_cls,
-  bullet_cls,
-  dummy_cls,
-  fragment_cls,
-  ship1_cls,
-  ship2_cls,
-  upgrade_cls,
-  upgrade_picked_cls,
-  ufo2_cls,
-  ben_cls,
-  ned_cls
+  cls_hero,
+  cls_bullet,
+  cls_dummy,
+  cls_fragment,
+  cls_ship1,
+  cls_ship2,
+  cls_upgrade,
+  cls_upgrade_picked,
+  cls_ufo2,
+  cls_ben,
+  cls_ned
 };
 
 // size that fits any instance of game object

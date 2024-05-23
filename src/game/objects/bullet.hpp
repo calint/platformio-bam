@@ -7,7 +7,7 @@
 
 class bullet final : public game_object {
 public:
-  bullet() : game_object{bullet_cls} {
+  bullet() : game_object{cls_bullet} {
     col_bits = cb_enemy_bullet;
     col_mask = cb_hero;
     damage = 1;

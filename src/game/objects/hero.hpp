@@ -18,7 +18,7 @@ class hero final : public game_object {
   static constexpr clk::time upgrade_deploy_interval_ms = 10000;
 
 public:
-  hero() : game_object{hero_cls} {
+  hero() : game_object{cls_hero} {
     col_bits = cb_hero;
     col_mask = cb_enemy | cb_enemy_bullet;
 

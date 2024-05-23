@@ -19,7 +19,7 @@ class ned final : public game_object {
 public:
   int8_t moving_direction = 0; // 0: still  1: right  -1s: left
 
-  ned() : game_object{ned_cls} {
+  ned() : game_object{cls_ned} {
     animator_.init(ned_animation_walk,
                    sizeof(ned_animation_walk) / sizeof(animator::frame), false);
     spr = sprites.alloc();

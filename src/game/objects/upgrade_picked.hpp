@@ -8,7 +8,7 @@ class upgrade_picked final : public game_object {
   clk::time death_at_ms = 0;
 
 public:
-  upgrade_picked() : game_object{upgrade_picked_cls} {
+  upgrade_picked() : game_object{cls_upgrade_picked} {
     spr = sprites.alloc();
     spr->obj = this;
     spr->img = sprite_imgs[9];

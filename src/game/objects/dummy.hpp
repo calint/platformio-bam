@@ -6,7 +6,7 @@
 
 class dummy final : public game_object {
 public:
-  dummy() : game_object{dummy_cls} {}
+  dummy() : game_object{cls_dummy} {}
 
   auto update() -> bool override {
     if (game_object::update()) {

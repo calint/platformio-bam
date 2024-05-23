@@ -18,7 +18,7 @@ class ben final : public game_object {
   uint8_t moving_direction = 0; // 0: still  1: right  2: left
 
 public:
-  ben() : game_object{ben_cls} {
+  ben() : game_object{cls_ben} {
     animator_.init(ben_animation_walk,
                    sizeof(ben_animation_walk) / sizeof(animator::frame), false);
     moving_direction = 1;

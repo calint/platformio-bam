@@ -6,7 +6,7 @@
 
 class ship1 final : public game_object {
 public:
-  ship1() : game_object{ship1_cls} {
+  ship1() : game_object{cls_ship1} {
     col_bits = cb_hero;
     col_mask = cb_enemy_bullet;
 

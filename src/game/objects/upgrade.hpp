@@ -7,7 +7,7 @@
 
 class upgrade final : public game_object {
 public:
-  upgrade() : game_object{upgrade_cls} {
+  upgrade() : game_object{cls_upgrade} {
     col_bits = cb_upgrade;
     col_mask = cb_enemy_bullet;
 
