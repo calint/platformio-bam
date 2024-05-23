@@ -128,6 +128,7 @@ auto setup() -> void {
          efuse_hal_get_minor_chip_version());
   printf("             cores: %u\n", ESP.getChipCores());
   printf("              freq: %u MHz\n", ESP.getCpuFreqMHz());
+  printf("           esp-idf: %s\n", esp_get_idf_version());
   printf("            screen: %u x %u px\n", display_width, display_height);
   printf("     free heap mem: %u B\n", ESP.getFreeHeap());
   printf("largest free block: %u B\n", ESP.getMaxAllocHeap());
