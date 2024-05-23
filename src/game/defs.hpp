@@ -33,7 +33,7 @@ static constexpr int sprite_height = 16;
 
 // number of layers of sprites
 // 0: ground, 1: air, 2: overlay
-static constexpr int sprite_layers = 3;
+static constexpr int sprite_layer_count = 3;
 
 // number of tile images
 static constexpr int tile_img_count = 256;
@@ -70,7 +70,7 @@ using sprite_ix = uint8_t;
 static constexpr int sprite_count = 255;
 
 // objects available for allocation using 'objects'
-static constexpr int objects_count = 255;
+static constexpr int object_count = 255;
 
 // used by 'engine.hpp' as seed for random numbers
 static constexpr int random_seed = 0;

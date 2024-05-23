@@ -62,7 +62,7 @@ public:
   int16_t scr_y = 0;
   uint8_t layer = 0;
   // note. lower 'layer' number is rendered first
-  //       number of layers specified by 'sprite_layers'
+  //       number of layers specified by 'sprite_layer_count'
   uint8_t flip = 0; // bits: horiz: 0b01, vert: 0b10
 };
 
@@ -95,7 +95,7 @@ public:
 };
 
 using object_store =
-    o1store<object, objects_count, 2, object_instance_max_size_B>;
+    o1store<object, object_count, 2, object_instance_max_size_B>;
 
 class objects : public object_store {
 public:
