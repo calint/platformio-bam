@@ -16,7 +16,7 @@
 ![export to png](readme-2.png)
 
 ## extracting resources
-script `update.sh` will overwrite files in `game/resources/`
+script `update.sh` will overwrite files in `../resources/`
 
 if necessary, change size of tiles and sprites in `update.sh`
 
