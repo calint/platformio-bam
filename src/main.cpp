@@ -144,14 +144,15 @@ auto setup() -> void {
   printf("          tile map: %zu B\n", sizeof(tile_map));
   printf("           sprites: %zu B\n", sizeof(sprites));
   printf("           objects: %zu B\n", sizeof(objects));
+
   printf_render_sprite_entries_ram_usage();
 
   device.init();
 
   printf("------------------- peripherals --------------------------\n");
-  printf("           SD card: %s\n", device.sd_present() ? "present" : "n/a");
+  printf("           SD card: %s\n", device.sd_available() ? "present" : "n/a");
   printf("            SPIFFS: %s\n",
-         device.spiffs_present() ? "present" : "n/a");
+         device.spiffs_available() ? "present" : "n/a");
 
   dma_buffers.init();
 

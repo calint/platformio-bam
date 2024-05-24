@@ -60,10 +60,10 @@ public:
   }
 
   // returns true if SD card present and initiated
-  auto sd_present() -> bool { return sd_present_; }
+  auto sd_available() -> bool { return sd_present_; }
 
   // returns true is SPIFFS present and initiated
-  auto spiffs_present() -> bool { return spiffs_present_; }
+  auto spiffs_available() -> bool { return spiffs_present_; }
 
 protected:
   // initiate SD and SPIFFS
