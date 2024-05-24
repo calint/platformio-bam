@@ -2,7 +2,7 @@
 
 * `game_object` extends `object` defined in `engine.hpp`
 * contains attributes and behavior common to most objects
-* provides overridable functions for custom logic at every step in the game loop
+* provides overridable functions for custom logic
 
 ## attributes
 
@@ -19,7 +19,7 @@
 
 ### related to collisions
 * health: `health`
-* damage inflicted on collision: `damage`
+* damage inflicted on other object at collision: `damage`
 * engine performs collision detection between sprites on screen if a bitwise AND operation involving `col_bits` from an object and `col_mask` from another object is non-zero
 * example:
   - if `col_mask` of object A bitwise AND with `col_bits` of object B is non-zero then object A `col_with` pointer is set to object B
@@ -66,7 +66,7 @@
 * called from `update` if game object is in collision
 * returns `true` if object has died
 * default implementation is to reduce `health` with the `damage` caused by the colliding object
-* if `health` is zero or less then calls `on_death_by_collision` and returns `true`
+* if `health` is zero or less then call `on_death_by_collision` and return `true`
 
 ### on_death_by_collision
 * called from `on_collision` if game object has died due to collision damage
