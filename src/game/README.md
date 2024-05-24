@@ -11,7 +11,7 @@
 * `defs.hpp` constants used by engine, game objects and `main.hpp`
 * `animator.hpp` support class implementing sprite animation
 
-## appendix:
+## appendix
 * `resources-from-png/update.sh` tool for extracting tile and sprite images resources from png files
 * `resources-from-tmx/update.sh` tool for extracting tile map resource
 
