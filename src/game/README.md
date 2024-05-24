@@ -9,7 +9,7 @@
 * `game_state.hpp` used by game objects and `main.hpp`
 * `resources/*` partial files defining tiles, sprites, palettes and tile map
 * `defs.hpp` constants used by engine, game objects and `main.hpp`
-* `animator.hpp` support class implementing sprite animation
+* `animator.hpp` support class that implements sprite animation
 
 ## appendix
 * `resources-from-png/update.sh` tool for extracting tile and sprite images resources from png files
