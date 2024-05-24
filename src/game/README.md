@@ -36,7 +36,7 @@
 
 ## resources/*
 * `tile_map.hpp` size defined in `defs.hpp`
-* `tiles.hpp`, `sprite_imgs.hpp` and `palette_*.hpp` generated from png files by tool `png-to-resources/extract.sh`
+* `tiles_imgs.hpp`, `sprite_imgs.hpp` and `palette_*.hpp` generated from png files by tool `resources-from-png/update.sh`
 * 256 tile and 256 sprite images, 16 x 16 pixels, are default settings in `defs.hpp`
 * sprite and tile images are constant data stored in program memory
 * separate palettes for tiles and sprites
