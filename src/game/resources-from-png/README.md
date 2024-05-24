@@ -20,7 +20,7 @@ script `update.sh` will overwrite files in `../resources/`
 
 if necessary, change size of tiles and sprites in `update.sh`
 
-note. check that transparency pixel is index 0
+_note: check that transparency pixel is index 0_
 
 ## current resources
 ### tiles
