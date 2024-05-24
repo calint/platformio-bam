@@ -3,7 +3,7 @@
 ## intention
 * developing a toy game using platform-independent engine
 
-## table of contents (in include order by program file):
+## table of contents
 * `main.hpp` setup initial game state, callbacks from engine, game logic
 * `objects/*` game objects
 * `game_state.hpp` used by game objects and `main.hpp`
