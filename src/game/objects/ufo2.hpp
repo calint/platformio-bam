@@ -8,41 +8,41 @@
 #include "utils.hpp"
 
 class ufo2 final : public game_object {
-  sprites_2x2 sprs;
+    sprites_2x2 sprs;
 
-public:
-  ufo2() : game_object{cls_ufo2}, sprs{this, 10, 1} {
-    col_bits = cb_hero;
-    col_mask = cb_enemy | cb_enemy_bullet;
+  public:
+    ufo2() : game_object{cls_ufo2}, sprs{this, 10, 1} {
+        col_bits = cb_hero;
+        col_mask = cb_enemy | cb_enemy_bullet;
 
-    health = 100;
-  }
-
-  auto pre_render() -> void override { sprs.pre_render(this); }
-
-  auto update() -> bool override {
-    if (game_object::update()) {
-      return true;
+        health = 100;
     }
-    if (y > (display_height + sprite_height)) {
-      return true;
+
+    auto pre_render() -> void override { sprs.pre_render(this); }
+
+    auto update() -> bool override {
+        if (game_object::update()) {
+            return true;
+        }
+        if (y > (display_height + sprite_height)) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  auto on_collision(game_object *obj) -> bool override {
-    ship2 *shp = new (objects.alloc()) ship2{};
-    shp->x = obj->x;
-    shp->y = obj->y - sprite_height;
-    shp->dx = random_float(-100, 100);
-    shp->ddx = -shp->dx * 0.5f;
-    shp->dy = -100;
-    shp->ddy = 100;
+    auto on_collision(game_object* obj) -> bool override {
+        ship2* shp = new (objects.alloc()) ship2{};
+        shp->x = obj->x;
+        shp->y = obj->y - sprite_height;
+        shp->dx = random_float(-100, 100);
+        shp->ddx = -shp->dx * 0.5f;
+        shp->dy = -100;
+        shp->ddy = 100;
 
-    return game_object::on_collision(obj);
-  }
+        return game_object::on_collision(obj);
+    }
 
-  auto on_death_by_collision() -> void override {
-    create_fragments(x, y, 32, 150, 2000);
-  }
+    auto on_death_by_collision() -> void override {
+        create_fragments(x, y, 32, 150, 2000);
+    }
 };

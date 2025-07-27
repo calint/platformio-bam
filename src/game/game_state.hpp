@@ -6,6 +6,6 @@
 // reviewed: 2024-05-22
 
 class game_state final {
-public:
-  bool hero_is_alive = false;
+  public:
+    bool hero_is_alive = false;
 } static game_state{};
