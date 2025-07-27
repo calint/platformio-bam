@@ -232,11 +232,13 @@ static inline auto update_render_sprite_lists() -> void {
   // note. "constexpr int len" does not compile
   for (int i = 0; i < len; ++i, ++spr) {
     if (!spr->img || spr->scr_x <= -sprite_width ||
-        spr->scr_x >= display_width) {
-      // sprite has no image or
-      // is outside the screen x-wise
+        spr->scr_x >= display_width || spr->scr_y <= -sprite_height ||
+        spr->scr_y >= display_height) {
+      // sprite has no image or is outside the screen
       continue;
     }
+    // create an entry at the end of the list of current sprite layer and
+    // increase that pointer
     render_sprite_entry *rse = render_sprite_entries_end[spr->layer];
     rse->ix = i;
     rse->spr = spr;
