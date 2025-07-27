@@ -60,7 +60,7 @@ static ESP32_2432S028R device{};
 
 #else
 #error                                                                         \
-    "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R, DEVICE_ESP32_2432S028R_BB"
+    "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R"
 #endif
 
 // number of scanlines to render before DMA transfer
