@@ -207,7 +207,7 @@ auto loop() -> void {
 
 // sprites to be rendered divided in layers
 struct render_sprite_entry {
-    sprite* spr = nullptr;
+    sprite const* spr = nullptr;
     sprite_ix ix = 0; // index in sprite array
 };
 
@@ -222,6 +222,7 @@ static inline auto printf_render_sprite_entries_ram_usage() -> void {
            sizeof(render_sprite_entries) + sizeof(render_sprite_entries_end));
 }
 
+// build lists of visible sprites based on layer index
 // only used in 'render(...)'
 static inline auto update_render_sprite_lists() -> void {
     // set end of lists pointers to start of lists
@@ -229,7 +230,7 @@ static inline auto update_render_sprite_lists() -> void {
         render_sprite_entries_end[i] = &render_sprite_entries[i][0];
     }
     // build entries lists
-    sprite* spr = sprites.all_list();
+    sprite const* spr = sprites.all_list();
     int const len = sprites.all_list_len();
     // note. "int constexpr len" does not compile
     for (int i = 0; i < len; ++i, ++spr) {
