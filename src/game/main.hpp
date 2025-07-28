@@ -19,6 +19,10 @@
 // then other
 #include "objects/utils.hpp"
 
+// movement of tile map in pixels per second
+static float tile_map_dx = 0;
+static float tile_map_dy = 0;
+
 // callback from 'setup()'
 static auto main_init() -> void {
     printf("------------------- game object sizes --------------------\n");

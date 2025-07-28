@@ -32,11 +32,9 @@ static tile_img_ix tile_map[tile_map_height][tile_map_width]{
 #include "game/resources/tile_map.hpp"
 };
 
-// tile map controls
+// render tile map starting at top left pixel position
 static float tile_map_x = 0;
-static float tile_map_dx = 0;
 static float tile_map_y = 0;
-static float tile_map_dy = 0;
 
 // images used by sprites
 static uint8_t constexpr sprite_imgs[sprite_img_count]
