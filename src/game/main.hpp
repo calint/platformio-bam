@@ -98,7 +98,7 @@ static auto main_wave_5() -> void;
 using wave_func_ptr = auto (*)() -> void;
 
 // eases placement of when waves should happen
-static auto constexpr y_for_screen_percentage(float screen_percentage)
+static auto constexpr y_for_screen_percentage(float const screen_percentage)
     -> float {
     return float(display_height * screen_percentage / 100.0f);
 }
@@ -107,8 +107,8 @@ struct wave_trigger {
     float since_last_wave_y = 0;
     wave_func_ptr func = nullptr;
 
-    constexpr wave_trigger(float const _y, wave_func_ptr const _func)
-        : since_last_wave_y{_y}, func{_func} {}
+    constexpr wave_trigger(float const y, wave_func_ptr const func_ptr)
+        : since_last_wave_y{y}, func{func_ptr} {}
     // note. constructor needed for C++11 to compile
 
 } static constexpr wave_triggers[] = {
