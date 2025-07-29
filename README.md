@@ -1,5 +1,5 @@
-| . | . |
-| - | - |
+| .                                                                                                                                                      | .                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/51fba3c0-08a6-4c6c-8f55-ef64c6cfcafe"></video> | <video width="100%" height="100%" controls src="https://github.com/calint/platformio-bam/assets/1920811/c6bc8561-14d7-4e2f-bc48-a28126c2fc9c"></video> |
 
 ## intention
@@ -35,14 +35,14 @@ a.k.a. cheap-black-device (CBD)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## development environment
-* Visual Code 1.89.1
-* PlatformIO 6.1.15
-* Espressif 32 (6.7.0) > Espressif ESP32 Dev Module
-* esp-idf 4.4.7-dirty
+* Visual Code 1.102.2
+* PlatformIO 6.1.18
+* platform: Espressif 32 (6.11.0) > Espressif ESP32-S3-DevKitM-1
 * packages:
-  - framework-arduinoespressif32 @ 3.20014.231204 (2.0.14) 
+  - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
   - tool-esptoolpy @ 1.40501.0 (4.5.1) 
-  - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
+  - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
+  - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
 * dependencies included in `/lib/`:
   - https://github.com/Bodmer/TFT_eSPI/releases/tag/V2.5.43
   - https://github.com/PaulStoffregen/XPT2046_Touchscreen/releases/tag/v1.4
