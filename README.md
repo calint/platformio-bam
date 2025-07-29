@@ -43,6 +43,7 @@ a.k.a. cheap-black-device (CBD)
 * packages:
   - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
   - tool-esptoolpy @ 1.40501.0 (4.5.1) 
+  - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
   - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
   - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
 * dependencies included in `/lib/`:
