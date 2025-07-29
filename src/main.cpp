@@ -16,7 +16,7 @@
 // variables are used where the bit width of the type is wide enough to fit the
 // largest value
 
-// note. const declarations are right-to-left convention
+// note. const and constexpr declarations are right-to-left convention
 
 // note. increments and decrements done prefix for compatibility with iterators
 
