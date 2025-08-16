@@ -176,11 +176,12 @@ class JC4827W543R final : public device {
         return touch_screen_pressure != 0;
     }
 
-    auto display_get_touch(uint16_t& x, uint16_t& y, uint8_t& pressure)
-        -> void override {
-        x = touch_screen_x;
-        y = touch_screen_y;
-        pressure = touch_screen_pressure;
+    auto display_touch_count() -> uint8_t override { return 1; }
+
+    auto display_get_touch(touch touches[]) -> void override {
+        touches[0].x = touch_screen_x;
+        touches[0].y = touch_screen_y;
+        touches[0].pressure = touch_screen_pressure;
     }
 
     auto dma_is_busy() -> bool override {

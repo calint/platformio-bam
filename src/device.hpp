@@ -9,6 +9,12 @@
 
 class device {
   public:
+    struct touch {
+        uint16_t x;
+        uint16_t y;
+        uint8_t pressure;
+    };
+
     virtual ~device() = default;
 
     // initiate device or abort
@@ -17,10 +23,12 @@ class device {
     // check if display is touched
     virtual auto display_is_touched() -> bool = 0;
 
+    // number of touches read at `display_get_touch`
+    virtual auto display_touch_count() -> uint8_t = 0;
+
     // if touched, get x, y values between 0 and 4095
     // pressure between 0 and 255
-    virtual auto display_get_touch(uint16_t& x, uint16_t& y, uint8_t& pressure)
-        -> void = 0;
+    virtual auto display_get_touch(touch touches[]) -> void = 0;
 
     // wait for previous DMA transaction to complete and make a new transaction
     virtual auto dma_write_bytes(uint8_t const* data, uint32_t len) -> void = 0;

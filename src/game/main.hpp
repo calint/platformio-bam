@@ -5,6 +5,8 @@
 // reviewed: 2005-05-01
 // reviewed: 2005-05-22
 
+// device interface
+#include "../device.hpp"
 // the game state
 #include "game_state.hpp"
 // then the objects
@@ -65,8 +67,8 @@ static auto main_init() -> void {
 }
 
 // callback when screen is touched, happens before 'render(...)'
-static auto main_on_touch(int16_t const x, int16_t const y,
-                          [[maybe_unused]] int16_t const pressure) -> void {
+static auto main_on_touch(device::touch const touches[], uint8_t const count)
+    -> void {
     // keep track of when the previous bullet was fired
     static clk::time last_fire_ms = 0;
 
@@ -76,8 +78,8 @@ static auto main_on_touch(int16_t const x, int16_t const y,
         last_fire_ms = clk.ms;
         if (object* mem = objects.alloc()) {
             bullet* blt = new (mem) bullet{};
-            blt->x = display_x_for_touch(x);
-            blt->y = display_y_for_touch(y);
+            blt->x = display_x_for_touch(touches[0].x);
+            blt->y = display_y_for_touch(touches[0].y);
             blt->dy = -200;
         }
     }

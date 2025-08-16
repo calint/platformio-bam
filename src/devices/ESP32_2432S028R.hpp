@@ -13,7 +13,7 @@ class ESP32_2432S028R final : public device {
     TFT_eSPI display{};
     SPIClass spi3{SPI3_HOST};
     XPT2046_Bitbang touch_screen{TOUCH_MOSI, TOUCH_MISO, TOUCH_SCK, TOUCH_CS};
-    TouchPoint touch{};
+    TouchPoint touch_point{};
 
   public:
     auto init() -> void override {
@@ -30,16 +30,17 @@ class ESP32_2432S028R final : public device {
     }
 
     auto display_is_touched() -> bool override {
-        touch = touch_screen.getTouch();
-        return touch.zRaw != 0;
+        touch_point = touch_screen.getTouch();
+        return touch_point.zRaw != 0;
     }
 
-    auto display_get_touch(uint16_t& x, uint16_t& y, uint8_t& pressure)
-        -> void override {
+    auto display_touch_count() -> uint8_t override { return 1; }
+
+    auto display_get_touch(touch touches[]) -> void override {
         // flip x and y for display orientation
-        x = 4096 - touch.yRaw;
-        y = touch.xRaw;
-        pressure = touch.zRaw;
+        touches[0].x = 4096 - touch_point.yRaw;
+        touches[0].y = touch_point.xRaw;
+        touches[0].pressure = touch_point.zRaw;
     }
 
     auto dma_write_bytes(uint8_t const* data, uint32_t const len)

@@ -195,11 +195,10 @@ auto loop() -> void {
     }
 
     if (device.display_is_touched()) {
-        uint16_t x = 0;
-        uint16_t y = 0;
-        uint8_t pressure = 0;
-        device.display_get_touch(x, y, pressure);
-        main_on_touch(x, y, pressure);
+        uint8_t const touch_count = device.display_touch_count();
+        device::touch touches[touch_count]{};
+        device.display_get_touch(touches);
+        main_on_touch(touches, touch_count);
     }
 
     engine_loop();
