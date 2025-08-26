@@ -1,3 +1,5 @@
+[ ] in JC4827W543C with multi-touch fire sometimes spawns more objects than
+    available causing crash. increase maximum objects
 [x] use common file for JC4827W543 R/C by abstracting common behavior
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
