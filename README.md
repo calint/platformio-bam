@@ -31,7 +31,7 @@ a.k.a. cheap-black-device (CBD) with resistive touch
 * [purchased at](https://www.aliexpress.com/item/1005006729377800.html)
 * [manufacturer](https://www.guition.com)
 * [documentation](https://github.com/lsdlsd88/JC4827W543)
-* [download](http://pan.jczn1688.com/s/zyojx8)
+* [download](http://pan.jczn1688.com/s/zyojx8) (note: http url, not https)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## device JC4827W543C
@@ -44,7 +44,7 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 * [purchased at](https://www.aliexpress.com/item/1005006729377800.html)
 * [manufacturer](https://www.guition.com)
 * [documentation](https://github.com/lsdlsd88/JC4827W543)
-* [download](http://pan.jczn1688.com/s/zyojx8)
+* [download](http://pan.jczn1688.com/s/zyojx8) (note: http url, not https)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## development environment
@@ -63,4 +63,4 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
   - https://github.com/Bodmer/TFT_eSPI/releases/tag/V2.5.43
   - https://github.com/PaulStoffregen/XPT2046_Touchscreen/releases/tag/v1.4
   - https://github.com/TheNitek/XPT2046_Bitbang_Arduino_Library/releases/tag/v2.0.1
-
+  - Touch_GT911 from downloadable documentation "1-Demo/Demo_Arduino/Libraries/Touch_GT911/"
