@@ -23,7 +23,20 @@ a.k.a. cheap-yellow-display (CYD)
 
 ## device JC4827W543R
 
-a.k.a. cheap-black-device (CBD)
+a.k.a. cheap-black-device (CBD) with resistive touch
+
+* display: 272 x 480
+* performance: ~45 frames per second
+
+* [purchased at](https://www.aliexpress.com/item/1005006729377800.html)
+* [manufacturer](https://www.guition.com)
+* [documentation](https://github.com/lsdlsd88/JC4827W543)
+* [download](http://pan.jczn1688.com/s/zyojx8)
+* [community](https://discord.com/channels/630078152038809611/1199730744424153109)
+
+## device JC4827W543C
+
+a.k.a. cheap-black-device (CBD) with capacitive touch
 
 * display: 272 x 480
 * performance: ~45 frames per second
