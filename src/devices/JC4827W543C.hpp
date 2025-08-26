@@ -168,8 +168,11 @@ class JC4827W543C final : public device {
         digitalWrite(TFT_BL, HIGH);
 
         touch_screen.begin();
-        touch_screen.setRotation(ROTATION_RIGHT);
-
+        if (display_orientation == TFT_ORIENTATION) {
+            touch_screen.setRotation(ROTATION_INVERTED);
+        } else {
+            touch_screen.setRotation(ROTATION_RIGHT);
+        }
         spi2.begin(SD_SCK, SD_MISO, SD_MOSI);
 
         init_sd_spiffs(spi2, SD_CS, 80000000);
@@ -192,9 +195,8 @@ class JC4827W543C final : public device {
             touches[i].x = touch_screen.points[i].x;
             touches[i].y = touch_screen.points[i].y;
             touches[i].pressure = touch_screen.points[i].size;
-            //       printf("Touch %u: x = %u, y = %u, size = %u\n", i,
-            //       touches[i].x,
-            //                touches[i].y, touches[i].pressure);
+            // printf("Touch %u: x = %u, y = %u, size = %u\n", i, touches[i].x,
+            //      touches[i].y, touches[i].pressure);
         }
     }
 
