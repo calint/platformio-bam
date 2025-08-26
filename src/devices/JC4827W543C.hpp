@@ -1,16 +1,11 @@
 #pragma once
-// display: NV3041A
-//     bus: QSPI
-
-// code lifted and prettified from Arduino_GFX
-// https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
-// bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
 
 #include "JC4827W543.hpp"
 #include <SPI.h>
 #include <Touch_GT911.h>
 #include <driver/spi_master.h>
 
+/// @brief Implements touch screen for capacitive version
 class JC4827W543C final : public JC4827W543 {
     Touch_GT911 touch_screen{
         TOUCH_SDA,

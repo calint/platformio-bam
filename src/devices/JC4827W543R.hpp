@@ -1,16 +1,11 @@
 #pragma once
-// display: NV3041A
-//     bus: QSPI
-
-// code lifted and prettified from Arduino_GFX
-// https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
-// bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
 
 #include "JC4827W543.hpp"
 #include <SPI.h>
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 
+/// @brief Implements touch screen for resistive version
 class JC4827W543R final : public JC4827W543 {
     XPT2046_Touchscreen touch_screen{TOUCH_CS};
     uint16_t touch_screen_x = 0;
