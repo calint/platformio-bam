@@ -58,6 +58,10 @@ static JC4827W543R device{};
 #include "devices/ESP32_2432S028R.hpp"
 static ESP32_2432S028R device{};
 
+#elif DEVICE_JC4827W543C
+#include "devices/JC4827W543C.hpp"
+static JC4827W543C device{};
+
 #else
 #error                                                                         \
     "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R"
