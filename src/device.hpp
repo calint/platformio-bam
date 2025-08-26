@@ -81,7 +81,7 @@ class device {
             sd_present_ = true;
         }
 
-        if (SPIFFS.begin()) {
+        if (SPIFFS.begin(true)) {
             spiffs_present_ = true;
         }
     }
