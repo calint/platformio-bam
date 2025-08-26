@@ -39,7 +39,7 @@ a.k.a. cheap-black-device (CBD) with resistive touch
 a.k.a. cheap-black-device (CBD) with capacitive touch
 
 * display: 272 x 480
-* performance: ~45 frames per second
+* performance: ~43 frames per second
 
 * [purchased at](https://www.aliexpress.com/item/1005006729377800.html)
 * [manufacturer](https://www.guition.com)

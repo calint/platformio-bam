@@ -1,4 +1,4 @@
-[ ] use common file for JC4827W543 R/C by abstracting common behavior
+[x] use common file for JC4827W543 R/C by abstracting common behavior
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
     default device screen orientation
