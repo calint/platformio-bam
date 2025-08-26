@@ -48,7 +48,7 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
 ## development environment
-* Visual Code 1.102.2
+* Visual Code 1.103.2
 * PlatformIO 6.1.18
 * platforms:
   - Espressif 32 (6.12.0) > Espressif ESP32 Dev Module
