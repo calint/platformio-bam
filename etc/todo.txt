@@ -1,3 +1,6 @@
+[ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
+    read touch values in device source depending on application orientation vs
+    default device screen orientation
 [x] animator.hpp: use sprite image indexes instead of pointers
 [ ] #define O1STORE_DEBUG to check for double free, index out of bounds
 [ ] JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
