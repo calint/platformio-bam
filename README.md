@@ -51,11 +51,11 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 * Visual Code 1.102.2
 * PlatformIO 6.1.18
 * platforms:
-  - Espressif 32 (6.11.0) > Espressif ESP32 Dev Module
-  - Espressif 32 (6.11.0) > Espressif ESP32-S3-DevKitM-1
+  - Espressif 32 (6.12.0) > Espressif ESP32 Dev Module
+  - Espressif 32 (6.12.0) > Espressif ESP32-S3-DevKitM-1
 * packages:
   - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
-  - tool-esptoolpy @ 1.40501.0 (4.5.1) 
+  - tool-esptoolpy @ 2.40900.250804 (4.9.0)
   - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
   - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
   - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
