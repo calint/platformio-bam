@@ -50,7 +50,7 @@ class sprites_2x2 final {
 static auto create_fragments(float const orig_x, float const orig_y,
                              int const count, float const speed,
                              clk::time const life_time_ms) -> void {
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; ++i) {
         fragment* frg = new (objects.alloc()) fragment{};
         frg->die_at_ms = clk.ms + life_time_ms;
         frg->x = orig_x;

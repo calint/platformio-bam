@@ -76,7 +76,7 @@ static auto main_on_touch(device::touch const touches[], uint8_t const count)
     if (clk.ms - last_fire_ms > 125) { // clear stats for this frame
 
         last_fire_ms = clk.ms;
-        for (uint8_t i = 0; i < count; i++) {
+        for (uint8_t i = 0; i < count; ++i) {
             if (object* mem = objects.alloc()) {
                 bullet* blt = new (mem) bullet{};
                 blt->x = display_x_for_touch(touches[i].x);
