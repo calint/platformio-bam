@@ -1,7 +1,6 @@
 #pragma once
 
 #include "JC4827W543.hpp"
-#include <SPI.h>
 #include <XPT2046_Touchscreen.h>
 #include <driver/spi_master.h>
 

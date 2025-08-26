@@ -1,9 +1,7 @@
 #pragma once
 
 #include "JC4827W543.hpp"
-#include <SPI.h>
 #include <Touch_GT911.h>
-#include <driver/spi_master.h>
 
 /// @brief Implements touch screen for capacitive version
 class JC4827W543C final : public JC4827W543 {
