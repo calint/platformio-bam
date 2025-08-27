@@ -17,7 +17,6 @@ static int constexpr display_height =
     display_orientation == TFT_ORIENTATION ? TFT_HEIGHT : TFT_WIDTH;
 
 class ESP32_2432S028R final : public device {
-    static int constexpr touch_irq = 36;
     static int constexpr touch_mosi = 32;
     static int constexpr touch_miso = 39;
     static int constexpr touch_sck = 25;
