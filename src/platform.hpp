@@ -5,8 +5,6 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
-;
-
 // calibration of touch screen
 static int16_t constexpr touch_screen_min_x = TOUCH_MIN_X;
 static int16_t constexpr touch_screen_max_x = TOUCH_MAX_X;
