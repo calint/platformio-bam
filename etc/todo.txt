@@ -1,10 +1,7 @@
-[ ] in JC4827W543C with multi-touch fire sometimes spawns more objects than
-    available causing crash. increase maximum objects
-[x] use common file for JC4827W543 R/C by abstracting common behavior
+[ ] move the constants in platform.ini to the device files
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
     default device screen orientation
-[x] animator.hpp: use sprite image indexes instead of pointers
 [ ] #define O1STORE_DEBUG to check for double free, index out of bounds
 [ ] JC4827W543R.hpp: what is the first init command 0xff,0xa5 ?
 [ ] several sets of tiles cycled for animation
@@ -20,6 +17,11 @@
     vaddf(result, a, b, 4);
     => esp32 specific gain if used more extensively in game logic
 -------------------------------------------------------------------------------
+[x] animator.hpp: use sprite image indexes instead of pointers
+[-] in JC4827W543C with multi-touch fire sometimes spawns more objects than
+    available causing crash. increase maximum objects
+    => 8-bit sprite collision map. more would require 16 bit
+[x] use common file for JC4827W543 R/C by abstracting common behavior
 [x] game_object: position relative to tile map or screen
     => sprite position adjusted in 'pre_render(...)'
 [x] device.hpp: consider implementing sd_x and spiffs_x in the abstract class (DRY)
