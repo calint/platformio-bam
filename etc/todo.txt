@@ -1,4 +1,4 @@
-[ ] move the constants in platform.ini to the device files
+[x] move the constants in platform.ini to the device files
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
     default device screen orientation

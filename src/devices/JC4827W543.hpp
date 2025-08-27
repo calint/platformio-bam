@@ -10,11 +10,32 @@
 #include <SPI.h>
 #include <driver/spi_master.h>
 
+// display dimensions depending on orientation
+// using device natural orientation and requested orientation
+static int constexpr display_width = display_orientation == 1 ? 480 : 272;
+static int constexpr display_height = display_orientation == 1 ? 272 : 480;
+
 /// @brief Abstract class for resistive and capacitive versions of the device
 class JC4827W543 : public device {
     // maximum for this device
     static int constexpr dma_max_transfer_b = 32768;
     static int constexpr nv3041a_max_clock_freq = 32000000;
+
+    static int constexpr tft_width = 480;
+    static int constexpr tft_height = 272;
+    static int constexpr tft_orientation = 1; // native orientation is landscape
+    static int constexpr tft_cs = 45;
+    static int constexpr tft_sck = 47;
+    static int constexpr tft_d0 = 21;
+    static int constexpr tft_d1 = 48;
+    static int constexpr tft_d2 = 40;
+    static int constexpr tft_d3 = 39;
+    static int constexpr tft_bl = 1;
+
+    static int constexpr sd_mosi = 11;
+    static int constexpr sd_miso = 13;
+    static int constexpr sd_sck = 12;
+    static int constexpr sd_cs = 10;
 
   protected:
     SPIClass spi2{SPI2_HOST};
@@ -23,15 +44,15 @@ class JC4827W543 : public device {
 
   public:
     auto init() -> void override {
-        pinMode(TFT_CS, OUTPUT);
+        pinMode(tft_cs, OUTPUT);
         bus_chip_select_disable();
 
         // init bus
-        spi_bus_config_t const bus_cfg = {.data0_io_num = TFT_D0,
-                                          .data1_io_num = TFT_D1,
-                                          .sclk_io_num = TFT_SCK,
-                                          .data2_io_num = TFT_D2,
-                                          .data3_io_num = TFT_D3,
+        spi_bus_config_t const bus_cfg = {.data0_io_num = tft_d0,
+                                          .data1_io_num = tft_d1,
+                                          .sclk_io_num = tft_sck,
+                                          .data2_io_num = tft_d2,
+                                          .data3_io_num = tft_d3,
                                           .data4_io_num = -1,
                                           .data5_io_num = -1,
                                           .data6_io_num = -1,
@@ -152,18 +173,18 @@ class JC4827W543 : public device {
 
         delay(100);
 
-        set_rotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
+        set_rotation(display_orientation == tft_orientation ? 0 : 1);
         set_write_address_window(0, 0, display_width, display_height);
 
         // turn on backlight
-        pinMode(TFT_BL, OUTPUT);
-        digitalWrite(TFT_BL, HIGH);
+        pinMode(tft_bl, OUTPUT);
+        digitalWrite(tft_bl, HIGH);
 
-        spi2.begin(SD_SCK, SD_MISO, SD_MOSI);
+        spi2.begin(sd_sck, sd_miso, sd_mosi);
 
         init_touch_screen();
 
-        init_sd_spiffs(spi2, SD_CS, 80000000);
+        init_sd_spiffs(spi2, sd_cs, 80000000);
     }
 
     auto dma_is_busy() -> bool override {
@@ -213,8 +234,8 @@ class JC4827W543 : public device {
         dev->bus_chip_select_disable();
     }
 
-    auto bus_chip_select_enable() -> void { digitalWrite(TFT_CS, LOW); }
-    auto bus_chip_select_disable() -> void { digitalWrite(TFT_CS, HIGH); }
+    auto bus_chip_select_enable() -> void { digitalWrite(tft_cs, LOW); }
+    auto bus_chip_select_disable() -> void { digitalWrite(tft_cs, HIGH); }
 
     auto bus_write_c8(uint8_t const cmd) -> void {
         transaction_.flags = SPI_TRANS_MULTILINE_CMD | SPI_TRANS_MULTILINE_ADDR;

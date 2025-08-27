@@ -5,18 +5,22 @@
 
 /// @brief Implements touch screen for capacitive version
 class JC4827W543C final : public JC4827W543 {
-    Touch_GT911 touch_screen{
-        TOUCH_SDA,
-        TOUCH_SCK,
-        TOUCH_IRQ,
-        TOUCH_RST,
-        display_orientation == TFT_ORIENTATION ? TFT_WIDTH : TFT_HEIGHT,
-        display_orientation == TFT_ORIENTATION ? TFT_HEIGHT : TFT_WIDTH};
+    static int constexpr touch_irq = 3;
+    static int constexpr touch_sda = 8;
+    static int constexpr touch_sck = 4;
+    static int constexpr touch_rst = 38;
+
+    Touch_GT911 touch_screen{touch_sda,
+                             touch_sck,
+                             touch_irq,
+                             touch_rst,
+                             display_orientation == 1 ? 480 : 272,
+                             display_orientation == 1 ? 272 : 480};
 
   protected:
     auto init_touch_screen() -> void override {
         touch_screen.begin();
-        if (display_orientation == TFT_ORIENTATION) {
+        if (display_orientation == 1) {
             touch_screen.setRotation(ROTATION_INVERTED);
         } else {
             touch_screen.setRotation(ROTATION_RIGHT);

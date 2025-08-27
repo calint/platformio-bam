@@ -6,7 +6,9 @@
 
 /// @brief Implements touch screen for resistive version
 class JC4827W543R final : public JC4827W543 {
-    XPT2046_Touchscreen touch_screen{TOUCH_CS};
+    static int constexpr touch_cs = 38;
+
+    XPT2046_Touchscreen touch_screen{touch_cs};
     uint16_t touch_screen_x = 0;
     uint16_t touch_screen_y = 0;
     uint8_t touch_screen_pressure = 0;
@@ -14,8 +16,7 @@ class JC4827W543R final : public JC4827W543 {
   protected:
     auto init_touch_screen() -> void override {
         touch_screen.begin(spi2);
-        touch_screen.setRotation(display_orientation == TFT_ORIENTATION ? 0
-                                                                        : 1);
+        touch_screen.setRotation(display_orientation == 1 ? 0 : 1);
     }
 
   public:

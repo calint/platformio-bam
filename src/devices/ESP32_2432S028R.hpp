@@ -9,10 +9,28 @@
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>
 
+// display dimensions depending on orientation
+// using device natural orientation and requested orientation
+static int constexpr display_width =
+    display_orientation == TFT_ORIENTATION ? TFT_WIDTH : TFT_HEIGHT;
+static int constexpr display_height =
+    display_orientation == TFT_ORIENTATION ? TFT_HEIGHT : TFT_WIDTH;
+
 class ESP32_2432S028R final : public device {
+    static int constexpr touch_irq = 36;
+    static int constexpr touch_mosi = 32;
+    static int constexpr touch_miso = 39;
+    static int constexpr touch_sck = 25;
+    static int constexpr touch_cs = 33;
+
+    static int constexpr sd_mosi = 23;
+    static int constexpr sd_miso = 19;
+    static int constexpr sd_sck = 18;
+    static int constexpr sd_cs = 5;
+
     TFT_eSPI display{};
     SPIClass spi3{SPI3_HOST};
-    XPT2046_Bitbang touch_screen{TOUCH_MOSI, TOUCH_MISO, TOUCH_SCK, TOUCH_CS};
+    XPT2046_Bitbang touch_screen{touch_mosi, touch_miso, touch_sck, touch_cs};
     TouchPoint touch_point{};
 
   public:
@@ -25,8 +43,8 @@ class ESP32_2432S028R final : public device {
 
         touch_screen.begin();
 
-        spi3.begin(SD_SCK, SD_MISO, SD_MOSI);
-        init_sd_spiffs(spi3, SD_CS, 80000000);
+        spi3.begin(sd_sck, sd_miso, sd_mosi);
+        init_sd_spiffs(spi3, sd_cs, 80000000);
     }
 
     auto display_is_touched() -> bool override {

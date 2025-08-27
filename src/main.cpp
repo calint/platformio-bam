@@ -40,15 +40,6 @@
 // first game defines
 #include "game/defs.hpp"
 
-// then platform constants
-#include "platform.hpp"
-
-// then the engine
-#include "engine.hpp"
-
-// then the main entry file to user code
-#include "game/main.hpp"
-
 // declare device based on config
 #ifdef DEVICE_JC4827W543R
 #include "devices/JC4827W543R.hpp"
@@ -66,6 +57,15 @@ static JC4827W543C device{};
 #error                                                                         \
     "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R"
 #endif
+
+// then platform constants
+#include "platform.hpp"
+
+// then the engine
+#include "engine.hpp"
+
+// then the main entry file to user code
+#include "game/main.hpp"
 
 // number of scanlines to render before DMA transfer
 static int constexpr dma_n_scanlines = 8;
