@@ -7,7 +7,7 @@
 #include <SPI.h>
 #include <SPIFFS.h>
 
-/// @brief Abstract device implemented by device file in `/devices`.
+/// @brief Abstract device implemented by device files in `src/devices`.
 /// note: device implementation must define:
 //    `static int constexpr display_width`
 //    `static int constexpr display_height`
