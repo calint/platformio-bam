@@ -25,9 +25,9 @@ class JC4827W543C final : public JC4827W543 {
         //       "Upload and Monitor" always works
         pinMode(touch_rst, OUTPUT);
         digitalWrite(touch_rst, LOW);
-        delay(100);
+        delay(500);
         digitalWrite(touch_rst, HIGH);
-        delay(250);
+        delay(500);
 
         touch_screen.begin();
         if (display_orientation == 1) {
