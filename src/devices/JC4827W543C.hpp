@@ -19,6 +19,15 @@ class JC4827W543C final : public JC4827W543 {
 
   protected:
     auto init_touch_screen() -> void override {
+
+        // note: reset the device or the cold boot sometimes does not find the
+        //       i2c device
+        pinMode(touch_rst, OUTPUT);
+        digitalWrite(touch_rst, LOW);
+        delay(100);
+        digitalWrite(touch_rst, HIGH);
+        delay(250);
+
         touch_screen.begin();
         if (display_orientation == 1) {
             touch_screen.setRotation(ROTATION_INVERTED);
