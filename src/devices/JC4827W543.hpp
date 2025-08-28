@@ -12,6 +12,8 @@
 
 // display dimensions depending on orientation
 // using device natural orientation and requested orientation
+// note: `display_width` and `display height` necessary constants for the
+//       framework. `display_orientation` defined in `game/defs.hpp`
 static int constexpr display_width = display_orientation == 1 ? 480 : 272;
 static int constexpr display_height = display_orientation == 1 ? 272 : 480;
 

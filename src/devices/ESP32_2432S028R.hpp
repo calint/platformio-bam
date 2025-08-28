@@ -28,8 +28,10 @@
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>
 
-// display dimensions depending on orientation
-// using device natural orientation and requested orientation
+// framework display dimensions depending on orientation using device natural
+// orientation and requested orientation
+// note: `display_width` and `display height` necessary constants for the
+//       framework. `display_orientation` defined in `game/defs.hpp`
 static int constexpr display_width =
     display_orientation == TFT_ORIENTATION ? TFT_WIDTH : TFT_HEIGHT;
 static int constexpr display_height =
