@@ -30,20 +30,23 @@ class JC4827W543C final : public JC4827W543 {
         pinMode(touch_rst, OUTPUT);
         pinMode(touch_irq, OUTPUT);
 
-        // Step 1: Pull RST low
         digitalWrite(touch_rst, LOW);
-        digitalWrite(touch_irq, LOW); // INT low sets I2C address
-        delay(10);
+        digitalWrite(touch_irq, LOW);
+        delayMicroseconds(200); // min 100us
 
-        // Step 2: Release RST while keeping INT low
+        digitalWrite(touch_irq, LOW);
+        // INT high or low sets I2C address to 0x5D or 0x14
+        // manual does not make clear which is which
+        // through experimenting correct is: low
+        // driver assumes 0x5D
+        delayMicroseconds(200); // min 100us
+
         digitalWrite(touch_rst, HIGH);
-        delay(5);
+        delay(10); // min 5ms
 
-        // Step 3: Release INT pin
-        digitalWrite(touch_irq, HIGH);
-        delay(50);
+        digitalWrite(touch_irq, LOW);
+        delay(100); // min 50ms
 
-        // Step 4: Configure INT as input for interrupt
         pinMode(touch_irq, INPUT);
 
         touch_screen.begin();
