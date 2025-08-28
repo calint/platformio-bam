@@ -7,6 +7,10 @@
 #include <SPI.h>
 #include <SPIFFS.h>
 
+/// @brief Abstract device implemented by device file in `/devices`.
+/// note: device implementation must define:
+//    `static int constexpr display_width`
+//    `static int constexpr display_height`
 class device {
   public:
     struct touch {
