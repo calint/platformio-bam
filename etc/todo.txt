@@ -1,7 +1,8 @@
-[ ] JC4827W543C: "upload and monitor" is ok but when powering on, many times
+[x] JC4827W543C: "upload and monitor" is ok but when powering on, many times
     it does not boot in the same way causing the touch screen not to work and
     FPS is way down. Reseting using the board button does not fix the problem
     [ 31421][E][Wire.cpp:513] requestFrom(): i2cRead returned Error -1
+    => needed to reset the i2c device to reliably work in cold boot
 [x] move the constants in platform.ini to the device files
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
