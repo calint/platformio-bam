@@ -40,7 +40,7 @@
 // first game defines
 #include "game/defs.hpp"
 
-// declare device based on config
+// then the device file specified in `platformio.ini`
 #ifdef DEVICE_JC4827W543R
 #include "devices/JC4827W543R.hpp"
 static JC4827W543R device{};
@@ -57,9 +57,6 @@ static JC4827W543C device{};
 #error                                                                         \
     "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R"
 #endif
-
-// then platform constants
-#include "platform.hpp"
 
 // then the engine
 #include "engine.hpp"
