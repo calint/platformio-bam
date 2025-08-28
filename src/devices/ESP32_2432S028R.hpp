@@ -4,6 +4,25 @@
 //
 // implements device using TFT_eSPI and XPT2046_Bitbang
 
+// configuration for TFT_eSPI
+#define USER_SETUP_LOADED
+#define ILI9341_2_DRIVER
+// natural display orientation is portrait
+#define TFT_ORIENTATION 0
+#define TFT_WIDTH 240
+#define TFT_HEIGHT 320
+#define TFT_MISO 12
+#define TFT_MOSI 13
+#define TFT_SCLK 14
+#define TFT_CS 15
+#define TFT_DC 2
+#define TFT_RST -1
+#define TFT_BL 21
+#define TFT_BACKLIGHT_ON HIGH
+#define SPI_FREQUENCY 55000000
+#define SPI_READ_FREQUENCY 20000000
+#define SPI_TOUCH_FREQUENCY 2500000
+
 #include "../device.hpp"
 #include <SPI.h>
 #include <TFT_eSPI.h>
