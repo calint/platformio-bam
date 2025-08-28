@@ -1,5 +1,8 @@
 #pragma once
-// abstraction of the device used by 'main.cpp'
+// abstraction of the device used by 'main.cpp' and implemented in `src/devices`
+// note: device implementations must define constants:
+//    `static int constexpr display_width`
+//    `static int constexpr display_height`
 
 // reviewed: 2024-05-22
 
@@ -7,10 +10,6 @@
 #include <SPI.h>
 #include <SPIFFS.h>
 
-/// @brief Abstract device implemented by device files in `src/devices`.
-/// note: device implementation must define:
-//    `static int constexpr display_width`
-//    `static int constexpr display_height`
 class device {
   public:
     struct touch {
