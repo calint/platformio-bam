@@ -23,6 +23,8 @@ class JC4827W543C final : public JC4827W543 {
         // note: cold boot sometimes does not reset the i2c device
         //       reset using button sometimes fails
         //       the reset procedure below fixes that
+        //       see: https://www.crystalfontz.com/controllers/GOODIX/GT911/
+        //            page 10
 
         // GT911 hardware reset sequence
         pinMode(touch_rst, OUTPUT);
