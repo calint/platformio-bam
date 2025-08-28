@@ -1,6 +1,6 @@
 [x] JC4827W543C: "upload and monitor" is ok but when powering on, many times
     it does not boot in the same way causing the touch screen not to work and
-    FPS is way down. Reseting using the board button does not fix the problem
+    FPS is way down. Resetting using the board button does not fix the problem
     [ 31421][E][Wire.cpp:513] requestFrom(): i2cRead returned Error -1
     => needed to reset the i2c device to reliably work in cold boot
     => it still occasionally fails when resetting using the button
