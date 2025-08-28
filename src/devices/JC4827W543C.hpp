@@ -21,15 +21,31 @@ class JC4827W543C final : public JC4827W543 {
     auto init_touch_screen() -> void override {
 
         // note: cold boot sometimes does not reset the i2c device
-        //       "Upload and Monitor" always works
-        //       reset using button is not fixed
+        //       reset using button sometimes fails
+        //       the reset procedure below fixes that
+
+        // GT911 hardware reset sequence
         pinMode(touch_rst, OUTPUT);
+        pinMode(touch_irq, OUTPUT);
+
+        // Step 1: Pull RST low
         digitalWrite(touch_rst, LOW);
-        delay(100);
+        digitalWrite(touch_irq, LOW); // INT low sets I2C address
+        delay(10);
+
+        // Step 2: Release RST while keeping INT low
         digitalWrite(touch_rst, HIGH);
-        delay(250);
+        delay(5);
+
+        // Step 3: Release INT pin
+        digitalWrite(touch_irq, HIGH);
+        delay(50);
+
+        // Step 4: Configure INT as input for interrupt
+        pinMode(touch_irq, INPUT);
 
         touch_screen.begin();
+
         if (display_orientation == 1) {
             touch_screen.setRotation(ROTATION_INVERTED);
         } else {
