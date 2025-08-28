@@ -20,9 +20,9 @@ class JC4827W543C final : public JC4827W543 {
   protected:
     auto init_touch_screen() -> void override {
 
-        // note: reset the device or a cold boot sometimes does not find the
-        //       i2c device
+        // note: cold boot sometimes does not reset the i2c device
         //       "Upload and Monitor" always works
+        //       reset using button is not fixed
         pinMode(touch_rst, OUTPUT);
         digitalWrite(touch_rst, LOW);
         delay(100);
