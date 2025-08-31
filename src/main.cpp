@@ -119,7 +119,7 @@ static auto printf_render_sprite_entries_ram_usage() -> void;
 
 auto setup() -> void {
     Serial.begin(115200);
-    sleep(1); // arbitrary wait for serial to connect
+    delay(500); // arbitrary wait for serial to connect
 
     heap_caps_print_heap_info(MALLOC_CAP_DEFAULT);
 
@@ -425,7 +425,7 @@ static auto render(int const x, int const y) -> void {
             // note. assumes display height is at least a tile height -1
             render_n_scanlines = tile_height - tile_y_fract;
             tile_line = tile_y_fract;
-            tile_line_times_tile_width = tile_y_fract * tile_height;
+            tile_line_times_tile_width = tile_y_fract * tile_width;
             tile_y_fract = 0;
         } else {
             render_n_scanlines = render_n_tile_lines;
