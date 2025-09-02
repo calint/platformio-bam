@@ -172,7 +172,7 @@ class JC4827W543 : public device {
             bus_write_c8d8(init_commands[i], init_commands[i + 1]);
         }
 
-        delay(120);
+        delay(120); // manual page 70 specifies the delay before other commands
 
         bus_write_c8d8(0x29, 0x00); // DISPON, turn on display
 
