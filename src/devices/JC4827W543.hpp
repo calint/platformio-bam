@@ -159,12 +159,14 @@ class JC4827W543 : public device {
 
             0x92, 0x16, // gam_pkp10[4:0]
             0xb2, 0x15, // gam_pkn10[4:0]
+
             // gamma done
 
-            0x21,
-            0x00, // INVON, invert colors (displays correct colors on device)
-            0x11, 0x00 // SLPOUT, turns off sleep mode, default
-        };
+            // INVON, invert colors (displays correct colors on device)
+            0x21, 0x00,
+
+            // SLPOUT, turns off sleep mode, default
+            0x11, 0x00};
 
         for (int i = 0; i < sizeof(init_commands); i += 2) {
             bus_write_c8d8(init_commands[i], init_commands[i + 1]);
