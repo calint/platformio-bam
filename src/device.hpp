@@ -1,6 +1,6 @@
 #pragma once
 // abstraction of the device used by 'main.cpp' and implemented in `src/devices`
-// note: device implementations must define constants:
+// note: device implementations must define global constants:
 //    `static int constexpr display_width`
 //    `static int constexpr display_height`
 
