@@ -55,7 +55,7 @@ static JC4827W543C device{};
 
 #else
 #error                                                                         \
-    "None of known devices defined: DEVICE_JC4827W543R, DEVICE_ESP32_2432S028R"
+    "None of known devices defined: DEVICE_JC4827W543R, DEVICE_JC4827W543C, DEVICE_ESP32_2432S028R"
 #endif
 
 // then the engine
