@@ -70,6 +70,26 @@ class device {
         return fs_write(SPIFFS, path, buf, buf_len, mode);
     }
 
+    // returns total size of SPIFFS in bytes or 0 if none present
+    auto spiffs_size_B() const -> size_t {
+        return spiffs_present_ ? SPIFFS.totalBytes() : 0;
+    }
+
+    // returns number of used bytes on SPIFFS or 0 if none present
+    auto spiffs_used_B() const -> size_t {
+        return spiffs_present_ ? SPIFFS.usedBytes() : 0;
+    }
+
+    // returns total size of SD card in bytes or 0 if none present
+    auto sd_size_B() const -> size_t {
+        return sd_present_ ? SD.totalBytes() : 0;
+    }
+
+    // returns number of bytes used on SD card or 0 if none present
+    auto sd_used_B() const -> size_t {
+        return sd_present_ ? SD.usedBytes() : 0;
+    }
+
     // returns true if SD card present and initiated
     auto sd_available() -> bool { return sd_present_; }
 
