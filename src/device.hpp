@@ -43,22 +43,13 @@ class device {
     // active
     virtual auto dma_wait_for_completion() -> void = 0;
 
-    // read from SD path 'path' maximum 'buf_len' into 'buf'
-    // returns number of bytes read or -1 if failed
-    virtual auto sd_read(char const* path, char* buf, int buf_len) -> int {
-        return fs_read(SD, path, buf, buf_len);
-    }
-
-    // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
-    // write or append returns true if ok
-    virtual auto sd_write(char const* path, char const* buf, int buf_len,
-                          char const* mode) -> bool {
-        return fs_write(SD, path, buf, buf_len, mode);
-    }
+    // returns true is SPIFFS present and initiated
+    auto spiffs_available() const -> bool { return spiffs_present_; }
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    virtual auto spiffs_read(char const* path, char* buf, int buf_len) -> int {
+    virtual auto spiffs_read(char const* path, char* buf, int buf_len) const
+        -> int {
         return fs_read(SPIFFS, path, buf, buf_len);
     }
 
@@ -66,7 +57,7 @@ class device {
     // write or append
     // returns true if ok
     virtual auto spiffs_write(char const* path, char const* buf, int buf_len,
-                              char const* mode) -> bool {
+                              char const* mode) const -> bool {
         return fs_write(SPIFFS, path, buf, buf_len, mode);
     }
 
@@ -80,6 +71,28 @@ class device {
         return spiffs_present_ ? SPIFFS.usedBytes() : 0;
     }
 
+    // returns true if path exists
+    auto spiffs_path_exists(char const* path) const -> bool {
+        return spiffs_present_ ? SPIFFS.exists(path) : false;
+    }
+
+    // returns true if SD card present and initiated
+    auto sd_available() const -> bool { return sd_present_; }
+
+    // read from SD path 'path' maximum 'buf_len' into 'buf'
+    // returns number of bytes read or -1 if failed
+    virtual auto sd_read(char const* path, char* buf, int buf_len) const
+        -> int {
+        return fs_read(SD, path, buf, buf_len);
+    }
+
+    // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
+    // write or append returns true if ok
+    virtual auto sd_write(char const* path, char const* buf, int buf_len,
+                          char const* mode) const -> bool {
+        return fs_write(SD, path, buf, buf_len, mode);
+    }
+
     // returns total size of SD card in bytes or 0 if none present
     auto sd_size_B() const -> size_t {
         return sd_present_ ? SD.totalBytes() : 0;
@@ -90,11 +103,10 @@ class device {
         return sd_present_ ? SD.usedBytes() : 0;
     }
 
-    // returns true if SD card present and initiated
-    auto sd_available() -> bool { return sd_present_; }
-
-    // returns true is SPIFFS present and initiated
-    auto spiffs_available() -> bool { return spiffs_present_; }
+    // returns true if path exists
+    auto sd_path_exists(char const* path) const -> bool {
+        return sd_present_ ? SD.exists(path) : false;
+    }
 
   protected:
     // initiate SD and SPIFFS
@@ -114,7 +126,7 @@ class device {
     bool spiffs_present_ = false;
 
     auto fs_write(FS& fs, char const* path, char const* buf, int const buf_len,
-                  char const* mode) -> bool {
+                  char const* mode) const -> bool {
         File file = fs.open(path, mode);
         if (!file) {
             return false;
@@ -125,7 +137,7 @@ class device {
         return n == buf_len;
     }
 
-    auto fs_read(FS& fs, char const* path, char* buf, int const buf_len)
+    auto fs_read(FS& fs, char const* path, char* buf, int const buf_len) const
         -> int {
         File file = fs.open(path);
         if (!file) {
@@ -134,5 +146,9 @@ class device {
         size_t const n = file.read(reinterpret_cast<uint8_t*>(buf), buf_len);
         file.close();
         return n;
+    }
+
+    auto fs_path_exists(FS& fs, char const* path) const -> bool {
+        return fs.exists(path);
     }
 };
