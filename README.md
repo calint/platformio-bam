@@ -50,17 +50,9 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 ## development environment
 * Visual Code 1.103.2
 * PlatformIO 6.1.18
-* platforms:
-  - Espressif 32 (6.12.0) > Espressif ESP32 Dev Module
-  - Espressif 32 (6.12.0) > Espressif ESP32-S3-DevKitM-1
-* packages:
-  - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
-  - tool-esptoolpy @ 2.40900.250804 (4.9.0)
-  - toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5
-  - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
-  - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
 * dependencies included in `/lib/`:
   - https://github.com/Bodmer/TFT_eSPI/releases/tag/V2.5.43
   - https://github.com/PaulStoffregen/XPT2046_Touchscreen/releases/tag/v1.4
   - https://github.com/TheNitek/XPT2046_Bitbang_Arduino_Library/releases/tag/v2.0.1
   - `Touch_GT911` from downloadable documentation "1-Demo/Demo_Arduino/Libraries/Touch_GT911/"
+* platforms info in `/etc/dependencies.txt`
