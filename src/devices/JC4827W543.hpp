@@ -90,13 +90,15 @@ class JC4827W543 : public device {
 
         // init transaction values that are constant
         transaction_.user = this;
+
+        // configuration of DMA transaction found in:
+        // `src/databus/Arduino_ESP32QSPI.cpp` function: writePixels
         transaction_async_.cmd = 0x32;
         transaction_async_.addr = 0x003C00;
         transaction_async_.flags = SPI_TRANS_MODE_QIO;
         transaction_async_.user = this;
 
-        // magic numbers from:
-        // https://github.com/moononournation/Arduino_GFX/blob/master/src/display/Arduino_NV3041A.h
+        // magic numbers from: `src/display/Arduino_NV3041A.h`
         // decoded using manual at:
         // https://admin.osptek.com/uploads/NV_3041_A_Datasheet_V1_2_20221011_686486a221.pdf
         uint8_t constexpr init_commands[] = {
