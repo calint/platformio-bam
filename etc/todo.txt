@@ -6,6 +6,8 @@
     => it still occasionally fails when resetting using the button
        => reset sequence before GT911 init in device file solved it
 [x] move the constants in platform.ini to the device files
+    => ESP32_2432S028R must be defined in platformio.ini because these are needed
+       at compilation of TFT_eSPI
 [ ] change to specify only TOUCH_MIN/MAX_X/Y for default orientation and adjust
     read touch values in device source depending on application orientation vs
     default device screen orientation
