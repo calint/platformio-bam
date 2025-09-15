@@ -14,10 +14,11 @@
 // note: `display_width` and `display_height` are necessary constants for the
 //       framework
 //       `display_orientation` defined in `game/defs.hpp`
+// note: default orientation for this display is portrait = 0
 static int constexpr display_width =
-    display_orientation == TFT_ORIENTATION ? TFT_WIDTH : TFT_HEIGHT;
+    display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
 static int constexpr display_height =
-    display_orientation == TFT_ORIENTATION ? TFT_HEIGHT : TFT_WIDTH;
+    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class ESP32_2432S028R final : public device {
     static int constexpr touch_mosi = 32;
@@ -40,7 +41,7 @@ class ESP32_2432S028R final : public device {
         // initiate display
         display.init();
         display.initDMA(true);
-        display.setRotation(display_orientation == TFT_ORIENTATION ? 0 : 1);
+        display.setRotation(display_orientation == 0 ? 0 : 1);
         display.setAddrWindow(0, 0, display_width, display_height);
 
         touch_screen.begin();
