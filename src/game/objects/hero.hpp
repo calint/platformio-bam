@@ -9,8 +9,8 @@
 #include "utils.hpp"
 
 class hero final : public game_object {
-    sprite* sprite_left_ = nullptr;
-    sprite* sprite_right_ = nullptr;
+    sprite* spr_left_ = nullptr;
+    sprite* spr_right_ = nullptr;
     clk::time last_upgrade_deployed_ms_ = 0;
     static clk::time constexpr upgrade_deploy_interval_ms_ = 10000;
 
@@ -27,17 +27,17 @@ class hero final : public game_object {
         spr->layer = 1; // put in top layer
         spr->flip = 0;
 
-        sprite_left_ = sprites.alloc();
-        sprite_left_->obj = this;
-        sprite_left_->img = sprite_imgs[0];
-        sprite_left_->layer = 1;
-        sprite_left_->flip = 0;
+        spr_left_ = sprites.alloc();
+        spr_left_->obj = this;
+        spr_left_->img = sprite_imgs[0];
+        spr_left_->layer = 1;
+        spr_left_->flip = 0;
 
-        sprite_right_ = sprites.alloc();
-        sprite_right_->obj = this;
-        sprite_right_->img = sprite_imgs[0];
-        sprite_right_->layer = 1;
-        sprite_right_->flip = 0;
+        spr_right_ = sprites.alloc();
+        spr_right_->obj = this;
+        spr_right_->img = sprite_imgs[0];
+        spr_right_->layer = 1;
+        spr_right_->flip = 0;
 
         last_upgrade_deployed_ms_ = clk.ms;
 
@@ -46,10 +46,10 @@ class hero final : public game_object {
 
     ~hero() override {
         // turn off and free sprites
-        sprite_left_->img = nullptr;
-        sprites.free(sprite_left_);
-        sprite_right_->img = nullptr;
-        sprites.free(sprite_right_);
+        spr_left_->img = nullptr;
+        sprites.free(spr_left_);
+        spr_right_->img = nullptr;
+        sprites.free(spr_right_);
 
         game_state.hero_is_alive = false;
     }
@@ -88,10 +88,10 @@ class hero final : public game_object {
         game_object::pre_render();
 
         // set position of additional sprites
-        sprite_left_->scr_x = int16_t(spr->scr_x - sprite_width);
-        sprite_left_->scr_y = spr->scr_y;
+        spr_left_->scr_x = int16_t(spr->scr_x - sprite_width);
+        spr_left_->scr_y = spr->scr_y;
 
-        sprite_right_->scr_x = int16_t(spr->scr_x + sprite_width);
-        sprite_right_->scr_y = spr->scr_y;
+        spr_right_->scr_x = int16_t(spr->scr_x + sprite_width);
+        spr_right_->scr_y = spr->scr_y;
     }
 };

@@ -7,17 +7,17 @@
 #include "utils.hpp"
 
 class ufo2 final : public game_object {
-    sprites_2x2 sprites_;
+    sprites_2x2 sprs_;
 
   public:
-    ufo2() : game_object{cls_ufo2}, sprites_{this, 10, 1} {
+    ufo2() : game_object{cls_ufo2}, sprs_{this, 10, 1} {
         col_bits = cb_hero;
         col_mask = cb_enemy | cb_enemy_bullet;
 
         health = 100;
     }
 
-    auto pre_render() -> void override { sprites_.pre_render(this); }
+    auto pre_render() -> void override { sprs_.pre_render(this); }
 
     auto update() -> bool override {
         if (game_object::update()) {
