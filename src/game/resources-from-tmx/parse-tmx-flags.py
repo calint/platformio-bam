@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 if len(sys.argv) < 3:
-    print("Usage: ./parse-tmx-flags.py <tmx file>")
+    print("Usage: ./parse-tmx-flags.py <tmx file> <output newline every n'th line>")
     sys.exit(1)
 
 input_file = sys.argv[1]
