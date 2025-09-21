@@ -23,7 +23,7 @@ static int16_t constexpr touch_screen_range_y =
 
 // palette used when rendering tile images
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
-// note. lower and higher byte swapped
+// note: lower and higher byte swapped
 static uint16_t constexpr palette_tiles[256]{
 #include "game/resources/palette_tiles.hpp"
 };
@@ -75,7 +75,7 @@ class sprite {
     int16_t scr_x = 0;
     int16_t scr_y = 0;
     uint8_t layer = 0;
-    // note. lower 'layer' number is rendered first
+    // note: lower 'layer' number is rendered first
     //       number of layers specified by 'sprite_layer_count'
     uint8_t flip = 0; // bits: horiz: 0b01, vert: 0b10
 };
@@ -87,20 +87,20 @@ static sprites_store sprites{};
 class object {
   public:
     object** alloc_ptr;
-    // note. no default value since it would overwrite the 'o1store' assigned
+    // note: no default value since it would overwrite the 'o1store' assigned
     //       value at 'alloc()'
 
     object* col_with = nullptr;
     collision_bits col_bits = 0;
     collision_bits col_mask = 0;
-    // note. used to declare interest in collisions with objects whose
+    // note: used to declare interest in collisions with objects whose
     //       'col_bits' bitwise AND with this 'col_mask' is not 0
 
     virtual ~object() = default;
-    // note. 'delete obj' is not allowed since memory is managed by 'o1store'
+    // note: 'delete obj' is not allowed since memory is managed by 'o1store'
 
     // returns true if object has died
-    // note. regarding classes overriding 'update(...)'
+    // note: regarding classes overriding 'update(...)'
     //       after 'update(...)' 'col_with' should be 'nullptr'
     virtual auto update() -> bool { return false; }
 
@@ -115,7 +115,7 @@ class objects : public object_store {
   public:
     auto update() -> void {
         object const* const* end = allocated_list_end();
-        // note. important to get the 'end' outside the loop because objects may
+        // note: important to get the 'end' outside the loop because objects may
         //       allocate new objects in the loop and that would change the
         //       'end'
         for (object** it = allocated_list(); it < end; ++it) {
@@ -129,7 +129,7 @@ class objects : public object_store {
 
     auto pre_render() -> void {
         object const* const* end = allocated_list_end();
-        // note. important to get the 'end' outside the loop because objects may
+        // note: important to get the 'end' outside the loop because objects may
         //       allocate new objects in the loop and that would change the
         //       'end'
         for (object** it = allocated_list(); it < end; ++it) {

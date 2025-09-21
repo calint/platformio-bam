@@ -1,6 +1,6 @@
 #pragma once
 // implements sprite animation
-// note. maximum 127 frames in an animation
+// note: maximum 127 frames in an animation
 
 class animator final {
   public:
@@ -10,7 +10,7 @@ class animator final {
                         float const _displace_y)
             : duration_ms{_duration_ms}, displace_x{_displace_x},
               displace_y{_displace_y}, spr_img_ix{_sprite_img_ix} {}
-        // note. C++11 requires constructor
+        // note: C++11 requires constructor
 
         clk::time duration_ms = 0;
         // displacement of object due to this frame

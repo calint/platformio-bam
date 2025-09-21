@@ -9,7 +9,7 @@
 // * InstanceSizeInBytes is custom size of instance to fit largest object in an
 //   object hierarchy or 0 if 'Type' sizeof is used
 //
-// note. no destructor since life-time is program life-time
+// note: no destructor since life-time is program life-time
 //
 
 // reviewed: 2024-05-01
@@ -72,8 +72,8 @@ class o1store {
         ++free_ptr_;
         *alloc_ptr_ = inst;
         inst->alloc_ptr = alloc_ptr_;
-        // note. needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
-        // written
+        // note: needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
+        //       written
         ++alloc_ptr_;
         return inst;
     }
@@ -124,7 +124,7 @@ class o1store {
         if (!InstanceSizeInBytes) {
             return &all_[ix];
         }
-        // note. if instance size is specified do pointer shenanigans
+        // note: if instance size is specified do pointer shenanigans
         return reinterpret_cast<Type*>(reinterpret_cast<char*>(all_) +
                                        InstanceSizeInBytes * ix);
     }

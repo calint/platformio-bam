@@ -2,7 +2,7 @@
 // bam game platform
 //
 
-// note. design decision of 'hpp' source files
+// note: design decision of 'hpp' source files
 // * the program is one file split into logical sections using includes
 // * globals are declared 'static'
 // * increases optimization opportunities for the compiler
@@ -11,24 +11,24 @@
 //   solves circular references and gives user the necessary callbacks to
 //   interface with engine
 
-// note. design decision regarding 'unsigned' - due to sign conversion warnings
+// note: design decision regarding 'unsigned' - due to sign conversion warnings
 // and subtle bugs in mixed signedness operations, signed constants and
 // variables are used where the bit width of the type is wide enough to fit the
 // largest value
 
-// note. const and constexpr declarations are right-to-left convention
+// note: const and constexpr declarations are right-to-left convention
 
-// note. increments and decrements done prefix for compatibility with iterators
+// note: increments and decrements done prefix for compatibility with iterators
 
-// note. auto is used when type declaration is too verbose such as iterators
+// note: auto is used when type declaration is too verbose such as iterators
 
-// note. why some buffers are allocated at 'setup'
+// note: why some buffers are allocated at 'setup'
 // Due to a technical limitation, the maximum statically allocated DRAM usage is
 // 160KB. The remaining 160KB (for a total of 320KB of DRAM) can only be
 // allocated at runtime as heap.
 // -- https://stackoverflow.com/questions/71085927/how-to-extend-esp32-heap-size
 
-// note. esp32 s3 can allocate more than 160 KB
+// note: esp32 s3 can allocate more than 160 KB
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
@@ -66,7 +66,7 @@ static JC4827W543C device{};
 
 // number of scanlines to render before DMA transfer
 static int constexpr dma_n_scanlines = 8;
-// note. performance on device (scanlines:FPS):
+// note: performance on device (scanlines:FPS):
 //  ESP32-2432S028R:
 //    1:23, 2:27, 4:29, 8:31, 16:31, 32:32, 64:32
 //  JC4827W543R:
@@ -173,7 +173,7 @@ auto setup() -> void {
 
     // initiate clock
     clk.init(millis(), clk_fps_update_ms, clk_locked_dt_ms);
-    // note. not in 'engine_init()' due to dependency on 'millis()'
+    // note: not in 'engine_init()' due to dependency on 'millis()'
 
     engine_init();
 
@@ -194,7 +194,7 @@ auto setup() -> void {
 
 auto loop() -> void {
     if (clk.on_frame(clk::time(millis()))) {
-        // note. not in 'engine_loop()' due to dependency on 'millis()'
+        // note: not in 'engine_loop()' due to dependency on 'millis()'
         printf("t=%06u  fps=%02d  dma=%03d  objs=%03d  sprs=%03d\n", clk.ms,
                clk.fps, dma_busy * 100 / (dma_writes ? dma_writes : 1),
                objects.allocated_list_len(), sprites.allocated_list_len());
@@ -237,7 +237,7 @@ static inline auto update_render_sprite_lists() -> void {
     // build entries lists
     sprite const* spr = sprites.all_list();
     int const len = sprites.all_list_len();
-    // note. "int constexpr len" does not compile
+    // note: "int constexpr len" does not compile
     for (int i = 0; i < len; ++i, ++spr) {
         if (!spr->img || spr->scr_x <= -sprite_width ||
             spr->scr_x >= display_width || spr->scr_y <= -sprite_height ||
@@ -255,7 +255,7 @@ static inline auto update_render_sprite_lists() -> void {
 }
 
 // renders a scanline
-// note. inline because it is only called from one location in render(...)
+// note: inline because it is only called from one location in render(...)
 static inline auto
 render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
                 int tile_x, int tile_x_fract,
@@ -315,7 +315,7 @@ render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
     }
 
     // render sprites
-    // note. although grossly inefficient algorithm the DMA is mostly busy while
+    // note: although grossly inefficient algorithm the DMA is mostly busy while
     //       rendering
 
     for (int layer = 0; layer < sprite_layer_count; ++layer) {
@@ -408,7 +408,7 @@ static auto render(int const x, int const y) -> void {
     dma_busy = dma_writes = 0;
 
     // clear collisions map
-    // note. works on other sizes of type 'sprite_ix' because reserved value is
+    // note: works on other sizes of type 'sprite_ix' because reserved value is
     //       unsigned maximum value such as 0xff or 0xffff etc
     memset(collision_map, sprite_ix_reserved, collision_map_size_B);
 
@@ -448,7 +448,7 @@ static auto render(int const x, int const y) -> void {
         int tile_line_times_tile_width = 0;
         int tile_line_times_tile_width_flipped = 0;
         if (tile_y_fract) {
-            // note. assumes display height is at least a tile height -1
+            // note: assumes display height is at least a tile height -1
             render_n_scanlines = tile_height - tile_y_fract;
             tile_line = tile_y_fract;
             tile_line_times_tile_width = tile_y_fract * tile_width;

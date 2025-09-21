@@ -29,7 +29,7 @@ using sprite_img_ix = uint8_t;
 // sprite dimensions
 static int constexpr sprite_width = 16;
 static int constexpr sprite_height = 16;
-// note. when changing dimensions update 'png-to-resources/update.sh'
+// note: when changing dimensions update 'png-to-resources/update.sh'
 
 // number of layers of sprites
 // 0: ground, 1: air, 2: overlay
@@ -45,7 +45,7 @@ using tile_img_ix = uint8_t;
 // tile dimensions
 static int constexpr tile_width = 16;
 static int constexpr tile_height = 16;
-// note. when changing dimensions update 'png-to-resources/update.sh'
+// note: when changing dimensions update 'png-to-resources/update.sh'
 
 //
 // example configuration for more sprites and tile_imgs
@@ -61,11 +61,11 @@ static int constexpr tile_map_height = 90;
 // defined in 'resources/tile_map.hpp'
 
 // type used to index a 'sprite'
-// note. 8-bit for 'collision_map' to fit in a contiguous block on heap
+// note: 8-bit for 'collision_map' to fit in a contiguous block on heap
 using sprite_ix = uint8_t;
 
 // sprites available for allocation using 'sprites'
-// note. maximum is one less than limit of type 'sprite_ix' due to the reserved
+// note: maximum is one less than limit of type 'sprite_ix' due to the reserved
 //       sprite index (maximum limit) used at collision detection
 static int constexpr sprite_count = 255;
 
@@ -77,7 +77,7 @@ static int constexpr random_seed = 0;
 
 // enumeration of game object classes
 // defined in 'objects/*'
-// note. not 'enum class' because of code ergonomics
+// note: not 'enum class' because of code ergonomics
 enum object_class : uint8_t {
     cls_hero,
     cls_bullet,

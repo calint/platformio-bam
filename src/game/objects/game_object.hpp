@@ -23,7 +23,7 @@ class game_object : public object {
     object_class cls;
 
     explicit game_object(object_class c) : cls{c} {}
-    // note. after constructor 'spr' must be in valid state.
+    // note: after constructor 'spr' must be in valid state.
 
     ~game_object() override {
         // turn off and free sprite
@@ -32,7 +32,7 @@ class game_object : public object {
     }
 
     // returns true if object has died
-    // note. regarding classes overriding 'update(...)'
+    // note: regarding classes overriding 'update(...)'
     // after 'update(...)' 'col_with' should be 'nullptr'
     auto update() -> bool override {
         if (col_with) {

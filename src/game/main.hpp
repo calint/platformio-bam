@@ -115,7 +115,7 @@ struct wave_trigger {
 
     constexpr wave_trigger(float const y, wave_func_ptr const func_ptr)
         : since_last_wave_y{y}, func{func_ptr} {}
-    // note. constructor needed for C++11 to compile
+    // note: constructor needed for C++11 to compile
 
 } static constexpr wave_triggers[] = {
     {y_for_screen_percentage(0), main_wave_5},
@@ -144,7 +144,7 @@ static float wave_triggers_next_y =
     wave_triggers_bottom_screen_y - wave_triggers[0].since_last_wave_y;
 
 // callback after frame has been rendered and objects updated
-// note. if objects are deleted see 'objects::update()'
+// note: if objects are deleted see 'objects::update()'
 static auto main_on_frame_completed() -> void {
     // update x position in pixels in the tile map
     tile_map_x += tile_map_dx * clk.dt;
