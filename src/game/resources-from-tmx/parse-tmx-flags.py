@@ -3,9 +3,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 if len(sys.argv) < 4:
-    print(
-        "Usage: ./parse-tmx.py <tmx file> <output newline every n'th line> <bit mask for tile id>"
-    )
+    print("Usage: ./parse-tmx-flags.py <tmx file> <output newline every n'th line>")
     sys.exit(1)
 
 input_file = sys.argv[1]
@@ -21,7 +19,8 @@ for row in range(height):
     row_data = []
     for col in range(width):
         tile_id = data[row * width + col]
-        row_data.append((int(tile_id) - 1) & bit_mask)
+        # extract highest 4 bits
+        row_data.append((int(tile_id)) >> 28)
     row_str = "{" + ",".join(map(str, row_data)) + "},"
     print(row_str)
     if newline_sep_every_nth_line and (row + 1) % newline_sep_every_nth_line == 0:

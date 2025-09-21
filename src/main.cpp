@@ -143,6 +143,7 @@ auto setup() -> void {
     printf("       tile images: %zu B\n", sizeof(tile_imgs));
     printf("------------------- globals ------------------------------\n");
     printf("          tile map: %zu B\n", sizeof(tile_map));
+    printf("    tile map flags: %zu B\n", sizeof(tile_map_flags));
     printf("           sprites: %zu B\n", sizeof(sprites));
     printf("           objects: %zu B\n", sizeof(objects));
 
@@ -258,19 +259,35 @@ static inline auto update_render_sprite_lists() -> void {
 static inline auto
 render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
                 int tile_x, int tile_x_fract,
-                tile_img_ix const* tiles_map_row_ptr, int16_t const scanline_y,
-                int const tile_line_times_tile_width) -> void {
+                tile_img_ix const* tile_map_row_ptr,
+                uint8_t const* tile_map_flags_row_ptr, int16_t const scanline_y,
+                int const tile_line_times_tile_width,
+                int const tile_line_times_tile_width_flipped) -> void {
 
     // used later by sprite renderer to overwrite tile_imgs pixels
     uint16_t* scanline_ptr = render_buf_ptr;
     // pointer to first tile to render
-    tile_img_ix const* tiles_map_ptr = tiles_map_row_ptr + tile_x;
+    tile_img_ix const* tile_map_ptr = tile_map_row_ptr + tile_x;
+    uint8_t const* tile_map_flags_ptr = tile_map_flags_row_ptr + tile_x;
     // for all horizontal pixels
     int remaining_x = display_width;
     while (remaining_x) {
+        uint8_t tile_flags = *tile_map_flags_ptr;
+        bool const flip_horiz = tile_flags & 0x8;
+        bool const flip_vert = tile_flags & 0x4;
         // pointer to tile image to render
-        uint8_t const* tile_img_ptr = &tile_imgs[*tiles_map_ptr][0] +
-                                      tile_line_times_tile_width + tile_x_fract;
+        uint8_t const* tile_img_ptr = &tile_imgs[*tile_map_ptr][0];
+        if (flip_vert) {
+            tile_img_ptr += tile_line_times_tile_width_flipped;
+        } else {
+            tile_img_ptr += tile_line_times_tile_width;
+        }
+        if (flip_horiz) {
+            tile_img_ptr += tile_width - 1 - tile_x_fract;
+        } else {
+            tile_img_ptr += tile_x_fract;
+        }
+        int const tile_img_ptr_inc = flip_horiz ? -1 : 1;
         // calculate number of pixels to render
         int render_n_pixels = 0;
         if (tile_x_fract) {
@@ -289,11 +306,12 @@ render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
         remaining_x -= render_n_pixels;
         while (render_n_pixels--) {
             *render_buf_ptr = palette_tiles[*tile_img_ptr];
-            ++tile_img_ptr;
+            tile_img_ptr += tile_img_ptr_inc;
             ++render_buf_ptr;
         }
         // next tile
-        ++tiles_map_ptr;
+        ++tile_map_ptr;
+        ++tile_map_flags_ptr;
     }
 
     // render sprites
@@ -406,7 +424,9 @@ static auto render(int const x, int const y) -> void {
     // current scanline screen y
     int16_t scanline_y = 0;
     // pointer to start of current row of tiles
-    tile_img_ix const* tiles_map_row_ptr = &tile_map[tile_y][0];
+    tile_img_ix const* tile_map_row_ptr = &tile_map[tile_y][0];
+    // pointer to start of current row of tile flags
+    uint8_t const* tile_map_flags_row_ptr = &tile_map_flags[tile_y][0];
     // pointer to collision map starting at top left of screen
     sprite_ix* collision_map_row_ptr = collision_map;
     // keeps track of how many scanlines have been rendered since last DMA
@@ -425,23 +445,29 @@ static auto render(int const x, int const y) -> void {
         int render_n_scanlines = 0;
         int tile_line = 0;
         int tile_line_times_tile_width = 0;
+        int tile_line_times_tile_width_flipped = 0;
         if (tile_y_fract) {
             // note. assumes display height is at least a tile height -1
             render_n_scanlines = tile_height - tile_y_fract;
             tile_line = tile_y_fract;
             tile_line_times_tile_width = tile_y_fract * tile_width;
+            tile_line_times_tile_width_flipped =
+                (tile_height - 1 - tile_y_fract) * tile_width;
             tile_y_fract = 0;
         } else {
             render_n_scanlines = render_n_tile_lines;
             tile_line_times_tile_width = tile_line = 0;
+            tile_line_times_tile_width_flipped = (tile_height - 1) * tile_width;
         }
         // render a row from tile map
         while (tile_line < render_n_tile_lines) {
-            render_scanline(render_buf_ptr, collision_map_row_ptr, tile_x,
-                            tile_x_fract, tiles_map_row_ptr, scanline_y,
-                            tile_line_times_tile_width);
+            render_scanline(
+                render_buf_ptr, collision_map_row_ptr, tile_x, tile_x_fract,
+                tile_map_row_ptr, tile_map_flags_row_ptr, scanline_y,
+                tile_line_times_tile_width, tile_line_times_tile_width_flipped);
             ++tile_line;
             tile_line_times_tile_width += tile_width;
+            tile_line_times_tile_width_flipped -= tile_width;
             render_buf_ptr += display_width;
             collision_map_row_ptr += display_width;
             ++scanline_y;
@@ -460,7 +486,8 @@ static auto render(int const x, int const y) -> void {
         }
         ++tile_y;
         remaining_y -= render_n_scanlines;
-        tiles_map_row_ptr += tile_map_width;
+        tile_map_row_ptr += tile_map_width;
+        tile_map_flags_row_ptr += tile_map_width;
     }
     // if 'display_height' is not evenly divisible by 'n_scanlines' there
     // will be remaining scanlines to write

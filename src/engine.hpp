@@ -43,6 +43,11 @@ static tile_img_ix tile_map[tile_map_height][tile_map_width]{
 #include "game/resources/tile_map.hpp"
 };
 
+// initial tile map cell flags
+static uint8_t tile_map_flags[tile_map_height][tile_map_width]{
+#include "game/resources/tile_map_flags.hpp"
+};
+
 // render tile map starting at top left pixel position
 static float tile_map_x = 0;
 static float tile_map_y = 0;
