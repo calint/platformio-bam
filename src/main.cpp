@@ -436,7 +436,7 @@ static auto render(int const x, int const y) -> void {
     uint16_t* render_buf_ptr = dma_buffers.current_buffer();
     // prepare visible sprites lists based on layer index
     update_render_sprite_lists();
-    // for all lines on displayupdate_render_sprite
+    // for all lines on display
     int remaining_y = display_height;
     while (remaining_y) {
         // render from tiles map and sprites to the 'render_buf_ptr'
