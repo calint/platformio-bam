@@ -7,7 +7,7 @@
 // * globals are declared 'static'
 // * increases optimization opportunities for the compiler
 // * directory 'game' contains the user code that interfaces with 'engine.hpp'
-// * order of include and content of 'defs.hpp', 'game_state.hpp', 'main.hpp'
+// * order of include and content of 'defs.hpp', 'state.hpp', 'application.hpp'
 //   solves circular references and gives user the necessary callbacks to
 //   interface with engine
 
@@ -38,7 +38,7 @@
 #include <Arduino.h>
 
 // first game defines
-#include "game/defs.hpp"
+#include "application/defs.hpp"
 
 // then the device file specified in `platformio.ini`
 #ifdef DEVICE_JC4827W543R
@@ -62,7 +62,7 @@ static JC4827W543C device{};
 #include "engine.hpp"
 
 // then the main entry file to user code
-#include "game/main.hpp"
+#include "application/application.hpp"
 
 // number of scanlines to render before DMA transfer
 static int constexpr dma_n_scanlines = 8;
@@ -177,7 +177,7 @@ auto setup() -> void {
 
     engine_init();
 
-    main_init();
+    application_init();
 
     printf("------------------- on heap ------------------------------\n");
     printf("   DMA buf 1 and 2: %d B\n", 2 * dma_buffers::buf_size_B);
@@ -204,7 +204,7 @@ auto loop() -> void {
         uint8_t const touch_count = device.display_touch_count();
         device::touch touches[touch_count]{};
         device.display_get_touch(touches);
-        main_on_touch(touches, touch_count);
+        application_on_touch(touches, touch_count);
     }
 
     engine_loop();

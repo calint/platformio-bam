@@ -41,7 +41,7 @@ class hero final : public game_object {
 
         last_upgrade_deployed_ms_ = clk.ms;
 
-        game_state.hero_is_alive = true;
+        state.hero_is_alive = true;
     }
 
     ~hero() override {
@@ -51,7 +51,7 @@ class hero final : public game_object {
         spr_right_->img = nullptr;
         sprites.free(spr_right_);
 
-        game_state.hero_is_alive = false;
+        state.hero_is_alive = false;
     }
 
     // returns true if object died

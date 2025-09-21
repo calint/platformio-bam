@@ -1,5 +1,5 @@
 #pragma once
-// constants used by engine, game objects and 'main.hpp'
+// constants used by engine, game objects and 'application.hpp'
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01

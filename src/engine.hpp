@@ -25,27 +25,27 @@ static int16_t constexpr touch_screen_range_y =
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note: lower and higher byte swapped
 static uint16_t constexpr palette_tiles[256]{
-#include "game/resources/palette_tiles.hpp"
+#include "application/resources/palette_tiles.hpp"
 };
 
 // palette used when rendering sprites
 static uint16_t constexpr palette_sprites[256]{
-#include "game/resources/palette_sprites.hpp"
+#include "application/resources/palette_sprites.hpp"
 };
 
 // images used by tile map
 static uint8_t constexpr tile_imgs[tile_img_count][tile_width * tile_height]{
-#include "game/resources/tile_imgs.hpp"
+#include "application/resources/tile_imgs.hpp"
 };
 
 // initial tile map
 static tile_img_ix tile_map[tile_map_height][tile_map_width]{
-#include "game/resources/tile_map.hpp"
+#include "application/resources/tile_map.hpp"
 };
 
 // initial tile map cell flags
 static uint8_t tile_map_flags[tile_map_height][tile_map_width]{
-#include "game/resources/tile_map_flags.hpp"
+#include "application/resources/tile_map_flags.hpp"
 };
 
 // render tile map starting at top left pixel position
@@ -55,7 +55,7 @@ static float tile_map_y = 0;
 // images used by sprites
 static uint8_t constexpr sprite_imgs[sprite_img_count]
                                     [sprite_width * sprite_height]{
-#include "game/resources/sprite_imgs.hpp"
+#include "application/resources/sprite_imgs.hpp"
                                     };
 
 using sprite_img = uint8_t const*;
@@ -210,7 +210,7 @@ static auto engine_init() -> void {
 static auto render(int x, int y) -> void;
 
 // forward declaration of user provided callback
-static auto main_on_frame_completed() -> void;
+static auto application_on_frame_completed() -> void;
 
 // callback from 'main.cpp'
 // render and update the state of the engine
@@ -230,8 +230,8 @@ static auto engine_loop() -> void {
     // deallocate the sprites freed during 'objects.update()'
     sprites.apply_free();
 
-    // game logic hook
-    main_on_frame_completed();
+    // application logic hook
+    application_on_frame_completed();
 }
 
 // used for static assert of object sizes and config

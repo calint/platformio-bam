@@ -4,11 +4,11 @@
 * developing a toy game using platform-independent engine
 
 ## table of contents
-* `main.hpp` setup initial game state, callbacks from engine, game logic
+* `application.hpp` setup initial game state, callbacks from engine, game logic
 * `objects/*` game objects
-* `game_state.hpp` used by game objects and `main.hpp`
+* `state.hpp` used by game objects and `application.hpp`
 * `resources/*` partial files defining tiles, sprites, palettes and tile map
-* `defs.hpp` constants used by engine, game objects and `main.hpp`
+* `defs.hpp` constants used by engine, game objects and `application.hpp`
 * `animator.hpp` support class that implements sprite animation
 
 ## appendix
@@ -17,21 +17,21 @@
 
 # overview
 
-## main.hpp
-### function `main_setup`
+## application.hpp
+### function `application_setup`
 * initiates the game by creating initial objects and sets tile map position and velocity
-### function `main_on_touch`
+### function `application_on_touch`
 * handles user interaction with touch screen
-### function `main_on_frame_completed`
+### function `application_on_frame_completed`
 * implements game logic after a frame has been rendered and objects updated
 
 ## objects/*
 * see `objects/README.md`
 
-## game_state.hpp
-* included by `main.hpp` before the game objects
-* provides a way for game objects to share data with `main.hpp` without circular references
-* used in `main_on_frame_completed` to solve circular reference issues
+## state.hpp
+* included by `application.hpp` before the game objects
+* provides a way for game objects to share data with `application.hpp` without circular references
+* used in `application_on_frame_completed` to solve circular reference issues
 
 ## resources/*
 * `tile_map.hpp` size defined in `defs.hpp` and generated from `tmx` file by tool `resources-from-tmx/update.sh`

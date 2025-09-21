@@ -5,7 +5,7 @@
 * `device.hpp` abstract device definition
 * `devices/*` device implementations
 * `engine.hpp` platform-independent game engine
-* `game/*` platform-independent game implementation using `engine.hpp`
+* `application/*` platform-independent game implementation using `engine.hpp`
 * `o1store.hpp` O(1) object allocator
 
 ## disclaimers

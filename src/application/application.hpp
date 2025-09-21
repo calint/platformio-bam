@@ -1,6 +1,6 @@
 #pragma once
 // setup initial game state, callbacks from engine, game logic
-// solves circular references between 'game_state' and game objects
+// solves circular references between 'state' and game objects
 
 // reviewed: 2005-05-01
 // reviewed: 2005-05-22
@@ -8,7 +8,7 @@
 // device interface
 #include "../device.hpp"
 // the game state
-#include "game_state.hpp"
+#include "state.hpp"
 // base class
 #include "objects/game_object.hpp"
 // then the objects
@@ -28,7 +28,7 @@ static float tile_map_dx = 0;
 static float tile_map_dy = 0;
 
 // callback from 'setup()'
-static auto main_init() -> void {
+static auto application_init() -> void {
     printf("------------------- game object sizes --------------------\n");
     printf("       game_object: %zu B\n", sizeof(game_object));
     printf("            bullet: %zu B\n", sizeof(bullet));
@@ -69,8 +69,8 @@ static auto main_init() -> void {
 }
 
 // callback when screen is touched, happens before 'render(...)'
-static auto main_on_touch(device::touch const touches[], uint8_t const count)
-    -> void {
+static auto application_on_touch(device::touch const touches[],
+                                 uint8_t const count) -> void {
     // keep track of when the previous bullet was fired
     static clk::time last_fire_ms = 0;
 
@@ -94,11 +94,11 @@ static auto main_on_touch(device::touch const touches[], uint8_t const count)
 //
 
 // forward declaration of functions that start waves of objects
-static auto main_wave_1() -> void;
-static auto main_wave_2() -> void;
-static auto main_wave_3() -> void;
-static auto main_wave_4() -> void;
-static auto main_wave_5() -> void;
+static auto wave_1() -> void;
+static auto wave_2() -> void;
+static auto wave_3() -> void;
+static auto wave_4() -> void;
+static auto wave_5() -> void;
 
 // pointer to function that creates wave
 using wave_func_ptr = auto (*)() -> void;
@@ -118,16 +118,16 @@ struct wave_trigger {
     // note: constructor needed for C++11 to compile
 
 } static constexpr wave_triggers[] = {
-    {y_for_screen_percentage(0), main_wave_5},
-    {y_for_screen_percentage(50), main_wave_4},
-    {y_for_screen_percentage(25), main_wave_1},
-    {y_for_screen_percentage(50), main_wave_2},
-    {y_for_screen_percentage(50), main_wave_3},
-    {y_for_screen_percentage(100), main_wave_4},
-    {y_for_screen_percentage(50), main_wave_3},
-    {y_for_screen_percentage(50), main_wave_2},
-    {y_for_screen_percentage(50), main_wave_1},
-    {y_for_screen_percentage(50), main_wave_4},
+    {y_for_screen_percentage(0), wave_5},
+    {y_for_screen_percentage(50), wave_4},
+    {y_for_screen_percentage(25), wave_1},
+    {y_for_screen_percentage(50), wave_2},
+    {y_for_screen_percentage(50), wave_3},
+    {y_for_screen_percentage(100), wave_4},
+    {y_for_screen_percentage(50), wave_3},
+    {y_for_screen_percentage(50), wave_2},
+    {y_for_screen_percentage(50), wave_1},
+    {y_for_screen_percentage(50), wave_4},
 };
 
 // largest tile map y
@@ -145,7 +145,7 @@ static float wave_triggers_next_y =
 
 // callback after frame has been rendered and objects updated
 // note: if objects are deleted see 'objects::update()'
-static auto main_on_frame_completed() -> void {
+static auto application_on_frame_completed() -> void {
     // update x position in pixels in the tile map
     tile_map_x += tile_map_dx * clk.dt;
     if (tile_map_x < 0) {
@@ -169,7 +169,7 @@ static auto main_on_frame_completed() -> void {
             wave_triggers_bottom_screen_y - wave_triggers[0].since_last_wave_y;
     }
 
-    if (!game_state.hero_is_alive) {
+    if (!state.hero_is_alive) {
         hero* hro = new (objects.alloc()) hero{};
         hro->x = random_float(0, display_width);
         hro->y = 30;
@@ -188,7 +188,7 @@ static auto main_on_frame_completed() -> void {
     }
 }
 
-static auto main_wave_1() -> void {
+static auto wave_1() -> void {
     int constexpr count = display_width / (sprite_width * 3 / 2);
     int constexpr dx = display_width / count;
     float x = 0;
@@ -203,7 +203,7 @@ static auto main_wave_1() -> void {
     }
 }
 
-static auto main_wave_2() -> void {
+static auto wave_2() -> void {
     int constexpr count = display_width / (sprite_width * 3 / 2);
     int constexpr dx = display_width / count;
     float x = 0;
@@ -216,7 +216,7 @@ static auto main_wave_2() -> void {
     }
 }
 
-static auto main_wave_3() -> void {
+static auto wave_3() -> void {
     int constexpr count_y = 10;
     int constexpr count_x = 10;
     int constexpr dx = display_width / count_x;
@@ -232,7 +232,7 @@ static auto main_wave_3() -> void {
     }
 }
 
-static auto main_wave_4() -> void {
+static auto wave_4() -> void {
     ufo2* ufo = new (objects.alloc()) ufo2{};
     ufo->x = display_width / 2;
     ufo->y = -sprite_height;
@@ -258,7 +258,7 @@ static auto main_wave_4() -> void {
     }
 }
 
-static auto main_wave_5() -> void {
+static auto wave_5() -> void {
     float y = -float(sprite_height);
     float constexpr dx = display_width / 12;
     for (int j = 0; j < 12; ++j, y -= 16) {
