@@ -1,6 +1,10 @@
 [ ] implement support for flipping tiles vertically and horizontally
     => Tiled supports flipping X and Y
     https://doc.mapeditor.org/en/stable/reference/global-tile-ids/#tile-flipping
+[ ] consider detecting collision between sprites and tilmap
+    => using 8-bits for collision map (limitation of esp32 largest chunk allocation)
+       bit 8 flags if lower 7 bits is index in sprites or tiles
+       reduces available sprites and tiles map to 128 in default configuration
 [x] JC4827W543C: "upload and monitor" is ok but when powering on, many times
     it does not boot in the same way causing the touch screen not to work and
     FPS is way down. Resetting using the board button does not fix the problem
