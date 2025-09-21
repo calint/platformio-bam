@@ -2,13 +2,12 @@
 import xml.etree.ElementTree as ET
 import sys
 
-if len(sys.argv) < 4:
-    print("Usage: ./parse-tmx-flags.py <tmx file> <output newline every n'th line>")
+if len(sys.argv) < 3:
+    print("Usage: ./parse-tmx-flags.py <tmx file>")
     sys.exit(1)
 
 input_file = sys.argv[1]
 newline_sep_every_nth_line = int(sys.argv[2])
-bit_mask = int(sys.argv[3], 16)
 
 root = ET.parse(input_file).getroot()
 width = int(root.attrib["width"])
