@@ -13,7 +13,7 @@
 
 ## appendix
 * `resources-from-png/update.sh` tool for extracting tile and sprite images resources from png files
-* `resources-from-tmx/update.sh` tool for extracting tile map resource
+* `resources-from-tmx/update.sh` tool for extracting tile map resources
 
 # overview
 
