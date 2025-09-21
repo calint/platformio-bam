@@ -1,3 +1,8 @@
+[ ] `application/objects/util/sprites_2x2`: utilize mirroring by specifying:
+    0: no mirrors
+    1: mirror all (e.g. circle, square)
+    2: mirror horizontally (e.g. triangle)
+    3: mirror vertically (e.g. oval)
 [x] implement support for flipping tiles vertically and horizontally
     => Tiled supports flipping X and Y
     https://doc.mapeditor.org/en/stable/reference/global-tile-ids/#tile-flipping
