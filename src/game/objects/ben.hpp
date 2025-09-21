@@ -14,14 +14,14 @@ static animator::frame constexpr ben_animation_walk[]{
 
 class ben final : public game_object {
     animator animator_{};
-    uint8_t moving_direction = 0; // 0: still  1: right  2: left
+    uint8_t moving_direction_ = 0; // 0: still  1: right  2: left
 
   public:
     ben() : game_object{cls_ben} {
         animator_.init(ben_animation_walk,
                        sizeof(ben_animation_walk) / sizeof(animator::frame),
                        false);
-        moving_direction = 1;
+        moving_direction_ = 1;
         spr = sprites.alloc();
         spr->obj = this;
         spr->img = animator_.sprite_img();
@@ -32,7 +32,7 @@ class ben final : public game_object {
         if (game_object::update()) {
             return true;
         }
-        switch (moving_direction) {
+        switch (moving_direction_) {
         case 1: // right
             if (x <= display_width - sprite_width) {
                 if (animator_.update()) {
@@ -42,7 +42,7 @@ class ben final : public game_object {
                     y += animator_.displace_y();
                 }
             } else {
-                moving_direction = 2;
+                moving_direction_ = 2;
                 animator_.reset();
                 spr->img = animator_.sprite_img();
                 spr->flip = 1;
@@ -57,7 +57,7 @@ class ben final : public game_object {
                     y += animator_.displace_y();
                 }
             } else {
-                moving_direction = 1;
+                moving_direction_ = 1;
                 animator_.reset();
                 spr->img = animator_.sprite_img();
                 spr->flip = 0;

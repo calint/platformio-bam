@@ -16,7 +16,7 @@ class ned final : public game_object {
     animator animator_{};
 
   public:
-    int8_t moving_direction = 0; // 0: still  1: right  -1s: left
+    int8_t moving_direction = 0; // 0: still  1: right  -1: left
 
     ned() : game_object{cls_ned} {
         animator_.init(ned_animation_walk,

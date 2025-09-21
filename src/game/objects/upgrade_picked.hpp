@@ -5,7 +5,7 @@
 // then other
 
 class upgrade_picked final : public game_object {
-    clk::time death_at_ms = 0;
+    clk::time death_at_ms_ = 0;
 
   public:
     upgrade_picked() : game_object{cls_upgrade_picked} {
@@ -15,7 +15,7 @@ class upgrade_picked final : public game_object {
         spr->layer = 1;
         spr->flip = 0;
 
-        death_at_ms = clk.ms + 5000;
+        death_at_ms_ = clk.ms + 5000;
     }
 
     // returns true if object died
@@ -23,7 +23,7 @@ class upgrade_picked final : public game_object {
         if (game_object::update()) {
             return true;
         }
-        if (clk.ms >= death_at_ms) {
+        if (clk.ms >= death_at_ms_) {
             return true;
         }
         return false;
