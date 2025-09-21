@@ -1,5 +1,6 @@
 [ ] implement support for flipping tiles vertically and horizontally
     => Tiled supports flipping X and Y
+    https://doc.mapeditor.org/en/stable/reference/global-tile-ids/#tile-flipping
 [x] JC4827W543C: "upload and monitor" is ok but when powering on, many times
     it does not boot in the same way causing the touch screen not to work and
     FPS is way down. Resetting using the board button does not fix the problem
