@@ -2,8 +2,7 @@
 // first include engine
 #include "../../engine.hpp"
 // then objects
-#include "game_object.hpp"
-//
+// then other
 #include "../animator.hpp"
 
 static animator::frame constexpr ship2_animation[]{

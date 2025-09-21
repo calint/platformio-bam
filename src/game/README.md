@@ -29,9 +29,8 @@
 * see `objects/README.md`
 
 ## game_state.hpp
-* included by game objects that access game state
-* included by `main.hpp` after the game objects
-* provides a way for game objects to share data with `main.hpp`
+* included by `main.hpp` before the game objects
+* provides a way for game objects to share data with `main.hpp` without circular references
 * used in `main_on_frame_completed` to solve circular reference issues
 
 ## resources/*

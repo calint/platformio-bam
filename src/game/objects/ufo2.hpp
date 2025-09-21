@@ -2,7 +2,6 @@
 // first include engine
 #include "../../engine.hpp"
 // then objects
-#include "game_object.hpp"
 #include "ship2.hpp"
 // then other
 #include "utils.hpp"

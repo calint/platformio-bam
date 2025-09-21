@@ -2,7 +2,7 @@
 // first include engine
 #include "../../engine.hpp"
 // then objects
-#include "game_object.hpp"
+// then other
 
 class upgrade_picked final : public game_object {
     clk::time death_at_ms = 0;

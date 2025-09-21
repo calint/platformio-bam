@@ -9,6 +9,8 @@
 #include "../device.hpp"
 // the game state
 #include "game_state.hpp"
+// base class
+#include "objects/game_object.hpp"
 // then the objects
 #include "objects/ben.hpp"
 #include "objects/bullet.hpp"

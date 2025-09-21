@@ -2,8 +2,8 @@
 // first include engine
 #include "../../engine.hpp"
 // then objects
-#include "game_object.hpp"
 #include "upgrade_picked.hpp"
+// then other
 
 class upgrade final : public game_object {
   public:
