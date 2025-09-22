@@ -1,3 +1,4 @@
+[x] return false to free object after update, on_collision etc
 [ ] enum for sprite flip types: horizontal, vertical
 [ ] `application/objects/util/sprites_2x2`: utilize mirroring by specifying:
     0: no mirrors

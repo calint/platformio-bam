@@ -9,12 +9,14 @@ class dummy final : public game_object {
     dummy() : game_object{cls_dummy} {}
 
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         if (x >= display_width || x - sprite_width <= 0) {
-            return true;
+            return false;
         }
-        return false;
+
+        return true;
     }
 };

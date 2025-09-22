@@ -28,10 +28,9 @@ class ship2 final : public game_object {
         spr->flip = 0;
     }
 
-    // returns true if object died
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
 
         if (dy > 0) {
@@ -39,14 +38,14 @@ class ship2 final : public game_object {
         }
 
         if (y > display_height) {
-            return true;
+            return false;
         }
 
         if (animator_.update()) {
             spr->img = animator_.sprite_img();
         }
 
-        return false;
+        return true;
     }
 
     auto on_death_by_collision() -> void override {

@@ -18,17 +18,16 @@ class upgrade final : public game_object {
         spr->flip = 0;
     }
 
-    // returns true if object died
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
 
         if (y >= display_height) {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     auto on_death_by_collision() -> void override {

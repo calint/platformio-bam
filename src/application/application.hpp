@@ -10,7 +10,7 @@
 // the game state
 #include "state.hpp"
 // base class
-#include "objects/game_object.hpp"
+#include "game_object.hpp"
 // then the objects
 #include "objects/ben.hpp"
 #include "objects/bullet.hpp"

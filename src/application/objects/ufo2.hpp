@@ -20,13 +20,15 @@ class ufo2 final : public game_object {
     auto pre_render() -> void override { sprs_.pre_render(this); }
 
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         if (y > (display_height + sprite_height)) {
-            return true;
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     auto on_collision(game_object* obj) -> bool override {

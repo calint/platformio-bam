@@ -29,9 +29,10 @@ class ned final : public game_object {
     }
 
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         switch (moving_direction) {
         case 1: // right
             if (x <= display_width - sprite_width) {
@@ -66,10 +67,10 @@ class ned final : public game_object {
         default: // other
             break;
         }
-        return false;
+
+        return true;
     }
 
-    // called before rendering the sprites
     auto pre_render() -> void override {
         // place sprite in background coordinate system
         spr->scr_x = int16_t(x - tile_map_x);

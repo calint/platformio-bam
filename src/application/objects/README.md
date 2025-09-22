@@ -60,13 +60,13 @@
   - update position and motion attributes
 * user code might implement custom collision handling
   - if `col_with` is not `nullptr`, handle collision and then set it to `nullptr`
-* return `true` if object has died and should be deallocated by the engine
+* return `false` if object has died and should be deallocated by the engine
 
 ### on_collision
 * called from `update` if game object is in collision
-* returns `true` if object has died
+* returns `false` if object has died
 * default implementation is to reduce `health` with the `damage` caused by the colliding object
-* if `health` is zero or less then call `on_death_by_collision` and return `true`
+* if `health` is zero or less then call `on_death_by_collision` and return `false`
 
 ### on_death_by_collision
 * called from `on_collision` if game object has died due to collision damage

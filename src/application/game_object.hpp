@@ -1,6 +1,6 @@
 #pragma once
 // first include engine
-#include "../../engine.hpp"
+#include "../engine.hpp"
 
 // implements common behavior of all game objects
 class game_object : public object {
@@ -31,13 +31,13 @@ class game_object : public object {
         sprites.free(spr);
     }
 
-    // returns true if object has died
+    // returns false if object has died
     // note: regarding classes overriding 'update(...)'
     // after 'update(...)' 'col_with' should be 'nullptr'
     auto update() -> bool override {
         if (col_with) {
-            if (on_collision(static_cast<game_object*>(col_with))) {
-                return true;
+            if (!on_collision(static_cast<game_object*>(col_with))) {
+                return false;
             }
             col_with = nullptr;
         }
@@ -47,7 +47,7 @@ class game_object : public object {
         dy += ddy * clk.dt;
         y += dy * clk.dt;
 
-        return false;
+        return true;
     }
 
     // called before rendering the sprites
@@ -57,14 +57,14 @@ class game_object : public object {
     }
 
     // called from 'update' if object is in collision
-    // returns true if object has died
+    // returns false if object has died
     virtual auto on_collision(game_object* obj) -> bool {
         health = int16_t(health - obj->damage);
         if (health <= 0) {
             on_death_by_collision();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     // called from 'on_collision' if object has died due to collision

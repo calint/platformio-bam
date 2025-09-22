@@ -19,14 +19,15 @@ class fragment final : public game_object {
         spr->flip = 0;
     }
 
-    // returns true if object died
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         if (clk.ms >= die_at_ms) {
-            return true;
+            return false;
         }
-        return false;
+
+        return true;
     }
 };

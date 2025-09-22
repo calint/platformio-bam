@@ -99,10 +99,10 @@ class object {
     virtual ~object() = default;
     // note: 'delete obj' is not allowed since memory is managed by 'o1store'
 
-    // returns true if object has died
+    // returns false if object has died
     // note: regarding classes overriding 'update(...)'
     //       after 'update(...)' 'col_with' should be 'nullptr'
-    virtual auto update() -> bool { return false; }
+    virtual auto update() -> bool { return true; }
 
     // called before rendering the sprites
     virtual auto pre_render() -> void {}
@@ -120,7 +120,7 @@ class objects : public object_store {
         //       'end'
         for (object** it = allocated_list(); it < end; ++it) {
             object* obj = *it;
-            if (obj->update()) {
+            if (!obj->update()) {
                 obj->~object();
                 free(obj);
             }

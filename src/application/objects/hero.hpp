@@ -54,10 +54,9 @@ class hero final : public game_object {
         state.hero_is_alive = false;
     }
 
-    // returns true if object died
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
 
         if (x >= display_width) {
@@ -77,7 +76,7 @@ class hero final : public game_object {
             last_upgrade_deployed_ms_ = clk.ms;
         }
 
-        return false;
+        return true;
     }
 
     auto on_death_by_collision() -> void override {

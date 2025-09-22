@@ -18,14 +18,15 @@ class upgrade_picked final : public game_object {
         death_at_ms_ = clk.ms + 5000;
     }
 
-    // returns true if object died
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         if (clk.ms >= death_at_ms_) {
-            return true;
+            return false;
         }
-        return false;
+
+        return true;
     }
 };

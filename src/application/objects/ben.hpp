@@ -29,9 +29,10 @@ class ben final : public game_object {
     }
 
     auto update() -> bool override {
-        if (game_object::update()) {
-            return true;
+        if (!game_object::update()) {
+            return false;
         }
+
         switch (moving_direction_) {
         case 1: // right
             if (x <= display_width - sprite_width) {
@@ -66,7 +67,8 @@ class ben final : public game_object {
         default: // other
             break;
         }
-        return false;
+
+        return true;
     }
 
     // called before rendering the sprites
