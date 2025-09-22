@@ -5,6 +5,7 @@
 
 ## table of contents
 * `application.hpp` setup initial game state, callbacks from engine, game logic
+* `game_object.hpp` base class for application objects
 * `objects/*` game objects
 * `state.hpp` used by game objects and `application.hpp`
 * `resources/*` partial files defining tiles, sprites, palettes and tile map
