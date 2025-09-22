@@ -35,6 +35,8 @@ class game_object : public object {
     // note: regarding classes overriding 'update(...)'
     // after 'update(...)' 'col_with' should be 'nullptr'
     auto update() -> bool override {
+        // note: object::update() omitted since it simply returns 'true'
+
         if (col_with) {
             if (!on_collision(static_cast<game_object*>(col_with))) {
                 return false;
