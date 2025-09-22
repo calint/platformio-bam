@@ -34,7 +34,7 @@
 * used in `application_on_frame_completed` to solve circular reference issues
 
 ## resources/*
-* `tile_map.hpp` size defined in `defs.hpp` and generated from `tmx` file by tool `resources-from-tmx/update.sh`
+* `tile_map.hpp` and `tile_map_flags.hpp` size defined in `defs.hpp` and generated from `tmx` file by tool `resources-from-tmx/update.sh`
 * `tile_imgs.hpp`, `sprite_imgs.hpp` and `palette_*.hpp` generated from `png` files by tool `resources-from-png/update.sh`
 * 256 tile and 256 sprite images, 16 x 16 pixels, are default settings in `defs.hpp`
 * sprite and tile images are constant data stored in program memory
