@@ -67,7 +67,7 @@ static sprite_ix constexpr sprite_ix_reserved =
 // forward declaration of type
 class object;
 
-class sprite {
+class sprite final {
   public:
     sprite** alloc_ptr = nullptr;
     object* obj = nullptr;

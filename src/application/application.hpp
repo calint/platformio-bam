@@ -30,6 +30,7 @@ static float tile_map_dy = 0;
 // callback from 'setup()'
 static auto application_init() -> void {
     printf("------------------- game object sizes --------------------\n");
+    printf("          animator: %zu B\n", sizeof(animator));
     printf("       game_object: %zu B\n", sizeof(game_object));
     printf("            bullet: %zu B\n", sizeof(bullet));
     printf("             dummy: %zu B\n", sizeof(dummy));

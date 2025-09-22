@@ -9,8 +9,10 @@ class sprites_2x2 final {
     sprite* sprs[3];
 
   public:
+    enum class mirror : uint8_t { none, all, horizontal, vertical };
+
     sprites_2x2(game_object* obj, int const top_left_index_in_16_sprites_row,
-                uint8_t const layer) {
+                uint8_t const layer, mirror const mirror = mirror::none) {
         obj->spr = sprites.alloc();
         obj->spr->obj = obj;
         obj->spr->layer = layer;
@@ -23,9 +25,36 @@ class sprites_2x2 final {
             spr->flip = 0;
         }
         obj->spr->img = sprite_imgs[top_left_index_in_16_sprites_row];
-        sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
-        sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
-        sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16 + 1];
+        switch (mirror) {
+        case mirror::none:
+            sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
+            sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
+            sprs[2]->img =
+                sprite_imgs[top_left_index_in_16_sprites_row + 16 + 1];
+            break;
+        case mirror::all:
+            sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row];
+            sprs[0]->flip = 1; // horizontal
+            sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row];
+            sprs[1]->flip = 2; // vertical
+            sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row];
+            sprs[2]->flip = 3; // horizontal and vertical
+            break;
+        case mirror::horizontal:
+            sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row];
+            sprs[0]->flip = 1; // horizontal
+            sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
+            sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
+            sprs[2]->flip = 1; // horizontal
+            break;
+        case mirror::vertical:
+            sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
+            sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row];
+            sprs[1]->flip = 2; // vertical
+            sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
+            sprs[2]->flip = 2; // vertical
+            break;
+        }
     }
 
     ~sprites_2x2() {
