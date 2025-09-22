@@ -1,5 +1,7 @@
 [ ] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
+[ ] consider having several sprite sheets with sprite object containing sheet
+    number
 [ ] enum for sprite flip types: horizontal, vertical, both
 [ ] consider specifying which palette to use for a tile cell with the remaining
     4 bits in tile_map_flags. same per sprite. 16 palettes available
