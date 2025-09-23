@@ -3,8 +3,9 @@
 [ ] consider having several sprite sheets with sprite object containing sheet
     number
 [ ] enum for sprite flip types: horizontal, vertical, both
-[ ] consider specifying which palette to use for a tile cell with the remaining
+[-] consider specifying which palette to use for a tile cell with the remaining
     4 bits in tile_map_flags. same per sprite. 16 palettes available
+    => the tooling (gimp, tiled) are not easily adaptable for that
 [ ] consider detecting collision between sprites and tile map
     => using 8-bits for collision map (limitation of esp32 largest chunk allocation)
        bit 8 flags if lower 7 bits is index in sprites or tiles
