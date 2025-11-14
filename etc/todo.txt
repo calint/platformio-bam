@@ -1,3 +1,4 @@
+[ ] several layers of tile map images for animation
 [ ] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
 [ ] consider having several sprite sheets with sprite object containing sheet
