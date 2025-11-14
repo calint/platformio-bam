@@ -1,17 +1,25 @@
-# troubleshooting
+# etc
+
+## troubleshooting
+
 device does not show up as '/dev/ttyUSB0' on linux
+
 * service 'brltty' might be the problem
 * disable it and related services or uninstall it
 
-# clipboard.txt
+## clipboard.txt
+
 * various command lines and notes
 
-# todo.txt
+## todo.txt
+
 * todo list and suggestions
 
-# platformio.ini
+## platformio.ini
+
 * additional flags
-```
+
+```txt
 ;
 ; compile c++ 23
 ;
