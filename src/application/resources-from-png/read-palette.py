@@ -2,7 +2,8 @@
 from PIL import Image
 import sys
 
-def print_palette_as_game_resource(filename):
+
+def print_palette_as_game_resource(filename: str):
     try:
         with Image.open(filename) as img:
             palette = img.getpalette()
@@ -17,6 +18,7 @@ def print_palette_as_game_resource(filename):
 
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
