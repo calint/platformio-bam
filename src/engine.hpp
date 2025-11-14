@@ -5,6 +5,9 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
+#include "application/defs.hpp"
+#include <cstdint>
+
 // calibration of touch screen (defined in `platformio.ini`)
 static int16_t constexpr touch_screen_min_x = TOUCH_MIN_X;
 static int16_t constexpr touch_screen_max_x = TOUCH_MAX_X;
@@ -15,6 +18,9 @@ static int16_t constexpr touch_screen_max_y = TOUCH_MAX_Y;
 static int16_t constexpr touch_screen_range_y =
     touch_screen_max_y - touch_screen_min_y;
 // --
+
+extern int const display_width;
+extern int const display_height;
 
 #include "o1store.hpp"
 

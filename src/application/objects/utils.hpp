@@ -1,7 +1,6 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
 #include "fragment.hpp"
 
 class sprites_2x2 final {

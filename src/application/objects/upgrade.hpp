@@ -1,7 +1,7 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
+#include "application/game_object.hpp"
 #include "upgrade_picked.hpp"
 // then other
 

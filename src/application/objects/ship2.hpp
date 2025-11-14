@@ -1,9 +1,9 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
-// then other
 #include "../animator.hpp"
+#include "application/game_object.hpp"
+#include "application/objects/upgrade.hpp"
 
 static animator::frame constexpr ship2_animation[]{
     {64, 500, 0, 0},

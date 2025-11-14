@@ -5,6 +5,7 @@
 // implements device using TFT_eSPI and XPT2046_Bitbang
 
 #include "../device.hpp"
+#include "application/defs.hpp"
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>

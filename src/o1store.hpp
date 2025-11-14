@@ -15,6 +15,8 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
+#include <cstdio>
+#include <cstdlib>
 template <typename Type, int const Size, int const StoreId = 0,
           int const InstanceSizeInBytes = 0>
 class o1store {

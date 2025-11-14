@@ -1,9 +1,8 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
-// then other
 #include "../animator.hpp"
+#include "application/game_object.hpp"
 
 static animator::frame constexpr ned_animation_walk[]{
     {48, 150, 2, 0},

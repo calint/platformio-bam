@@ -41,13 +41,13 @@
 #include "application/defs.hpp"
 
 // then the device file specified in `platformio.ini`
-#ifdef DEVICE_JC4827W543R
-#include "devices/JC4827W543R.hpp"
-static JC4827W543R device{};
-
-#elif DEVICE_ESP32_2432S028R
+#if DEVICE_ESP32_2432S028R
 #include "devices/ESP32_2432S028R.hpp"
 static ESP32_2432S028R device{};
+
+#elif DEVICE_JC4827W543R
+#include "devices/JC4827W543R.hpp"
+static JC4827W543R device{};
 
 #elif DEVICE_JC4827W543C
 #include "devices/JC4827W543C.hpp"
@@ -136,7 +136,7 @@ auto setup() -> void {
     printf("------------------- object sizes -------------------------\n");
     printf("            sprite: %zu B\n", sizeof(sprite));
     printf("            object: %zu B\n", sizeof(object));
-    printf("   object instance: %zu B\n", object_instance_max_size_B);
+    printf("   object instance: %zu B\n", size_t(object_instance_max_size_B));
     printf("              tile: %zu B\n", sizeof(tile_imgs[0]));
     printf("------------------- in program memory --------------------\n");
     printf("     sprite images: %zu B\n", sizeof(sprite_imgs));
@@ -202,7 +202,7 @@ auto loop() -> void {
 
     if (device.display_is_touched()) {
         uint8_t const touch_count = device.display_touch_count();
-        device::touch touches[touch_count]{};
+        device::touch touches[10]{};
         device.display_get_touch(touches);
         application_on_touch(touches, touch_count);
     }

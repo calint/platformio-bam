@@ -7,11 +7,7 @@
 
 // device interface
 #include "../device.hpp"
-// the game state
-#include "state.hpp"
-// base class
 #include "game_object.hpp"
-// then the objects
 #include "objects/ben.hpp"
 #include "objects/bullet.hpp"
 #include "objects/dummy.hpp"
@@ -20,8 +16,7 @@
 #include "objects/ship1.hpp"
 #include "objects/ship2.hpp"
 #include "objects/ufo2.hpp"
-// then other
-#include "objects/utils.hpp"
+#include "state.hpp"
 
 // movement of tile map in pixels per second
 static float tile_map_dx = 0;
@@ -65,7 +60,7 @@ static auto application_init() -> void {
 
     // create default hero
     hero* hro = new (objects.alloc()) hero{};
-    hro->x = display_width / 2 - sprite_width / 2;
+    hro->x = float(display_width) / 2 - float(sprite_width) / 2;
     hro->y = 30;
 }
 
@@ -200,7 +195,7 @@ static auto wave_1() -> void {
         shp->y = y;
         shp->dy = 50;
         x += dx;
-        y -= sprite_width / 2;
+        y -= float(sprite_width) / 2;
     }
 }
 
@@ -235,7 +230,7 @@ static auto wave_3() -> void {
 
 static auto wave_4() -> void {
     ufo2* ufo = new (objects.alloc()) ufo2{};
-    ufo->x = display_width / 2;
+    ufo->x = float(display_width) / 2;
     ufo->y = -sprite_height;
     ufo->dy = 5;
 
@@ -261,7 +256,7 @@ static auto wave_4() -> void {
 
 static auto wave_5() -> void {
     float y = -float(sprite_height);
-    float constexpr dx = display_width / 12;
+    float constexpr dx = float(display_width) / 12;
     for (int j = 0; j < 12; ++j, y -= 16) {
         float x = 0;
         for (int i = 0; i < 19; ++i, x += dx) {

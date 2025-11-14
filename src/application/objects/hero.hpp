@@ -1,11 +1,8 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
-#include "bullet.hpp"
-#include "fragment.hpp"
+#include "application/state.hpp"
 #include "upgrade.hpp"
-// then other
 #include "utils.hpp"
 
 class hero final : public game_object {

@@ -1,8 +1,7 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
-// then other
+#include "application/game_object.hpp"
 
 class fragment final : public game_object {
   public:

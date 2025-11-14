@@ -2,6 +2,9 @@
 // implements sprite animation
 // note: maximum 127 frames in an animation
 
+#include "../engine.hpp"
+#include "application/defs.hpp"
+
 class animator final {
   public:
     struct frame final {

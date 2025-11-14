@@ -1,9 +1,8 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
+#include "application/game_object.hpp"
 #include "fragment.hpp"
-// then other
 
 class bullet final : public game_object {
   public:

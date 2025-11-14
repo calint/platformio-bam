@@ -1,9 +1,7 @@
 #pragma once
-// first include engine
+
 #include "../../engine.hpp"
-// then objects
 #include "ship2.hpp"
-// then other
 #include "utils.hpp"
 
 class ufo2 final : public game_object {

@@ -7,6 +7,7 @@
 // bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
 
 #include "../device.hpp"
+#include "application/defs.hpp"
 #include <SPI.h>
 #include <driver/spi_master.h>
 
