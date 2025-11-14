@@ -261,13 +261,12 @@ static auto random_float(float const min, float const max) -> float {
 
 // returns x on display for raw touch value x
 static auto display_x_for_touch(int16_t const x) -> float {
-    static float constexpr fact_x = float(display_width) / touch_screen_range_x;
+    static float const fact_x = float(display_width) / touch_screen_range_x;
     return float(x - touch_screen_min_x) * fact_x;
 }
 
 // returns y on display for raw touch value y
 static auto display_y_for_touch(int16_t const y) -> float {
-    static float constexpr fact_y =
-        float(display_height) / touch_screen_range_y;
+    static float const fact_y = float(display_height) / touch_screen_range_y;
     return float(y - touch_screen_min_y) * fact_y;
 }

@@ -4,6 +4,7 @@
 #include "../animator.hpp"
 #include "application/game_object.hpp"
 #include "application/objects/upgrade.hpp"
+#include <new>
 
 static animator::frame constexpr ship2_animation[]{
     {64, 500, 0, 0},

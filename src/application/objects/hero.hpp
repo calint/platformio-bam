@@ -4,6 +4,7 @@
 #include "application/state.hpp"
 #include "upgrade.hpp"
 #include "utils.hpp"
+#include <new>
 
 class hero final : public game_object {
     sprite* spr_left_ = nullptr;

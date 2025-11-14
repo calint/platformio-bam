@@ -2,6 +2,7 @@
 
 #include "../../engine.hpp"
 #include "fragment.hpp"
+#include <new>
 
 class sprites_2x2 final {
     // three additional sprites

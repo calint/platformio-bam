@@ -3,6 +3,7 @@
 #include "../../engine.hpp"
 #include "application/game_object.hpp"
 #include "upgrade_picked.hpp"
+#include <new>
 // then other
 
 class upgrade final : public game_object {

@@ -3,6 +3,7 @@
 #include "../../engine.hpp"
 #include "application/game_object.hpp"
 #include "fragment.hpp"
+#include <new>
 
 class bullet final : public game_object {
   public:
