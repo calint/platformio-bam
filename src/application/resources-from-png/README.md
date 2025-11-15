@@ -19,9 +19,9 @@
 
 ## extracting resources
 
-script `update.sh` will overwrite files in `../resources/`
-
-if necessary, change size of tiles and sprites in `update.sh`
+* script `update.sh` will overwrite files in `../resources/`
+* default size of sprites and tiles is 16. change through first parameter,
+  e.g., `update.sh 32`
 
 note: _check that transparency pixel is index 0_
 
