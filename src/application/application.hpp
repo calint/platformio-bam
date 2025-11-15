@@ -43,7 +43,8 @@ static auto application_init() -> void {
     static_assert(
         max_size_of_type<game_object, bullet, dummy, fragment, hero, ship1,
                          ship2, upgrade, upgrade_picked, ufo2, ben, ned>() <=
-        object_instance_max_size_B);
+            object_instance_max_size_B,
+        "game object size larger than the specified maximum size");
 
     // scrolling vertically from bottom up
     tile_map_y = tile_map_height * tile_height - display_height;
