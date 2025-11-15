@@ -20,25 +20,9 @@ static int const display_height = 320;
 
 class device_sdl : public device {
   public:
-    device_sdl() = default;
-
-    ~device_sdl() {
-        if (buffer_) {
-            delete[] buffer_;
-        }
-        if (texture_) {
-            SDL_DestroyTexture(texture_);
-        }
-        if (renderer_) {
-            SDL_DestroyRenderer(renderer_);
-        }
-        if (window_) {
-            SDL_DestroyWindow(window_);
-        }
-        SDL_Quit();
-    }
-
     auto init() -> void override {
+        // note: cleaning up resources omitted because device is alive during
+        //       whole program life time
         if (!SDL_Init(SDL_INIT_VIDEO)) {
             throw std::runtime_error("Failed to initialize SDL3");
         }
