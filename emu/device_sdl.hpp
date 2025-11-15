@@ -46,22 +46,17 @@ class device_sdl : public device {
         window_ =
             SDL_CreateWindow("Device Screen", display_width, display_height, 0);
         if (!window_) {
-            SDL_Quit();
             throw std::runtime_error("Failed to create SDL3 window");
         }
 
         renderer_ = SDL_CreateRenderer(window_, nullptr);
         if (!renderer_) {
-            SDL_DestroyWindow(window_);
-            SDL_Quit();
             throw std::runtime_error("Failed to create SDL3 renderer");
         }
 
         if (!SDL_SetRenderLogicalPresentation(
                 renderer_, display_width, display_height,
                 SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
-            SDL_DestroyWindow(window_);
-            SDL_Quit();
             throw std::runtime_error("Failed to set aspect ratio");
         }
 
@@ -69,20 +64,14 @@ class device_sdl : public device {
                                      SDL_TEXTUREACCESS_STREAMING, display_width,
                                      display_height);
         if (!texture_) {
-            SDL_DestroyRenderer(renderer_);
-            SDL_DestroyWindow(window_);
-            SDL_Quit();
             throw std::runtime_error("Failed to create SDL3 texture");
         }
 
         size_t const buffer_size =
             display_width * display_height * sizeof(uint16_t);
+
         buffer_ = new uint8_t[buffer_size]();
         if (!buffer_) {
-            SDL_DestroyTexture(texture_);
-            SDL_DestroyRenderer(renderer_);
-            SDL_DestroyWindow(window_);
-            SDL_Quit();
             throw std::runtime_error("Failed to allocate display buffer");
         }
     }
