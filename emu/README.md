@@ -2,7 +2,7 @@
 
 ## intention
 
-* implement an emulator for a 240 x 320 device
+* implement an emulator for a device with variable sized screen and performance
 * keep the rendering code as the hardware version
 
 ## how-to

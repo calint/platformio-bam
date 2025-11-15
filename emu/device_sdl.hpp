@@ -15,8 +15,8 @@
 #include <cstring>
 #include <stdexcept>
 
-static int const display_width = 240;
-static int const display_height = 320;
+static int const display_width = TFT_WIDTH;
+static int const display_height = TFT_HEIGHT;
 
 class device_sdl : public device {
   public:
