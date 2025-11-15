@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+cd $(dirname "$0")
 
 g++ -std=gnu++11 -O0 -g3 -o bam -Wfatal-errors -Werror -Wall -Wextra -Wpedantic \
     $(pkg-config --cflags --libs sdl3) \
