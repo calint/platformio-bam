@@ -17,7 +17,7 @@ static int dma_writes = 0;
 // allocated in 'renderer_init()'
 static size_t const collision_map_size_B =
     sizeof(sprite_ix) * display_width * display_height;
-static sprite_ix* collision_map = nullptr;
+static sprite_ix* collision_map;
 
 // forward declarations to used device functions
 auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void;
