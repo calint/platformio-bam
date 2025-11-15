@@ -4,8 +4,8 @@
 //
 // implements device using TFT_eSPI and XPT2046_Bitbang
 
-#include "../device.hpp"
 #include "application/defs.hpp"
+#include "devices/abstract_device.hpp"
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>
@@ -21,7 +21,7 @@ static int constexpr display_width =
 static int constexpr display_height =
     display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
-class ESP32_2432S028R final : public device {
+class ESP32_2432S028R final : public abstract_device {
     static int constexpr touch_mosi = 32;
     static int constexpr touch_miso = 39;
     static int constexpr touch_sck = 25;

@@ -196,8 +196,8 @@ class clk {
         }
         frames_rendered_since_last_update_++;
         time const dt_ms = time_ms - last_fps_update_ms_;
-        if (dt_ms >= interval_ms_) {
-            fps = frames_rendered_since_last_update_ * 1000 / dt_ms;
+        if (int(dt_ms) >= interval_ms_) {
+            fps = frames_rendered_since_last_update_ * 1000 / int(dt_ms);
             frames_rendered_since_last_update_ = 0;
             last_fps_update_ms_ = time_ms;
             return interval_ms_ != 0;
@@ -242,12 +242,12 @@ static auto engine_loop() -> void {
 
 // used for static assert of object sizes and config
 // 'object_instance_max_size_B'
-template <typename T> static auto constexpr max_size_of_type() -> int {
+template <typename T> static auto constexpr max_size_of_type() -> size_t {
     return sizeof(T);
 }
 
 template <typename T, typename U, typename... Args>
-static auto constexpr max_size_of_type() -> int {
+static auto constexpr max_size_of_type() -> size_t {
     return sizeof(T) > max_size_of_type<U, Args...>()
                ? sizeof(T)
                : max_size_of_type<U, Args...>();
@@ -260,13 +260,13 @@ static auto random_float(float const min, float const max) -> float {
 }
 
 // returns x on display for raw touch value x
-static auto display_x_for_touch(int16_t const x) -> float {
+static auto display_x_for_touch(uint16_t const x) -> float {
     static float const fact_x = float(display_width) / touch_screen_range_x;
     return float(x - touch_screen_min_x) * fact_x;
 }
 
 // returns y on display for raw touch value y
-static auto display_y_for_touch(int16_t const y) -> float {
+static auto display_y_for_touch(uint16_t const y) -> float {
     static float const fact_y = float(display_height) / touch_screen_range_y;
     return float(y - touch_screen_min_y) * fact_y;
 }

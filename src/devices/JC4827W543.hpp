@@ -6,8 +6,8 @@
 // https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
 // bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
 
-#include "../device.hpp"
 #include "application/defs.hpp"
+#include "devices/abstract_device.hpp"
 #include <SPI.h>
 #include <driver/spi_master.h>
 
@@ -20,7 +20,7 @@ static int constexpr display_width = display_orientation == 1 ? 480 : 272;
 static int constexpr display_height = display_orientation == 1 ? 272 : 480;
 
 /// @brief Abstract class for resistive and capacitive versions of the device
-class JC4827W543 : public device {
+class JC4827W543 : public abstract_device {
     // maximum for this device
     static int constexpr dma_max_transfer_b = 32768;
     static int constexpr nv3041a_max_clock_freq = 32000000;

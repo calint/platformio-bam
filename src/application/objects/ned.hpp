@@ -2,7 +2,7 @@
 
 #include "../../engine.hpp"
 #include "../animator.hpp"
-#include "application/game_object.hpp"
+#include "../game_object.hpp"
 
 static animator::frame constexpr ned_animation_walk[]{
     {48, 150, 2, 0},

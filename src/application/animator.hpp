@@ -3,7 +3,7 @@
 // note: maximum 127 frames in an animation
 
 #include "../engine.hpp"
-#include "application/defs.hpp"
+#include "defs.hpp"
 
 class animator final {
   public:

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../engine.hpp"
-#include "application/game_object.hpp"
+#include "../game_object.hpp"
 
 class upgrade_picked final : public game_object {
     clk::time death_at_ms_ = 0;

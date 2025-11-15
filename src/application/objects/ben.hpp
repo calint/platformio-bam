@@ -2,7 +2,7 @@
 
 #include "../../engine.hpp"
 #include "../animator.hpp"
-#include "application/game_object.hpp"
+#include "../game_object.hpp"
 
 static animator::frame constexpr ben_animation_walk[]{
     {32, 300, 2, 0},

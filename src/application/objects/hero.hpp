@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../engine.hpp"
-#include "application/state.hpp"
+#include "../state.hpp"
 #include "upgrade.hpp"
 #include "utils.hpp"
 #include <new>

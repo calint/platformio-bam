@@ -33,11 +33,8 @@ class o1store {
 
   public:
     o1store() {
-        if (InstanceSizeInBytes) {
-            all_ = static_cast<Type*>(calloc(Size, InstanceSizeInBytes));
-        } else {
-            all_ = static_cast<Type*>(calloc(Size, sizeof(Type)));
-        }
+        all_ = static_cast<Type*>(calloc(
+            Size, InstanceSizeInBytes ? InstanceSizeInBytes : sizeof(Type)));
         free_ptr_ = free_bgn_ =
             static_cast<Type**>(calloc(Size, sizeof(Type*)));
         alloc_ptr_ = alloc_bgn_ =
@@ -110,7 +107,7 @@ class o1store {
 
     // returns length of list of allocated instances
     inline auto allocated_list_len() const -> int {
-        return alloc_ptr_ - alloc_bgn_;
+        return int(alloc_ptr_ - alloc_bgn_);
     }
 
     // returns one past the end of allocated instances list
