@@ -106,7 +106,7 @@ using wave_func_ptr = auto (*)() -> void;
 // eases placement of when waves should happen
 static auto constexpr y_for_screen_percentage(float const screen_percentage)
     -> float {
-    return float(display_height * screen_percentage / 100.0f);
+    return display_height * screen_percentage / 100.0f;
 }
 
 struct wave_trigger {
