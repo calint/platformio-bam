@@ -1,6 +1,7 @@
 #pragma once
 
 #include "JC4827W543.hpp"
+
 #include <Touch_GT911.h>
 
 /// @brief Implements touch screen for capacitive version

@@ -6,8 +6,9 @@
 // https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
 // bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
 
-#include "application/defs.hpp"
-#include "devices/abstract_device.hpp"
+#include "../application/defs.hpp"
+#include "abstract_device.hpp"
+
 #include <SPI.h>
 #include <driver/spi_master.h>
 
@@ -16,8 +17,8 @@
 // note: `display_width` and `display_height` are necessary constants for the
 //       framework
 //       `display_orientation` defined in `game/defs.hpp`
-static int constexpr display_width = display_orientation == 1 ? 480 : 272;
-static int constexpr display_height = display_orientation == 1 ? 272 : 480;
+int const display_width = display_orientation == 1 ? 480 : 272;
+int const display_height = display_orientation == 1 ? 272 : 480;
 
 /// @brief Abstract class for resistive and capacitive versions of the device
 class JC4827W543 : public abstract_device {

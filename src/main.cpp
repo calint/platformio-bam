@@ -34,14 +34,15 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
-#include "esp_heap_caps.h"
-#include "hal/efuse_hal.h"
 #include <Arduino.h>
+#include <hal/efuse_hal.h>
 
-// first game defines
-#include "application/defs.hpp"
+// main entry file to user code
+#include "application/application.hpp"
+// the common renderer
+#include "renderer.hpp"
 
-// then the device file specified in `platformio.ini`
+// device file specified in `platformio.ini`
 #if DEVICE_ESP32_2432S028R
 #include "devices/ESP32_2432S028R.hpp"
 static ESP32_2432S028R device{};
@@ -59,9 +60,6 @@ static JC4827W543C device{};
     "None of known devices defined: DEVICE_JC4827W543R, DEVICE_JC4827W543C, DEVICE_ESP32_2432S028R"
 #endif
 
-// then the main entry file to user code
-#include "application/application.hpp"
-
 // functions used in `renderer.hpp` to decouple from device implementation
 auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void {
     device.dma_write_bytes(data, len);
@@ -74,9 +72,6 @@ auto device_alloc_internal_buffer(uint32_t n) -> void* {
     return heap_caps_calloc(1, n, MALLOC_CAP_INTERNAL);
 }
 // --
-
-// the common renderer
-#include "renderer.hpp"
 
 auto setup() -> void {
     Serial.begin(115200);
@@ -133,10 +128,10 @@ auto setup() -> void {
     application_init();
 
     printf("------------------- on heap ------------------------------\n");
-    printf("   DMA buf 1 and 2: %zu B\n", 2 * dma_buffers.buf_size_B);
+    printf("   DMA buf 1 and 2: %u B\n", 2 * dma_buffers.buf_size_B);
     printf("      sprites data: %d B\n", sprites.allocated_data_size_B());
     printf("      objects data: %d B\n", objects.allocated_data_size_B());
-    printf("     collision map: %zu B\n", collision_map_size_B);
+    printf("     collision map: %u B\n", collision_map_size_B);
     printf("------------------- after setup --------------------------\n");
     printf("     free heap mem: %u B\n", ESP.getFreeHeap());
     printf("largest free block: %u B\n", ESP.getMaxAllocHeap());

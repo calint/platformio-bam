@@ -4,8 +4,9 @@
 //
 // implements device using TFT_eSPI and XPT2046_Bitbang
 
-#include "application/defs.hpp"
-#include "devices/abstract_device.hpp"
+#include "../application/defs.hpp"
+#include "abstract_device.hpp"
+
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Bitbang.h>
@@ -16,10 +17,8 @@
 //       framework
 //       `display_orientation` defined in `game/defs.hpp`
 // note: default orientation for this display is portrait = 0
-static int constexpr display_width =
-    display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
-static int constexpr display_height =
-    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
+int const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
+int const display_height = display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class ESP32_2432S028R final : public abstract_device {
     static int constexpr touch_mosi = 32;
