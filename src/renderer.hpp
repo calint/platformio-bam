@@ -4,6 +4,7 @@
 
 #include <cstring>
 
+// defined in device implementation
 extern int const display_width;
 extern int const display_height;
 

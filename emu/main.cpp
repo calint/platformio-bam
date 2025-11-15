@@ -22,7 +22,7 @@ static device_sdl device{};
 // arduino replacement
 auto millis() -> unsigned long { return SDL_GetTicks(); }
 
-// functions used in `renderer.hpp`
+// functions used in `renderer.hpp` to decouple from device implementation
 auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void {
     device.dma_write_bytes(data, len);
 }

@@ -8,11 +8,10 @@
 //       `static int const display_height`
 
 #include "../src/device.hpp"
+
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_endian.h>
 #include <SDL3/SDL_render.h>
-#include <cstddef>
-#include <cstdint>
 #include <cstring>
 #include <stdexcept>
 

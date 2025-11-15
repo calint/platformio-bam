@@ -8,3 +8,7 @@
 ## how-to
 
 * `./make.sh && ./bam` to make and run emulator
+
+## notes
+
+* frames per second capped to resemble hardware
