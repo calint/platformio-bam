@@ -182,7 +182,7 @@ class device_sdl : public device {
             }
 
             case SDL_EVENT_MOUSE_MOTION: {
-                if (touch_count_ > 0) {
+                if (touch_count_ != 0) {
                     float logical_x = 0;
                     float logical_y = 0;
                     if (SDL_RenderCoordinatesFromWindow(
