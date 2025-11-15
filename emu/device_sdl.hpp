@@ -1,12 +1,11 @@
 #pragma once
-// SDL3 device implementation for Linux
-
-// note: kept the logic from hardware when rendering a scan-line at a time for
-//       most accurate emulation
+//
+// sdl3 device implementation for Linux
+//
 
 // note: device implementations must define global constants:
-//    `static int constexpr display_width`
-//    `static int constexpr display_height`
+//       `static int const display_width`
+//       `static int const display_height`
 
 #include "../src/device.hpp"
 #include <SDL3/SDL.h>
