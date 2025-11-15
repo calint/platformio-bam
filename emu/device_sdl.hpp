@@ -159,9 +159,11 @@ class device_sdl : public device {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
-            case SDL_EVENT_QUIT:
+
+            case SDL_EVENT_QUIT: {
                 exit(0);
                 break;
+            }
 
             case SDL_EVENT_MOUSE_BUTTON_DOWN: {
                 float logical_x;
@@ -179,6 +181,7 @@ class device_sdl : public device {
                 }
                 break;
             }
+
             case SDL_EVENT_MOUSE_MOTION: {
                 if (touch_count_ > 0) {
                     float logical_x;
@@ -193,6 +196,7 @@ class device_sdl : public device {
                 }
                 break;
             }
+
             case SDL_EVENT_MOUSE_BUTTON_UP: {
                 touch_count_ = 0;
                 break;
