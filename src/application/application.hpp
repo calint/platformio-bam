@@ -24,7 +24,7 @@ static float tile_map_dx = 0;
 static float tile_map_dy = 0;
 
 // callback from 'setup()'
-auto application_init() -> void {
+inline auto application_init() -> void {
     printf("------------------- game object sizes --------------------\n");
     printf("          animator: %zu B\n", sizeof(animator));
     printf("       game_object: %zu B\n", sizeof(game_object));
@@ -67,8 +67,8 @@ auto application_init() -> void {
 }
 
 // callback when screen is touched, happens before 'render(...)'
-auto application_on_touch(device::touch const touches[], uint8_t const count)
-    -> void {
+inline auto application_on_touch(device::touch const touches[],
+                                 uint8_t const count) -> void {
     // keep track of when the previous bullet was fired
     static clk::time last_fire_ms = 0;
 
@@ -145,7 +145,7 @@ static float wave_triggers_next_y =
 
 // callback after frame has been rendered and objects updated
 // note: if objects are deleted see 'objects::update()'
-auto application_on_frame_completed() -> void {
+inline auto application_on_frame_completed() -> void {
     // update x position in pixels in the tile map
     tile_map_x += tile_map_dx * clk.dt;
     if (tile_map_x < 0) {
