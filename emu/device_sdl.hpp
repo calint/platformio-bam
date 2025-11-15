@@ -18,7 +18,7 @@
 static int const display_width = TFT_WIDTH;
 static int const display_height = TFT_HEIGHT;
 
-class device_sdl : public device {
+class device_sdl final : public device {
   public:
     // note: cleaning up resources omitted because device is alive during
     //       whole program life time
