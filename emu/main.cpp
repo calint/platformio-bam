@@ -87,15 +87,15 @@ auto setup() -> void {
 
     device.init();
 
-    // printf("------------------- peripherals --------------------------\n");
-    // printf("           SD card: %s\n",
-    //        device.sd_available() ? "present" : "n/a");
-    // printf("              size: %zu B\n", device.sd_size_B());
-    // printf("              used: %zu B\n", device.sd_used_B());
-    // printf("            SPIFFS: %s\n",
-    //        device.spiffs_available() ? "present" : "n/a");
-    // printf("              size: %zu B\n", device.spiffs_size_B());
-    // printf("              used: %zu B\n", device.spiffs_used_B());
+    printf("------------------- peripherals --------------------------\n");
+    printf("           SD card: %s\n",
+           device.sd_available() ? "present" : "n/a");
+    printf("              size: %zu B\n", device.sd_size_B());
+    printf("              used: %zu B\n", device.sd_used_B());
+    printf("            SPIFFS: %s\n",
+           device.spiffs_available() ? "present" : "n/a");
+    printf("              size: %zu B\n", device.spiffs_size_B());
+    printf("              used: %zu B\n", device.spiffs_used_B());
 
     dma_buffers.init();
 
