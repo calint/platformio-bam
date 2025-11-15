@@ -10,5 +10,5 @@
 * script `update.sh` overwrites files in `../resources/`
   * `tile_map.hpp`
   * `tile_map_flags.hpp`
-* __note__: `update.sh` generates a new line every 30'th row by default or
+* __note__: `update.sh` generates a blank line every 30'th row by default or
   specified as first argument, e.g., `update.sh 60`
