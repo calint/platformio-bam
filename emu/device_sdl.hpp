@@ -216,8 +216,7 @@ class device_sdl : public device {
             ptr++;
         }
 
-        int const pitch =
-            display_width * sizeof(uint16_t); // 2 bytes per pixel for RGB565
+        int const pitch = display_width * sizeof(uint16_t);
         if (!SDL_UpdateTexture(texture_, nullptr, buffer_, pitch)) {
             throw std::runtime_error("Failed to update texture");
         }
