@@ -1,5 +1,5 @@
 //
-// emulator of device with screen size 240 x 320 emulator
+// emulator of device with screen size 240 x 320
 // note: rendering is kept as the implementation for closest emulation
 //
 
