@@ -248,7 +248,7 @@ class JC4827W543 : public abstract_device {
     auto bus_write_c8(uint8_t const cmd) -> void {
         transaction_.flags = SPI_TRANS_MULTILINE_CMD | SPI_TRANS_MULTILINE_ADDR;
         transaction_.cmd = 0x02;
-        transaction_.addr = static_cast<uint32_t>(cmd) << 8;
+        transaction_.addr = uint32_t(cmd) << 8;
         transaction_.tx_buffer = nullptr;
         transaction_.length = 0;
         ESP_ERROR_CHECK(
@@ -259,7 +259,7 @@ class JC4827W543 : public abstract_device {
         transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                              SPI_TRANS_MULTILINE_ADDR;
         transaction_.cmd = 0x02;
-        transaction_.addr = static_cast<uint32_t>(cmd) << 8;
+        transaction_.addr = uint32_t(cmd) << 8;
         transaction_.tx_data[0] = data;
         transaction_.length = 8; // in bits
         ESP_ERROR_CHECK(
@@ -271,7 +271,7 @@ class JC4827W543 : public abstract_device {
         transaction_.flags = SPI_TRANS_USE_TXDATA | SPI_TRANS_MULTILINE_CMD |
                              SPI_TRANS_MULTILINE_ADDR;
         transaction_.cmd = 0x02;
-        transaction_.addr = static_cast<uint32_t>(cmd) << 8;
+        transaction_.addr = uint32_t(cmd) << 8;
         transaction_.tx_data[0] = data1 >> 8;
         transaction_.tx_data[1] = data1;
         transaction_.tx_data[2] = data2 >> 8;

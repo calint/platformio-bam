@@ -171,11 +171,10 @@ class device_sdl : public device {
 
                 touch_count_ = 0;
                 if (SDL_RenderCoordinatesFromWindow(
-                        renderer_, static_cast<float>(event.button.x),
-                        static_cast<float>(event.button.y), &logical_x,
-                        &logical_y)) {
-                    touches_[0].x = static_cast<uint16_t>(logical_x);
-                    touches_[0].y = static_cast<uint16_t>(logical_y);
+                        renderer_, float(event.button.x), float(event.button.y),
+                        &logical_x, &logical_y)) {
+                    touches_[0].x = uint16_t(logical_x);
+                    touches_[0].y = uint16_t(logical_y);
                     touches_[0].pressure = 255;
                     touch_count_ = 1;
                 }
@@ -187,11 +186,10 @@ class device_sdl : public device {
                     float logical_x;
                     float logical_y;
                     if (SDL_RenderCoordinatesFromWindow(
-                            renderer_, static_cast<float>(event.motion.x),
-                            static_cast<float>(event.motion.y), &logical_x,
-                            &logical_y)) {
-                        touches_[0].x = static_cast<uint16_t>(logical_x);
-                        touches_[0].y = static_cast<uint16_t>(logical_y);
+                            renderer_, float(event.motion.x),
+                            float(event.motion.y), &logical_x, &logical_y)) {
+                        touches_[0].x = uint16_t(logical_x);
+                        touches_[0].y = uint16_t(logical_y);
                     }
                 }
                 break;
