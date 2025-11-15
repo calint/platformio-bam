@@ -17,10 +17,8 @@
 #include <cstring>
 #include <stdexcept>
 
-static int const display_width =
-    display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
-static int const display_height =
-    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
+int const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
+int const display_height = display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class device_sdl final : public device {
   public:
