@@ -2,7 +2,8 @@
 
 ## intention
 
-* implement an emulator for a device with variable sized screen and performance
+* implement an emulator of a variable size screen and performance device for
+  faster development cycle
 * keep the rendering code as the hardware version
 
 ## how-to
