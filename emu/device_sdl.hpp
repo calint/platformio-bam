@@ -211,7 +211,7 @@ class device_sdl : public device {
         uint16_t* ptr = reinterpret_cast<uint16_t*>(buffer_);
         for (int i = 0; i < display_width * display_height; ++i) {
             *ptr = SDL_Swap16(*ptr);
-            ptr++;
+            ++ptr;
         }
 
         int const pitch = display_width * sizeof(uint16_t);
