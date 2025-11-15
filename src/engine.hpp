@@ -5,11 +5,11 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
-#include "application/defs.hpp"
-
+// defined by the device
 extern int const display_width;
 extern int const display_height;
 
+#include "application/defs.hpp"
 #include "o1store.hpp"
 
 #include <cstdint>
