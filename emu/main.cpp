@@ -1,21 +1,26 @@
+//
+// emulator of device with screen size 240 x 320 emulator
+// note: rendering is kept as the implementation for closest emulation
+//
+
 #define BAM_TIME_STEP_MS 33
 #define TOUCH_MIN_X 0
 #define TOUCH_MAX_X 240
 #define TOUCH_MIN_Y 0
 #define TOUCH_MAX_Y 320
 
+// first the application defs
 #include "../src/application/defs.hpp"
+// then the device
 #include "device_sdl.hpp"
-
-auto millis() -> unsigned long { return SDL_GetTicks(); }
-
 static device_sdl device{};
-
 // then the engine
 #include "../src/engine.hpp"
-
 // then the main entry file to user code
 #include "../src/application/application.hpp"
+
+// arduino replacement
+auto millis() -> unsigned long { return SDL_GetTicks(); }
 
 // number of scanlines to render before DMA transfer
 static int constexpr dma_n_scanlines = 8;
