@@ -2,8 +2,10 @@
 // implements sprite animation
 // note: maximum 127 frames in an animation
 
-#include "../engine.hpp"
 #include "defs.hpp"
+
+#include "../engine.hpp"
+#include "../resources.hpp"
 
 class animator final {
   public:
