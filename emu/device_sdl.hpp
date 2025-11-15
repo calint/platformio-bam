@@ -151,7 +151,7 @@ class device_sdl : public device {
     bool dma_busy_{};
     uint32_t dma_offset_{};
 
-    static constexpr uint8_t MAX_TOUCHES = 10;
+    static uint8_t constexpr MAX_TOUCHES = 10;
     touch touches_[MAX_TOUCHES]{};
     uint8_t touch_count_{};
 
