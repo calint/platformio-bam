@@ -4,6 +4,7 @@
 //
 
 // defines usually provided by `platformio.ini`
+#include <SDL3/SDL_stdinc.h>
 #define BAM_TIME_STEP_MS 33
 #define TOUCH_MIN_X 0
 #define TOUCH_MAX_X 240
@@ -101,8 +102,11 @@ auto loop() -> void {
 auto main() -> int {
     setup();
     while (true) {
+        unsigned long t0 = millis();
         loop();
-        SDL_Delay(BAM_TIME_STEP_MS);
-        // bug: falsely assumes 0ms loop time
+        unsigned long dt = millis() - t0;
+        if (BAM_TIME_STEP_MS > dt) {
+            SDL_Delay(Uint32(BAM_TIME_STEP_MS - dt));
+        }
     }
 }
