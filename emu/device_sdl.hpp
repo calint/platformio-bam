@@ -1,6 +1,6 @@
 #pragma once
 //
-// sdl3 device implementation for Linux
+// sdl3 device implementation
 //
 
 // note: device implementations must define global constants:
