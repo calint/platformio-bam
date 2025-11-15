@@ -67,10 +67,10 @@ auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void {
     device.dma_write_bytes(data, len);
 }
 auto device_dma_is_busy() -> bool { return device.dma_is_busy(); };
-auto device_alloc_dma_buffer(size_t n) -> void* {
+auto device_alloc_dma_buffer(uint32_t n) -> void* {
     return heap_caps_calloc(1, n, MALLOC_CAP_DMA);
 }
-auto device_alloc_internal_buffer(size_t n) -> void* {
+auto device_alloc_internal_buffer(uint32_t n) -> void* {
     return heap_caps_calloc(1, n, MALLOC_CAP_INTERNAL);
 }
 // --
@@ -97,7 +97,7 @@ auto setup() -> void {
     printf("------------------- object sizes -------------------------\n");
     printf("            sprite: %zu B\n", sizeof(sprite));
     printf("            object: %zu B\n", sizeof(object));
-    printf("   object instance: %zu B\n", size_t(object_instance_max_size_B));
+    printf("   object instance: %d B\n", object_instance_max_size_B);
     printf("              tile: %zu B\n", sizeof(tile_imgs[0]));
     printf("------------------- in program memory --------------------\n");
     printf("     sprite images: %zu B\n", sizeof(sprite_imgs));

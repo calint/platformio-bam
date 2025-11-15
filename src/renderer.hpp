@@ -15,15 +15,15 @@ static int dma_writes;
 
 // pixel precision collision detection between on screen sprites
 // allocated in 'renderer_init()'
-static size_t const collision_map_size_B =
+static uint32_t const collision_map_size_B =
     sizeof(sprite_ix) * display_width * display_height;
 static sprite_ix* collision_map;
 
 // forward declarations to used device functions
 auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void;
 auto device_dma_is_busy() -> bool;
-auto device_alloc_dma_buffer(size_t n) -> void*;
-auto device_alloc_internal_buffer(size_t n) -> void*;
+auto device_alloc_dma_buffer(uint32_t n) -> void*;
+auto device_alloc_internal_buffer(uint32_t n) -> void*;
 
 // number of scanlines to render before DMA transfer
 static int constexpr dma_n_scanlines = 8;
@@ -37,7 +37,7 @@ static int constexpr dma_n_scanlines = 8;
 class dma_buffers final {
   public:
     // size of a DMA buffer
-    size_t const buf_size_B =
+    uint32_t const buf_size_B =
         sizeof(uint16_t) * display_width * dma_n_scanlines;
 
     auto init() -> void {

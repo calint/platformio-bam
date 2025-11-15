@@ -25,14 +25,14 @@ auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void {
     device.dma_write_bytes(data, len);
 }
 auto device_dma_is_busy() -> bool { return false; };
-auto device_alloc_dma_buffer(size_t n) -> void* { return calloc(1, n); }
-auto device_alloc_internal_buffer(size_t n) -> void* { return calloc(1, n); }
+auto device_alloc_dma_buffer(uint32_t n) -> void* { return calloc(1, n); }
+auto device_alloc_internal_buffer(uint32_t n) -> void* { return calloc(1, n); }
 
 auto setup() -> void {
     printf("------------------- object sizes -------------------------\n");
     printf("            sprite: %zu B\n", sizeof(sprite));
     printf("            object: %zu B\n", sizeof(object));
-    printf("   object instance: %zu B\n", size_t(object_instance_max_size_B));
+    printf("   object instance: %d B\n", object_instance_max_size_B);
     printf("              tile: %zu B\n", sizeof(tile_imgs[0]));
     printf("------------------- in program memory --------------------\n");
     printf("     sprite images: %zu B\n", sizeof(sprite_imgs));
@@ -68,10 +68,10 @@ auto setup() -> void {
     application_init();
 
     printf("------------------- on heap ------------------------------\n");
-    printf("   DMA buf 1 and 2: %zu B\n", 2 * dma_buffers.buf_size_B);
+    printf("   DMA buf 1 and 2: %u B\n", 2 * dma_buffers.buf_size_B);
     printf("      sprites data: %d B\n", sprites.allocated_data_size_B());
     printf("      objects data: %d B\n", objects.allocated_data_size_B());
-    printf("     collision map: %zu B\n", collision_map_size_B);
+    printf("     collision map: %u B\n", collision_map_size_B);
     printf("------------------- after setup --------------------------\n");
 }
 
