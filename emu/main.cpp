@@ -2,8 +2,8 @@
 // emulator of device with variable screen size and performance
 // see `make.sh` for supplied defines
 //
+
 // note: rendering is kept as the implementation for closest emulation
-//
 
 // first the application defs
 #include "../src/application/defs.hpp"
