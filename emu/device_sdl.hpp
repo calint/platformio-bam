@@ -7,16 +7,20 @@
 //       `static int const display_width`
 //       `static int const display_height`
 
+#include "../src/application/defs.hpp"
 #include "../src/device.hpp"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_endian.h>
 #include <SDL3/SDL_render.h>
+#include <cstdint>
 #include <cstring>
 #include <stdexcept>
 
-static int const display_width = TFT_WIDTH;
-static int const display_height = TFT_HEIGHT;
+static int const display_width =
+    display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
+static int const display_height =
+    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class device_sdl final : public device {
   public:
