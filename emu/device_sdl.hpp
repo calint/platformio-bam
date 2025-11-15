@@ -209,7 +209,7 @@ class device_sdl : public device {
     auto copy_to_screen() -> void {
         // byte swap to match format of resources
         uint16_t* ptr = reinterpret_cast<uint16_t*>(buffer_);
-        for (int i = 0; i < display_width * display_height; i++) {
+        for (int i = 0; i < display_width * display_height; ++i) {
             *ptr = SDL_Swap16(*ptr);
             ptr++;
         }
