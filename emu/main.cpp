@@ -9,10 +9,13 @@
 #include "../src/application/defs.hpp"
 // then the device
 #include "device_sdl.hpp"
-// instantiate device
-static device_sdl device{};
+// then the common renderer
+#include "../src/renderer.hpp"
 // then the main entry file to user code
 #include "../src/application/application.hpp"
+
+// instantiate the device implementation
+static device_sdl device{};
 
 // arduino replacement
 auto millis() -> unsigned long { return SDL_GetTicks(); }
@@ -24,9 +27,6 @@ auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void {
 auto device_dma_is_busy() -> bool { return false; };
 auto device_alloc_dma_buffer(size_t n) -> void* { return calloc(1, n); }
 auto device_alloc_internal_buffer(size_t n) -> void* { return calloc(1, n); }
-
-// the common renderer
-#include "../src/renderer.hpp"
 
 auto setup() -> void {
     printf("------------------- object sizes -------------------------\n");

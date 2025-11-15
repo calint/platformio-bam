@@ -7,6 +7,7 @@
 
 // device interface
 #include "../device.hpp"
+#include "defs.hpp"
 #include "game_object.hpp"
 #include "objects/ben.hpp"
 #include "objects/bullet.hpp"
@@ -78,8 +79,10 @@ static auto application_on_touch(device::touch const touches[],
         for (uint8_t i = 0; i < count; ++i) {
             if (object* mem = objects.alloc()) {
                 bullet* blt = new (mem) bullet{};
-                blt->x = display_x_for_touch(touches[i].x);
-                blt->y = display_y_for_touch(touches[i].y);
+                blt->x =
+                    display_x_for_touch(touches[i].x) - float(sprite_width) / 2;
+                blt->y = display_y_for_touch(touches[i].y) -
+                         float(sprite_height) / 2;
                 blt->dy = -200;
             }
         }

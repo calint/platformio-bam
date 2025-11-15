@@ -173,8 +173,8 @@ class device_sdl : public device {
                 if (SDL_RenderCoordinatesFromWindow(
                         renderer_, float(event.button.x), float(event.button.y),
                         &logical_x, &logical_y)) {
-                    touches_[0].x = uint16_t(logical_x);
-                    touches_[0].y = uint16_t(logical_y);
+                    touches_[0].x = uint16_t(logical_x < 0 ? 0 : logical_x);
+                    touches_[0].y = uint16_t(logical_y < 0 ? 0 : logical_y);
                     touches_[0].pressure = 255;
                     touch_count_ = 1;
                 }
@@ -188,8 +188,8 @@ class device_sdl : public device {
                     if (SDL_RenderCoordinatesFromWindow(
                             renderer_, float(event.motion.x),
                             float(event.motion.y), &logical_x, &logical_y)) {
-                        touches_[0].x = uint16_t(logical_x);
-                        touches_[0].y = uint16_t(logical_y);
+                        touches_[0].x = uint16_t(logical_x < 0 ? 0 : logical_x);
+                        touches_[0].y = uint16_t(logical_y < 0 ? 0 : logical_y);
                     }
                 }
                 break;
