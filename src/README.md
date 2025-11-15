@@ -6,7 +6,7 @@
 * `device.hpp` abstract device definition
 * `devices/*` device implementations
 * `engine.hpp` platform-independent game engine
-* `resources.hpp` used by engine
+* `resources.hpp` used by engine and application
 * `renderer.hpp` common file with emulator
 * `application/*` platform-independent game implementation using `engine.hpp`
 * `o1store.hpp` O(1) object allocator
