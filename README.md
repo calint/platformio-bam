@@ -50,7 +50,7 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 
 ## device emulator
 
-`/emu/` contains an emulator of 240 x 320 device for faster development cycles
+`/emu/` contains an emulator of a 240 x 320 device for faster development cycle
 
 ## development environment
 
