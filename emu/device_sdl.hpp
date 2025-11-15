@@ -200,6 +200,11 @@ class device_sdl : public device {
                 break;
             }
 
+            case SDL_EVENT_WINDOW_RESIZED: {
+                SDL_RenderClear(renderer_);
+                break;
+            }
+
             default:
                 break;
             }
@@ -218,7 +223,6 @@ class device_sdl : public device {
         if (!SDL_UpdateTexture(texture_, nullptr, buffer_, pitch)) {
             throw std::runtime_error("Failed to update texture");
         }
-        SDL_RenderClear(renderer_);
         if (!SDL_RenderTexture(renderer_, texture_, nullptr, nullptr)) {
             throw std::runtime_error("Failed to render texture");
         }
