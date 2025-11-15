@@ -10,8 +10,8 @@ extern int const display_height;
 
 // statistics about ratio of busy DMA before sending new buffer (higher is
 // better meaning DMA is not finished before rendering)
-static int dma_busy = 0;
-static int dma_writes = 0;
+static int dma_busy;
+static int dma_writes;
 
 // pixel precision collision detection between on screen sprites
 // allocated in 'renderer_init()'
@@ -58,9 +58,9 @@ class dma_buffers final {
     }
 
   private:
-    uint16_t* buf_1_ = nullptr;
-    uint16_t* buf_2_ = nullptr;
-    uint16_t* buf_current_ = nullptr;
+    uint16_t* buf_1_{};
+    uint16_t* buf_2_{};
+    uint16_t* buf_current_{};
 } static dma_buffers{};
 
 inline auto renderer_init() -> void {
@@ -76,8 +76,8 @@ inline auto renderer_init() -> void {
 
 // sprites to be rendered divided in layers
 struct render_sprite_entry {
-    sprite const* spr = nullptr;
-    sprite_ix ix = 0; // index in sprite array
+    sprite const* spr{};
+    sprite_ix ix{}; // index in sprite array
 };
 
 // list of sprites to render by layer

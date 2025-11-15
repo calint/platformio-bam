@@ -13,7 +13,7 @@ static animator::frame constexpr ben_animation_walk[]{
 
 class ben final : public game_object {
     animator animator_{};
-    uint8_t moving_direction_ = 0; // 0: still  1: right  2: left
+    uint8_t moving_direction_{}; // 0: still  1: right  2: left
 
   public:
     ben() : game_object{cls_ben} {

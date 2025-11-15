@@ -6,7 +6,7 @@
 
 class sprites_2x2 final {
     // three additional sprites
-    sprite* sprs[3];
+    sprite* sprs[3]{};
 
   public:
     enum class mirror : uint8_t { none, all, horizontal, vertical };

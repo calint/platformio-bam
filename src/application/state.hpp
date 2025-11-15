@@ -7,5 +7,5 @@
 
 class state final {
   public:
-    bool hero_is_alive = false;
+    bool hero_is_alive{};
 } static state{};

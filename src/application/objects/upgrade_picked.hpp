@@ -4,7 +4,7 @@
 #include "../game_object.hpp"
 
 class upgrade_picked final : public game_object {
-    clk::time death_at_ms_ = 0;
+    clk::time death_at_ms_{};
 
   public:
     upgrade_picked() : game_object{cls_upgrade_picked} {

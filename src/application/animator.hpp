@@ -25,12 +25,12 @@ class animator final {
     };
 
   private:
-    frame const* frames_ = nullptr;
-    clk::time next_frame_ms_ = 0;
-    int8_t frame_count_ = 0;
-    int8_t current_frame_ix_ = 0;
-    int8_t frame_ix_dir_ = 0; // forward: 1  backwards: -1
-    bool ping_pong_ = false;  // back-and-forth animation
+    frame const* frames_{};
+    clk::time next_frame_ms_{};
+    int8_t frame_count_{};
+    int8_t current_frame_ix_{};
+    int8_t frame_ix_dir_{}; // forward: 1  backwards: -1
+    bool ping_pong_{};      // back-and-forth animation
 
   public:
     auto init(frame const* frames, int8_t const frame_count,

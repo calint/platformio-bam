@@ -110,8 +110,8 @@ static auto constexpr y_for_screen_percentage(float const screen_percentage)
 }
 
 struct wave_trigger {
-    float since_last_wave_y = 0;
-    wave_func_ptr func = nullptr;
+    float since_last_wave_y{};
+    wave_func_ptr func{};
 
     constexpr wave_trigger(float const y, wave_func_ptr const func_ptr)
         : since_last_wave_y{y}, func{func_ptr} {}

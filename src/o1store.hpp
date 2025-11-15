@@ -21,15 +21,15 @@
 template <typename Type, int const Size, int const StoreId = 0,
           int const InstanceSizeInBytes = 0>
 class o1store {
-    Type* all_ = nullptr;
-    Type** free_bgn_ = nullptr;
-    Type** free_ptr_ = nullptr;
-    Type** free_end_ = nullptr;
-    Type** alloc_bgn_ = nullptr;
-    Type** alloc_ptr_ = nullptr;
-    Type** del_bgn_ = nullptr;
-    Type** del_ptr_ = nullptr;
-    Type** del_end_ = nullptr;
+    Type* all_{};
+    Type** free_bgn_{};
+    Type** free_ptr_{};
+    Type** free_end_{};
+    Type** alloc_bgn_{};
+    Type** alloc_ptr_{};
+    Type** del_bgn_{};
+    Type** del_ptr_{};
+    Type** del_end_{};
 
   public:
     o1store() {

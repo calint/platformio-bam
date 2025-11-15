@@ -5,22 +5,22 @@
 // implements common behavior of all game objects
 class game_object : public object {
   public:
-    sprite* spr = nullptr;
+    sprite* spr{};
 
-    float ddx = 0;
-    float dx = 0;
-    float x = 0;
-    float ddy = 0;
-    float dy = 0;
-    float y = 0;
+    float ddx{};
+    float dx{};
+    float x{};
+    float ddy{};
+    float dy{};
+    float y{};
 
-    int16_t health = 0;
+    int16_t health{};
 
     // damage inflicted on other object at collision
-    int16_t damage = 0;
+    int16_t damage{};
 
     // run time information about the class of this object
-    object_class cls;
+    object_class cls{};
 
     explicit game_object(object_class c) : cls{c} {}
     // note: after constructor 'spr' must be in valid state.

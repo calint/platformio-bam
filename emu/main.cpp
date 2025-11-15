@@ -15,7 +15,7 @@
 #include "../src/application/application.hpp"
 
 // instantiate the device implementation
-static device_sdl device{};
+static device_sdl device;
 
 // arduino replacement
 auto millis() -> unsigned long { return SDL_GetTicks(); }

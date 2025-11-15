@@ -9,9 +9,9 @@ class JC4827W543R final : public JC4827W543 {
     static int constexpr touch_cs = 38;
 
     XPT2046_Touchscreen touch_screen{touch_cs};
-    uint16_t touch_screen_x = 0;
-    uint16_t touch_screen_y = 0;
-    uint8_t touch_screen_pressure = 0;
+    uint16_t touch_screen_x{};
+    uint16_t touch_screen_y{};
+    uint8_t touch_screen_pressure{};
 
   protected:
     auto init_touch_screen() -> void override {

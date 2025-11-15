@@ -200,7 +200,7 @@ class JC4827W543 : public abstract_device {
             return false;
         }
 
-        spi_transaction_t* t = nullptr;
+        spi_transaction_t* t{};
         async_busy_ = spi_device_get_trans_result(device_handle_, &t, 0) ==
                       ESP_ERR_TIMEOUT;
 
@@ -212,7 +212,7 @@ class JC4827W543 : public abstract_device {
             return;
         }
 
-        spi_transaction_t* t = nullptr;
+        spi_transaction_t* t{};
         ESP_ERROR_CHECK(
             spi_device_get_trans_result(device_handle_, &t, portMAX_DELAY));
 

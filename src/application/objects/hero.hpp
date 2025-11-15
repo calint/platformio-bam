@@ -7,9 +7,9 @@
 #include <new>
 
 class hero final : public game_object {
-    sprite* spr_left_ = nullptr;
-    sprite* spr_right_ = nullptr;
-    clk::time last_upgrade_deployed_ms_ = 0;
+    sprite* spr_left_{};
+    sprite* spr_right_{};
+    clk::time last_upgrade_deployed_ms_{};
     static clk::time constexpr upgrade_deploy_interval_ms_ = 10000;
 
   public:

@@ -76,15 +76,15 @@ class object;
 
 class sprite final {
   public:
-    sprite** alloc_ptr = nullptr;
-    object* obj = nullptr;
-    sprite_img img = nullptr;
-    int16_t scr_x = 0;
-    int16_t scr_y = 0;
-    uint8_t layer = 0;
+    sprite** alloc_ptr{};
+    object* obj{};
+    sprite_img img{};
+    int16_t scr_x{};
+    int16_t scr_y{};
+    uint8_t layer{};
     // note: lower 'layer' number is rendered first
     //       number of layers specified by 'sprite_layer_count'
-    uint8_t flip = 0; // bits: horiz: 0b01, vert: 0b10
+    uint8_t flip{}; // bits: horiz: 0b01, vert: 0b10
 };
 
 using sprites_store = o1store<sprite, sprite_count, 1>;
@@ -97,9 +97,9 @@ class object {
     // note: no default value since it would overwrite the 'o1store' assigned
     //       value at 'alloc()'
 
-    object* col_with = nullptr;
-    collision_bits col_bits = 0;
-    collision_bits col_mask = 0;
+    object* col_with{};
+    collision_bits col_bits{};
+    collision_bits col_mask{};
     // note: used to declare interest in collisions with objects whose
     //       'col_bits' bitwise AND with this 'col_mask' is not 0
 

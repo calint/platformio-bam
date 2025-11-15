@@ -5,7 +5,7 @@
 
 class fragment final : public game_object {
   public:
-    clk::time die_at_ms = 0;
+    clk::time die_at_ms{};
 
     fragment() : game_object{cls_fragment} {
         col_bits = cb_fragment;

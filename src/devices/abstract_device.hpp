@@ -91,8 +91,8 @@ class abstract_device : public device {
     }
 
   private:
-    bool sd_present_ = false;
-    bool spiffs_present_ = false;
+    bool sd_present_{};
+    bool spiffs_present_{};
 
     auto fs_write(FS& fs, char const* path, char const* buf, int const buf_len,
                   char const* mode) const -> bool {
