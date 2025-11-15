@@ -1,5 +1,7 @@
 //
-// emulator of device with screen size 240 x 320
+// emulator of device with variable screen size and performance
+// see `make.sh` for supplied defines
+//
 // note: rendering is kept as the implementation for closest emulation
 //
 
