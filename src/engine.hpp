@@ -11,6 +11,7 @@ extern int const display_height;
 
 #include "application/defs.hpp"
 #include "o1store.hpp"
+#include "resources.hpp"
 
 #include <cstdint>
 #include <limits>

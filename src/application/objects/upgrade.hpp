@@ -15,7 +15,7 @@ class upgrade final : public game_object {
         spr = sprites.alloc();
         spr->obj = this;
         spr->img = sprite_imgs[8];
-        spr->layer = 1;
+        spr->layer = 2;
         spr->flip = 0;
     }
 

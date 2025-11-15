@@ -11,7 +11,7 @@ class upgrade_picked final : public game_object {
         spr = sprites.alloc();
         spr->obj = this;
         spr->img = sprite_imgs[9];
-        spr->layer = 1;
+        spr->layer = 2;
         spr->flip = 0;
 
         death_at_ms_ = clk.ms + 5000;

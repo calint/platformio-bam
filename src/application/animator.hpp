@@ -5,7 +5,6 @@
 #include "defs.hpp"
 
 #include "../engine.hpp"
-#include "../resources.hpp"
 
 class animator final {
   public:
