@@ -48,6 +48,10 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 * [download](http://pan.jczn1688.com/s/zyojx8) (note: http url, not https)
 * [community](https://discord.com/channels/630078152038809611/1199730744424153109)
 
+## device emulator
+
+`/emu/` constains an emulator of 240 x 320 device for faster development cycles
+
 ## development environment
 
 * PlatformIO 6.1.18
