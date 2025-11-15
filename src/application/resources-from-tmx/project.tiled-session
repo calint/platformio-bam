@@ -9,11 +9,11 @@
             "scaleInDock": 1
         },
         "map.tmx": {
-            "scale": 1.5,
+            "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 158.99999999999994,
-                "y": 294.3333333333333
+                "x": 283.8333333333333,
+                "y": 955.8333333333333
             }
         },
         "tiles.tsx": {
