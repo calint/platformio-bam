@@ -5,11 +5,6 @@
 
 // defines usually provided by `platformio.ini`
 #include <SDL3/SDL_stdinc.h>
-#define BAM_TIME_STEP_MS 33
-#define TOUCH_MIN_X 0
-#define TOUCH_MAX_X 240
-#define TOUCH_MIN_Y 0
-#define TOUCH_MAX_Y 320
 
 // first the application defs
 #include "../src/application/defs.hpp"
