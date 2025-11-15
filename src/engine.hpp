@@ -214,10 +214,10 @@ static auto engine_init() -> void {
 }
 
 // forward declaration of platform specific function
-static auto render(int x, int y) -> void;
+auto render(int x, int y) -> void;
 
 // forward declaration of user provided callback
-static auto application_on_frame_completed() -> void;
+auto application_on_frame_completed() -> void;
 
 // callback from 'main.cpp'
 // render and update the state of the engine
