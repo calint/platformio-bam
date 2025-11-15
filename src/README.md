@@ -44,8 +44,10 @@
   * for consistency with incrementing iterators, increments and decrements are
     done in prefix
 * casting such as `char(getchar())` is ok for readability
-  * `static_cast` or `reinterpret_cast` are used when syntax does not allow otherwise
-* members and variables are initialized for clarity although redundant
+  * `static_cast` or `reinterpret_cast` are used when syntax does not allow
+    otherwise
+* members and variables that are not default initialized are initialized with
+  `{}`
   * some exceptions regarding buffers applied
 * naming convention:
   * descriptive and verbose
