@@ -3,9 +3,6 @@
 // note: rendering is kept as the implementation for closest emulation
 //
 
-// defines usually provided by `platformio.ini`
-#include <SDL3/SDL_stdinc.h>
-
 // first the application defs
 #include "../src/application/defs.hpp"
 // then the device
