@@ -1,7 +1,7 @@
 [ ] when rendering tiles and if empty tile skip rendering for that scanline
 [ ] 2 tile maps rendered for parallax effect
     => experimental code in etc/renderer-overlay.hpp
-       fps drop from ~30 to ~25
+       on cyd: fps drop from ~30 to ~25
 [ ] several layers of tile map images for animation
 [ ] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
