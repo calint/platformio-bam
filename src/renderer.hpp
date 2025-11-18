@@ -118,18 +118,15 @@ static inline auto update_render_sprite_lists() -> void {
     }
 }
 
-// renders a scanline
+// renders a scanline of tiles
 // note: inline because it is only called from one location in render(...)
-static inline auto
-render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
-                int tile_x, int tile_x_fract,
-                tile_img_ix const* tile_map_row_ptr,
-                uint8_t const* tile_map_flags_row_ptr, int16_t const scanline_y,
-                int const tile_line_times_tile_width,
-                int const tile_line_times_tile_width_flipped) -> void {
+template <bool enable_transparency = false>
+static inline auto render_scanline_tiles(
+    uint16_t* render_buf_ptr, int tile_x, int tile_x_fract,
+    tile_img_ix const* tile_map_row_ptr, uint8_t const* tile_map_flags_row_ptr,
+    int16_t const scanline_y, int const tile_line_times_tile_width,
+    int const tile_line_times_tile_width_flipped) -> void {
 
-    // used later by sprite renderer to overwrite tile_imgs pixels
-    uint16_t* scanline_ptr = render_buf_ptr;
     // pointer to first tile to render
     tile_img_ix const* tile_map_ptr = tile_map_row_ptr + tile_x;
     uint8_t const* tile_map_flags_ptr = tile_map_flags_row_ptr + tile_x;
@@ -169,7 +166,14 @@ render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
         // decrease remaining pixels to render before using that variable
         remaining_x -= render_n_pixels;
         while (render_n_pixels--) {
-            *render_buf_ptr = palette_tiles[*tile_img_ptr];
+            if (enable_transparency) {
+                uint16_t const px = palette_tiles[*tile_img_ptr];
+                if (px != 0) {
+                    *render_buf_ptr = px;
+                }
+            } else {
+                *render_buf_ptr = palette_tiles[*tile_img_ptr];
+            }
             tile_img_ptr += tile_img_ptr_inc;
             ++render_buf_ptr;
         }
@@ -177,8 +181,15 @@ render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
         ++tile_map_ptr;
         ++tile_map_flags_ptr;
     }
+}
 
-    // render sprites
+// renders a scanline of sprites
+// note: inline because it is only called from one location in render(...)
+static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
+                                           sprite_ix* collision_map_row_ptr,
+                                           int tile_x, int tile_x_fract,
+                                           int16_t const scanline_y) -> void {
+
     // note: although grossly inefficient algorithm the DMA is mostly busy while
     //       rendering
 
@@ -210,7 +221,7 @@ render_scanline(uint16_t* render_buf_ptr, sprite_ix* collision_map_row_ptr,
             // increment to next sprite pixel to be rendered
             int const spr_img_ptr_inc = flip_horiz ? -1 : 1;
             // pointer to destination of sprite data
-            uint16_t* scanline_dst_ptr = scanline_ptr + spr->scr_x;
+            uint16_t* scanline_dst_ptr = render_buf_ptr + spr->scr_x;
             // initial number of pixels to be rendered
             int render_n_pixels = sprite_width;
             // pointer to collision map for first pixel of sprite
@@ -326,10 +337,12 @@ inline auto render(int const x, int const y) -> void {
         }
         // render a row from tile map
         while (tile_line < render_n_tile_lines) {
-            render_scanline(
-                render_buf_ptr, collision_map_row_ptr, tile_x, tile_x_fract,
-                tile_map_row_ptr, tile_map_flags_row_ptr, scanline_y,
-                tile_line_times_tile_width, tile_line_times_tile_width_flipped);
+            render_scanline_tiles(render_buf_ptr, tile_x, tile_x_fract,
+                                  tile_map_row_ptr, tile_map_flags_row_ptr,
+                                  scanline_y, tile_line_times_tile_width,
+                                  tile_line_times_tile_width_flipped);
+            render_scanline_sprites(render_buf_ptr, collision_map_row_ptr,
+                                    tile_x, tile_x_fract, scanline_y);
             ++tile_line;
             tile_line_times_tile_width += tile_width;
             tile_line_times_tile_width_flipped -= tile_width;
