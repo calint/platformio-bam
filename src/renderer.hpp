@@ -5,13 +5,13 @@
 #include <cstring>
 
 // defined in device implementation
-extern int const display_width;
-extern int const display_height;
+extern int32_t const display_width;
+extern int32_t const display_height;
 
 // statistics about ratio of busy DMA before sending new buffer (higher is
 // better meaning DMA is not finished before rendering)
-static int dma_busy;
-static int dma_writes;
+static int32_t dma_busy;
+static int32_t dma_writes;
 
 // pixel precision collision detection between on screen sprites
 // allocated in 'renderer_init()'
@@ -26,7 +26,7 @@ auto device_alloc_dma_buffer(uint32_t n) -> void*;
 auto device_alloc_internal_buffer(uint32_t n) -> void*;
 
 // number of scanlines to render before DMA transfer
-static int constexpr dma_n_scanlines = 8;
+static int32_t constexpr dma_n_scanlines = 8;
 // note: performance on device (scanlines:FPS):
 //  ESP32-2432S028R:
 //    1:23, 2:27, 4:29, 8:31, 16:31, 32:32, 64:32
@@ -95,14 +95,14 @@ static inline auto printf_render_sprite_entries_ram_usage() -> void {
 // only used in 'render(...)'
 static inline auto update_render_sprite_lists() -> void {
     // set end of lists pointers to start of lists
-    for (int i = 0; i < sprite_layer_count; ++i) {
+    for (int32_t i = 0; i < sprite_layer_count; ++i) {
         render_sprite_entries_end[i] = &render_sprite_entries[i][0];
     }
     // build entries lists
     sprite const* spr = sprites.all_list();
-    int const len = sprites.all_list_len();
-    // note: "int constexpr len" does not compile
-    for (int i = 0; i < len; ++i, ++spr) {
+    int32_t const len = sprites.all_list_len();
+    // note: "int32_t constexpr len" does not compile
+    for (int32_t i = 0; i < len; ++i, ++spr) {
         if (!spr->img || spr->scr_x <= -sprite_width ||
             spr->scr_x >= display_width || spr->scr_y <= -sprite_height ||
             spr->scr_y >= display_height) {
@@ -122,16 +122,16 @@ static inline auto update_render_sprite_lists() -> void {
 // note: inline because it is only called from one location in render(...)
 template <bool enable_transparency = false>
 static inline auto render_scanline_tiles(
-    uint16_t* render_buf_ptr, int tile_x, int tile_x_fract,
+    uint16_t* render_buf_ptr, int32_t tile_x, int32_t tile_x_fract,
     tile_img_ix const* tile_map_row_ptr, uint8_t const* tile_map_flags_row_ptr,
-    int16_t const scanline_y, int const tile_line_times_tile_width,
-    int const tile_line_times_tile_width_flipped) -> void {
+    int16_t const scanline_y, int32_t const tile_line_times_tile_width,
+    int32_t const tile_line_times_tile_width_flipped) -> void {
 
     // pointer to first tile to render
     tile_img_ix const* tile_map_ptr = tile_map_row_ptr + tile_x;
     uint8_t const* tile_map_flags_ptr = tile_map_flags_row_ptr + tile_x;
     // for all horizontal pixels
-    int remaining_x = display_width;
+    int32_t remaining_x = display_width;
     while (remaining_x) {
         uint8_t tile_flags = *tile_map_flags_ptr;
         bool const flip_horiz = tile_flags & 0x8;
@@ -148,9 +148,9 @@ static inline auto render_scanline_tiles(
         } else {
             tile_img_ptr += tile_x_fract;
         }
-        int const tile_img_ptr_inc = flip_horiz ? -1 : 1;
+        int32_t const tile_img_ptr_inc = flip_horiz ? -1 : 1;
         // calculate number of pixels to render
-        int render_n_pixels = 0;
+        int32_t render_n_pixels = 0;
         if (tile_x_fract) {
             // can only happen at first tile in row
             render_n_pixels = tile_width - tile_x_fract;
@@ -187,13 +187,13 @@ static inline auto render_scanline_tiles(
 // note: inline because it is only called from one location in render(...)
 static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
                                            sprite_ix* collision_map_row_ptr,
-                                           int tile_x, int tile_x_fract,
+                                           int32_t tile_x, int32_t tile_x_fract,
                                            int16_t const scanline_y) -> void {
 
     // note: although grossly inefficient algorithm the DMA is mostly busy while
     //       rendering
 
-    for (int layer = 0; layer < sprite_layer_count; ++layer) {
+    for (int32_t layer = 0; layer < sprite_layer_count; ++layer) {
         render_sprite_entry* spr_it_end = render_sprite_entries_end[layer];
         for (render_sprite_entry* spr_it = &render_sprite_entries[layer][0];
              spr_it < spr_it_end; ++spr_it) {
@@ -219,11 +219,11 @@ static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
                 spr_img_ptr += sprite_width - 1;
             }
             // increment to next sprite pixel to be rendered
-            int const spr_img_ptr_inc = flip_horiz ? -1 : 1;
+            int32_t const spr_img_ptr_inc = flip_horiz ? -1 : 1;
             // pointer to destination of sprite data
             uint16_t* scanline_dst_ptr = render_buf_ptr + spr->scr_x;
             // initial number of pixels to be rendered
-            int render_n_pixels = sprite_width;
+            int32_t render_n_pixels = sprite_width;
             // pointer to collision map for first pixel of sprite
             sprite_ix* collision_pixel = collision_map_row_ptr + spr->scr_x;
             if (spr->scr_x < 0) {
@@ -273,12 +273,12 @@ static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
 }
 
 // returns number of shifts to convert a 2^n number to 1
-static auto constexpr count_right_shifts_until_1(int num) -> int {
+static auto constexpr count_right_shifts_until_1(int32_t num) -> int32_t {
     return (num <= 1) ? 0 : 1 + count_right_shifts_until_1(num >> 1);
 }
 
 // renders tile map and sprites
-inline auto render(int const x, int const y) -> void {
+inline auto render(int32_t const x, int32_t const y) -> void {
     // clear stats for this frame
     dma_busy = dma_writes = 0;
 
@@ -288,14 +288,15 @@ inline auto render(int const x, int const y) -> void {
     memset(collision_map, sprite_ix_reserved, collision_map_size_B);
 
     // extract whole number and fractions from x, y
-    int constexpr tile_width_shift = count_right_shifts_until_1(tile_width);
-    int constexpr tile_height_shift = count_right_shifts_until_1(tile_height);
-    int constexpr tile_width_and = (1 << tile_width_shift) - 1;
-    int constexpr tile_height_and = (1 << tile_height_shift) - 1;
-    int const tile_x = x >> tile_width_shift;
-    int const tile_x_fract = x & tile_width_and;
-    int tile_y = y >> tile_height_shift;
-    int tile_y_fract = y & tile_height_and;
+    int32_t constexpr tile_width_shift = count_right_shifts_until_1(tile_width);
+    int32_t constexpr tile_height_shift =
+        count_right_shifts_until_1(tile_height);
+    int32_t constexpr tile_width_and = (1 << tile_width_shift) - 1;
+    int32_t constexpr tile_height_and = (1 << tile_height_shift) - 1;
+    int32_t const tile_x = x >> tile_width_shift;
+    int32_t const tile_x_fract = x & tile_width_and;
+    int32_t tile_y = y >> tile_height_shift;
+    int32_t tile_y_fract = y & tile_height_and;
     // current scanline screen y
     int16_t scanline_y = 0;
     // pointer to start of current row of tiles
@@ -306,22 +307,22 @@ inline auto render(int const x, int const y) -> void {
     sprite_ix* collision_map_row_ptr = collision_map;
     // keeps track of how many scanlines have been rendered since last DMA
     // transfer
-    int dma_scanline_count = 0;
+    int32_t dma_scanline_count = 0;
     // buffer to render
     uint16_t* render_buf_ptr = dma_buffers.current_buffer();
     // prepare visible sprites lists based on layer index
     update_render_sprite_lists();
     // for all lines on display
-    int remaining_y = display_height;
+    int32_t remaining_y = display_height;
     while (remaining_y) {
         // render from tiles map and sprites to the 'render_buf_ptr'
-        int const render_n_tile_lines =
+        int32_t const render_n_tile_lines =
             remaining_y < tile_height ? remaining_y : tile_height;
         // prepare loop variables
-        int render_n_scanlines = 0;
-        int tile_line = 0;
-        int tile_line_times_tile_width = 0;
-        int tile_line_times_tile_width_flipped = 0;
+        int32_t render_n_scanlines = 0;
+        int32_t tile_line = 0;
+        int32_t tile_line_times_tile_width = 0;
+        int32_t tile_line_times_tile_width_flipped = 0;
         if (tile_y_fract) {
             // note: assumes display height is at least a tile height -1
             render_n_scanlines = tile_height - tile_y_fract;
@@ -369,7 +370,7 @@ inline auto render(int const x, int const y) -> void {
     }
     // if 'display_height' is not evenly divisible by 'n_scanlines' there
     // will be remaining scanlines to write
-    int const dma_n_scanlines_trailing = display_height % dma_n_scanlines;
+    int32_t const dma_n_scanlines_trailing = display_height % dma_n_scanlines;
     if (dma_n_scanlines_trailing) {
         ++dma_writes;
         dma_busy += device_dma_is_busy() ? 1 : 0;

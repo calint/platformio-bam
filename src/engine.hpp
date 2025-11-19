@@ -5,15 +5,15 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
-// defined by the device
-extern int const display_width;
-extern int const display_height;
-
 #include "application/defs.hpp"
 #include "o1store.hpp"
 
 #include <cstdint>
 #include <limits>
+
+// defined by the device
+extern int32_t const display_width;
+extern int32_t const display_height;
 
 // resources
 
@@ -152,11 +152,11 @@ class clk {
     using time = uint32_t;
 
   private:
-    int interval_ms_ = 0;
-    int frames_rendered_since_last_update_ = 0;
+    int32_t interval_ms_ = 0;
+    int32_t frames_rendered_since_last_update_ = 0;
     time last_fps_update_ms_ = 0;
     time prv_ms_ = 0;
-    int locked_dt_ms_ = 0;
+    int32_t locked_dt_ms_ = 0;
 
   public:
     // current time since boot in milliseconds
@@ -166,12 +166,12 @@ class clk {
     float dt = 0;
 
     // current frames per second calculated at interval specified at 'init'
-    int fps = 0;
+    int32_t fps = 0;
 
     // called at setup with current time, frames per seconds calculation
     // interval and optional fixed frame delta time
-    auto init(time const time_ms, int const interval_of_fps_calculation_ms,
-              int const locked_dt_ms) -> void {
+    auto init(time const time_ms, int32_t const interval_of_fps_calculation_ms,
+              int32_t const locked_dt_ms) -> void {
         interval_ms_ = interval_of_fps_calculation_ms;
         if (locked_dt_ms) {
             locked_dt_ms_ = locked_dt_ms;
@@ -214,7 +214,7 @@ static auto engine_init() -> void {
 }
 
 // forward declaration of platform specific function
-auto render(int x, int y) -> void;
+auto render(int32_t x, int32_t y) -> void;
 
 // forward declaration of user provided callback
 auto application_on_frame_completed() -> void;

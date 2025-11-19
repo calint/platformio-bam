@@ -7,7 +7,7 @@
 
 /// @brief Implements touch screen for resistive version
 class JC4827W543R final : public JC4827W543 {
-    static int constexpr touch_cs = 38;
+    static int32_t constexpr touch_cs = 38;
 
     XPT2046_Touchscreen touch_screen{touch_cs};
     uint16_t touch_screen_x{};

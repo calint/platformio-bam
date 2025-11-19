@@ -4,8 +4,8 @@
 //
 
 // note: device implementations must define global constants:
-//       `static int const display_width`
-//       `static int const display_height`
+//       `static int32_t const display_width`
+//       `static int32_t const display_height`
 
 #include "../src/application/defs.hpp"
 #include "../src/device.hpp"
@@ -17,8 +17,9 @@
 #include <cstring>
 #include <stdexcept>
 
-int const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
-int const display_height = display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
+int32_t const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
+int32_t const display_height =
+    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class device_sdl final : public device {
   public:
@@ -93,15 +94,15 @@ class device_sdl final : public device {
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    auto spiffs_read(char const* path, char* buf, int buf_len) const
-        -> int override {
+    auto spiffs_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t override {
         return 0;
     }
 
     // write to SPIFFS 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append
     // returns true if ok
-    auto spiffs_write(char const* path, char const* buf, int buf_len,
+    auto spiffs_write(char const* path, char const* buf, size_t buf_len,
                       char const* mode) const -> bool override {
         return false;
     }
@@ -122,14 +123,14 @@ class device_sdl final : public device {
 
     // read from SD path 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    auto sd_read(char const* path, char* buf, int buf_len) const
-        -> int override {
+    auto sd_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t override {
         return 0;
     }
 
     // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append returns true if ok
-    auto sd_write(char const* path, char const* buf, int buf_len,
+    auto sd_write(char const* path, char const* buf, size_t buf_len,
                   char const* mode) const -> bool override {
         return false;
     }
@@ -216,12 +217,12 @@ class device_sdl final : public device {
     auto copy_to_screen() -> void {
         // byte swap to match format of resources
         uint16_t* ptr = reinterpret_cast<uint16_t*>(buffer_);
-        for (int i = 0; i < display_width * display_height; ++i) {
+        for (int32_t i = 0; i < display_width * display_height; ++i) {
             *ptr = SDL_Swap16(*ptr);
             ++ptr;
         }
 
-        int const pitch = display_width * sizeof(uint16_t);
+        int32_t const pitch = display_width * sizeof(uint16_t);
         if (!SDL_UpdateTexture(texture_, nullptr, buffer_, pitch)) {
             throw std::runtime_error("Failed to update texture");
         }

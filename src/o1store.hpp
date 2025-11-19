@@ -18,8 +18,8 @@
 #include <cstdio>
 #include <cstdlib>
 
-template <typename Type, int const Size, int const StoreId = 0,
-          int const InstanceSizeInBytes = 0>
+template <typename Type, int32_t const Size, int32_t const StoreId = 0,
+          int32_t const InstanceSizeInBytes = 0>
 class o1store {
     Type* all_{};
     Type** free_bgn_{};
@@ -106,7 +106,7 @@ class o1store {
     inline auto allocated_list() const -> Type** { return alloc_bgn_; }
 
     // returns length of list of allocated instances
-    inline auto allocated_list_len() const -> int {
+    inline auto allocated_list_len() const -> int32_t {
         return int(alloc_ptr_ - alloc_bgn_);
     }
 
@@ -117,10 +117,10 @@ class o1store {
     inline auto all_list() const -> Type* { return all_; }
 
     // returns the length of 'all' list
-    auto constexpr all_list_len() const -> int { return Size; }
+    auto constexpr all_list_len() const -> int32_t { return Size; }
 
     // returns instance at index 'ix' from 'all' list
-    inline auto instance(int ix) const -> Type* {
+    inline auto instance(int32_t ix) const -> Type* {
         if (!InstanceSizeInBytes) {
             return &all_[ix];
         }
@@ -130,7 +130,7 @@ class o1store {
     }
 
     // returns the size of allocated heap memory in bytes
-    auto constexpr allocated_data_size_B() const -> int {
+    auto constexpr allocated_data_size_B() const -> int32_t {
         return InstanceSizeInBytes
                    ? (Size * InstanceSizeInBytes + 3 * Size * sizeof(Type*))
                    : (Size * sizeof(Type) + 3 * Size * sizeof(Type*));

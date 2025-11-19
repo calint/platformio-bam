@@ -6,10 +6,10 @@
 
 /// @brief Implements touch screen for capacitive version
 class JC4827W543C final : public JC4827W543 {
-    static int constexpr touch_irq = 3;
-    static int constexpr touch_sda = 8;
-    static int constexpr touch_sck = 4;
-    static int constexpr touch_rst = 38;
+    static int32_t constexpr touch_irq = 3;
+    static int32_t constexpr touch_sda = 8;
+    static int32_t constexpr touch_sck = 4;
+    static int32_t constexpr touch_rst = 38;
 
     Touch_GT911 touch_screen{touch_sda,
                              touch_sck,
@@ -73,7 +73,7 @@ class JC4827W543C final : public JC4827W543 {
 
     auto display_get_touch(touch touches[]) -> void override {
         //       printf("get touches: %u\n", touch_screen.touches);
-        for (int i = 0; i < touch_screen.touches; ++i) {
+        for (int32_t i = 0; i < touch_screen.touches; ++i) {
             touches[i].x = touch_screen.points[i].x;
             touches[i].y = touch_screen.points[i].y;
             touches[i].pressure = touch_screen.points[i].size;

@@ -134,10 +134,10 @@ struct wave_trigger {
 static float const wave_triggers_bottom_screen_y =
     tile_map_height * tile_height - display_height;
 
-static int constexpr wave_triggers_len =
+static int32_t constexpr wave_triggers_len =
     sizeof(wave_triggers) / sizeof(wave_trigger);
 
-static int wave_triggers_ix = 0;
+static int32_t wave_triggers_ix = 0;
 
 // initiate to when the first wave is triggered
 static float wave_triggers_next_y =
@@ -189,11 +189,11 @@ inline auto application_on_frame_completed() -> void {
 }
 
 static auto wave_1() -> void {
-    int const count = display_width / (sprite_width * 3 / 2);
-    int const dx = display_width / count;
+    int32_t const count = display_width / (sprite_width * 3 / 2);
+    int32_t const dx = display_width / count;
     float x = 0;
     float y = -sprite_height;
-    for (int i = 0; i < count; ++i) {
+    for (int32_t i = 0; i < count; ++i) {
         ship1* shp = new (objects.alloc()) ship1{};
         shp->x = x;
         shp->y = y;
@@ -204,11 +204,11 @@ static auto wave_1() -> void {
 }
 
 static auto wave_2() -> void {
-    int const count = display_width / (sprite_width * 3 / 2);
-    int const dx = display_width / count;
+    int32_t const count = display_width / (sprite_width * 3 / 2);
+    int32_t const dx = display_width / count;
     float x = 0;
     float y = -sprite_height;
-    for (int i = 0; i < count; ++i, x += dx) {
+    for (int32_t i = 0; i < count; ++i, x += dx) {
         ship1* shp = new (objects.alloc()) ship1{};
         shp->x = x;
         shp->y = y;
@@ -217,13 +217,13 @@ static auto wave_2() -> void {
 }
 
 static auto wave_3() -> void {
-    int const count_y = 10;
-    int const count_x = 10;
-    int const dx = display_width / count_x;
+    int32_t const count_y = 10;
+    int32_t const count_x = 10;
+    int32_t const dx = display_width / count_x;
     float y = -sprite_height;
-    for (int j = 0; j < count_y; ++j, y -= 24) {
+    for (int32_t j = 0; j < count_y; ++j, y -= 24) {
         float x = 0;
-        for (int i = 0; i < count_x; ++i, x += dx) {
+        for (int32_t i = 0; i < count_x; ++i, x += dx) {
             ship1* shp = new (objects.alloc()) ship1{};
             shp->x = x;
             shp->y = y;
@@ -261,9 +261,9 @@ static auto wave_4() -> void {
 static auto wave_5() -> void {
     float y = -float(sprite_height);
     float const dx = float(display_width) / 12;
-    for (int j = 0; j < 12; ++j, y -= 16) {
+    for (int32_t j = 0; j < 12; ++j, y -= 16) {
         float x = 0;
-        for (int i = 0; i < 19; ++i, x += dx) {
+        for (int32_t i = 0; i < 19; ++i, x += dx) {
             ship1* shp = new (objects.alloc()) ship1{};
             shp->x = x;
             shp->y = y;

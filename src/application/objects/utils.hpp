@@ -11,7 +11,8 @@ class sprites_2x2 final {
   public:
     enum class mirror : uint8_t { none, all, horizontal, vertical };
 
-    sprites_2x2(game_object* obj, int const top_left_index_in_16_sprites_row,
+    sprites_2x2(game_object* obj,
+                int32_t const top_left_index_in_16_sprites_row,
                 uint8_t const layer, mirror const mr = mirror::none) {
         obj->spr = sprites.alloc();
         obj->spr->obj = obj;
@@ -77,9 +78,9 @@ class sprites_2x2 final {
 };
 
 static auto create_fragments(float const orig_x, float const orig_y,
-                             int const count, float const speed,
+                             int32_t const count, float const speed,
                              clk::time const life_time_ms) -> void {
-    for (int i = 0; i < count; ++i) {
+    for (int32_t i = 0; i < count; ++i) {
         fragment* frg = new (objects.alloc()) fragment{};
         frg->die_at_ms = clk.ms + life_time_ms;
         frg->x = orig_x;

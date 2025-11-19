@@ -17,30 +17,31 @@
 // note: `display_width` and `display_height` are necessary constants for the
 //       framework
 //       `display_orientation` defined in `game/defs.hpp`
-int const display_width = display_orientation == 1 ? 480 : 272;
-int const display_height = display_orientation == 1 ? 272 : 480;
+int32_t const display_width = display_orientation == 1 ? 480 : 272;
+int32_t const display_height = display_orientation == 1 ? 272 : 480;
 
 /// @brief Abstract class for resistive and capacitive versions of the device
 class JC4827W543 : public abstract_device {
     // maximum for this device
-    static int constexpr dma_max_transfer_b = 32768;
-    static int constexpr nv3041a_max_clock_freq = 32000000;
+    static int32_t constexpr dma_max_transfer_b = 32768;
+    static int32_t constexpr nv3041a_max_clock_freq = 32000000;
 
-    static int constexpr tft_width = 480;
-    static int constexpr tft_height = 272;
-    static int constexpr tft_orientation = 1; // native orientation is landscape
-    static int constexpr tft_cs = 45;
-    static int constexpr tft_sck = 47;
-    static int constexpr tft_d0 = 21;
-    static int constexpr tft_d1 = 48;
-    static int constexpr tft_d2 = 40;
-    static int constexpr tft_d3 = 39;
-    static int constexpr tft_bl = 1;
+    static int32_t constexpr tft_width = 480;
+    static int32_t constexpr tft_height = 272;
+    static int32_t constexpr tft_orientation =
+        1; // native orientation is landscape
+    static int32_t constexpr tft_cs = 45;
+    static int32_t constexpr tft_sck = 47;
+    static int32_t constexpr tft_d0 = 21;
+    static int32_t constexpr tft_d1 = 48;
+    static int32_t constexpr tft_d2 = 40;
+    static int32_t constexpr tft_d3 = 39;
+    static int32_t constexpr tft_bl = 1;
 
-    static int constexpr sd_mosi = 11;
-    static int constexpr sd_miso = 13;
-    static int constexpr sd_sck = 12;
-    static int constexpr sd_cs = 10;
+    static int32_t constexpr sd_mosi = 11;
+    static int32_t constexpr sd_miso = 13;
+    static int32_t constexpr sd_sck = 12;
+    static int32_t constexpr sd_cs = 10;
 
   protected:
     SPIClass spi2{SPI2_HOST};
@@ -172,7 +173,7 @@ class JC4827W543 : public abstract_device {
             // SLPOUT, turns off sleep mode, default
             0x11, 0x00};
 
-        for (int i = 0; i < sizeof(init_commands); i += 2) {
+        for (int32_t i = 0; i < sizeof(init_commands); i += 2) {
             bus_write_c8d8(init_commands[i], init_commands[i + 1]);
         }
 

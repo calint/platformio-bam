@@ -1,8 +1,8 @@
 #pragma once
 // abstraction of the device used by 'main.cpp' and implemented in `src/devices`
 // note: device implementations must define global constants:
-//    `static int constexpr display_width`
-//    `static int constexpr display_height`
+//    `static int32_t constexpr display_width`
+//    `static int32_t constexpr display_height`
 
 #include "../device.hpp"
 
@@ -17,15 +17,15 @@ class abstract_device : public device {
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    auto spiffs_read(char const* path, char* buf, int buf_len) const
-        -> int override {
+    auto spiffs_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t override {
         return fs_read(SPIFFS, path, buf, buf_len);
     }
 
     // write to SPIFFS 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append
     // returns true if ok
-    auto spiffs_write(char const* path, char const* buf, int buf_len,
+    auto spiffs_write(char const* path, char const* buf, size_t buf_len,
                       char const* mode) const -> bool override {
         return fs_write(SPIFFS, path, buf, buf_len, mode);
     }
@@ -50,14 +50,14 @@ class abstract_device : public device {
 
     // read from SD path 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    auto sd_read(char const* path, char* buf, int buf_len) const
-        -> int override {
+    auto sd_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t override {
         return fs_read(SD, path, buf, buf_len);
     }
 
     // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append returns true if ok
-    auto sd_write(char const* path, char const* buf, int buf_len,
+    auto sd_write(char const* path, char const* buf, size_t buf_len,
                   char const* mode) const -> bool override {
         return fs_write(SD, path, buf, buf_len, mode);
     }
@@ -79,8 +79,9 @@ class abstract_device : public device {
 
   protected:
     // initiate SD and SPIFFS
-    auto init_sd_spiffs(SPIClass& spi, uint8_t sd_cs, int sd_bus_freq = 4000000)
-        -> void {
+    auto init_sd_spiffs(SPIClass& spi, uint8_t sd_cs,
+                        int32_t sd_bus_freq = 4000000) -> void {
+
         if (SD.begin(sd_cs, spi, sd_bus_freq)) {
             sd_present_ = true;
         }
@@ -94,8 +95,9 @@ class abstract_device : public device {
     bool sd_present_{};
     bool spiffs_present_{};
 
-    auto fs_write(FS& fs, char const* path, char const* buf, int const buf_len,
-                  char const* mode) const -> bool {
+    auto fs_write(FS& fs, char const* path, char const* buf,
+                  size_t const buf_len, char const* mode) const -> bool {
+
         File file = fs.open(path, mode);
         if (!file) {
             return false;
@@ -106,8 +108,9 @@ class abstract_device : public device {
         return n == buf_len;
     }
 
-    auto fs_read(FS& fs, char const* path, char* buf, int const buf_len) const
-        -> int {
+    auto fs_read(FS& fs, char const* path, char* buf,
+                 size_t const buf_len) const -> size_t {
+
         File file = fs.open(path);
         if (!file) {
             return -1;

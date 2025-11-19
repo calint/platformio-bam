@@ -2,8 +2,8 @@
 // device interface used by 'main.cpp' and implemented in `src/devices`
 
 // note: device implementations must define global constants:
-//       `static int const display_width`
-//       `static int const display_height`
+//       `static int32_t const display_width`
+//       `static int32_t const display_height`
 
 // reviewed: 2024-05-22
 
@@ -48,13 +48,13 @@ class device {
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    virtual auto spiffs_read(char const* path, char* buf, int buf_len) const
-        -> int = 0;
+    virtual auto spiffs_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t = 0;
 
     // write to SPIFFS 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append
     // returns true if ok
-    virtual auto spiffs_write(char const* path, char const* buf, int buf_len,
+    virtual auto spiffs_write(char const* path, char const* buf, size_t buf_len,
                               char const* mode) const -> bool = 0;
 
     // returns total size of SPIFFS in bytes or 0 if none present
@@ -71,12 +71,12 @@ class device {
 
     // read from SD path 'path' maximum 'buf_len' into 'buf'
     // returns number of bytes read or -1 if failed
-    virtual auto sd_read(char const* path, char* buf, int buf_len) const
-        -> int = 0;
+    virtual auto sd_read(char const* path, char* buf, size_t buf_len) const
+        -> size_t = 0;
 
     // write to SD 'path' 'buf_len' bytes from 'buf', 'mode' "w" or "a" for
     // write or append returns true if ok
-    virtual auto sd_write(char const* path, char const* buf, int buf_len,
+    virtual auto sd_write(char const* path, char const* buf, size_t buf_len,
                           char const* mode) const -> bool = 0;
 
     // returns total size of SD card in bytes or 0 if none present

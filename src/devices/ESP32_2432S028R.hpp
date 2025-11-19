@@ -17,19 +17,20 @@
 //       framework
 //       `display_orientation` defined in `game/defs.hpp`
 // note: default orientation for this display is portrait = 0
-int const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
-int const display_height = display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
+int32_t const display_width = display_orientation == 0 ? TFT_WIDTH : TFT_HEIGHT;
+int32_t const display_height =
+    display_orientation == 0 ? TFT_HEIGHT : TFT_WIDTH;
 
 class ESP32_2432S028R final : public abstract_device {
-    static int constexpr touch_mosi = 32;
-    static int constexpr touch_miso = 39;
-    static int constexpr touch_sck = 25;
-    static int constexpr touch_cs = 33;
+    static int32_t constexpr touch_mosi = 32;
+    static int32_t constexpr touch_miso = 39;
+    static int32_t constexpr touch_sck = 25;
+    static int32_t constexpr touch_cs = 33;
 
-    static int constexpr sd_mosi = 23;
-    static int constexpr sd_miso = 19;
-    static int constexpr sd_sck = 18;
-    static int constexpr sd_cs = 5;
+    static int32_t constexpr sd_mosi = 23;
+    static int32_t constexpr sd_miso = 19;
+    static int32_t constexpr sd_sck = 18;
+    static int32_t constexpr sd_cs = 5;
 
     TFT_eSPI display{};
     SPIClass spi3{SPI3_HOST};
