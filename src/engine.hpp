@@ -17,6 +17,9 @@ extern int32_t const display_height;
 
 // resources
 
+// note: most data is stored in program memory using `constexpr` due to RAM
+//       constraints on the devices
+
 // palette used when rendering tile images
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note: lower and higher byte swapped to match default mode of device
@@ -197,8 +200,8 @@ class clk {
         }
         frames_rendered_since_last_update_++;
         time const dt_ms = time_ms - last_fps_update_ms_;
-        if (int(dt_ms) >= interval_ms_) {
-            fps = frames_rendered_since_last_update_ * 1000 / int(dt_ms);
+        if (int32_t(dt_ms) >= interval_ms_) {
+            fps = frames_rendered_since_last_update_ * 1000 / int32_t(dt_ms);
             frames_rendered_since_last_update_ = 0;
             last_fps_update_ms_ = time_ms;
             return interval_ms_ != 0;
@@ -226,7 +229,7 @@ static auto engine_loop() -> void {
     objects.pre_render();
 
     // render tiles, sprites and collision map
-    render(int(tile_map_x), int(tile_map_y));
+    render(int32_t(tile_map_x), int32_t(tile_map_y));
 
     // call 'update()' on allocated objects
     objects.update();

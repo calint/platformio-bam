@@ -107,7 +107,7 @@ class o1store {
 
     // returns length of list of allocated instances
     inline auto allocated_list_len() const -> int32_t {
-        return int(alloc_ptr_ - alloc_bgn_);
+        return int32_t(alloc_ptr_ - alloc_bgn_);
     }
 
     // returns one past the end of allocated instances list
