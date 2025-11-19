@@ -128,7 +128,7 @@ static auto constexpr count_right_shifts_until_1(int32_t num) -> int32_t {
 // note: inline because it is only called from one location in render(...)
 template <bool enable_transparency = false>
 static inline auto render_scanline_tiles(
-    uint16_t* render_buf_ptr, uint8_t const* imgs, uint16_t const* palette,
+    uint16_t* render_buf_ptr, uint16_t const* palette, uint8_t const* imgs,
     int32_t tile_x, int32_t tile_x_fract, tile_img_ix const* tile_map_row_ptr,
     uint8_t const* tile_map_flags_row_ptr, int16_t const scanline_y,
     int32_t const tile_line_times_tile_width,
@@ -195,8 +195,8 @@ static inline auto render_scanline_tiles(
 // renders a scanline of sprites
 // note: inline because it is only called from one location in render(...)
 static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
-                                           sprite_ix* collision_map_row_ptr,
                                            uint16_t const* palette,
+                                           sprite_ix* collision_map_row_ptr,
                                            int32_t tile_x, int32_t tile_x_fract,
                                            int16_t const scanline_y) -> void {
 
@@ -343,13 +343,13 @@ inline auto render(int32_t const x, int32_t const y) -> void {
         }
         // render a row from tile map
         while (tile_line < render_n_tile_lines) {
-            render_scanline_tiles(render_buf_ptr, &tile_imgs[0][0],
-                                  palette_tiles, tile_x, tile_x_fract,
+            render_scanline_tiles(render_buf_ptr, palette_tiles,
+                                  &tile_imgs[0][0], tile_x, tile_x_fract,
                                   tile_map_row_ptr, tile_map_flags_row_ptr,
                                   scanline_y, tile_line_times_tile_width,
                                   tile_line_times_tile_width_flipped);
-            render_scanline_sprites(render_buf_ptr, collision_map_row_ptr,
-                                    palette_sprites, tile_x, tile_x_fract,
+            render_scanline_sprites(render_buf_ptr, palette_sprites,
+                                    collision_map_row_ptr, tile_x, tile_x_fract,
                                     scanline_y);
             ++tile_line;
             tile_line_times_tile_width += tile_width;
