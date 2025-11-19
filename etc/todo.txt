@@ -1,12 +1,12 @@
-[ ] change `int` to int32_t for consistency between emulator and ESP32
+[x] change `int` to int32_t for consistency between emulator and ESP32
+[ ] consider making one more layer of tile map for printing with transparency
+    intended for "score", "game over" etc overlay over tiles and sprites
 [ ] if empty row skip the scanline completely
-[ ] when rendering tiles and if empty tile skip rendering for that scanline
+[ ] when rendering tiles and if empty tile skip rendering for that tile 
 [ ] 2 tile maps rendered for parallax effect
     => experimental code in etc/renderer-overlay.hpp
        on cyd: fps drop from ~30 to ~25
 [ ] several layers of tile map images for animation
-[ ] consider making one more layer of tile map for printing with transparency
-    intended for "score", "game over" etc overlay over tiles and sprites
 [ ] consider having several sprite sheets with sprite object containing sheet
     number
 [ ] enum for sprite flip types: horizontal, vertical, both
