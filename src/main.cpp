@@ -6,7 +6,8 @@
 // * the program is one file split into logical sections using includes
 // * globals are declared 'static'
 // * increases optimization opportunities for the compiler
-// * directory 'game' contains the user code that interfaces with 'engine.hpp'
+// * directory 'application' contains the user code that interfaces with
+//   'engine.hpp'
 // * order of include and content of 'defs.hpp', 'state.hpp', 'application.hpp'
 //   solves circular references and gives user the necessary callbacks to
 //   interface with engine
