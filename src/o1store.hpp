@@ -74,6 +74,7 @@ class o1store {
         inst->alloc_ptr = alloc_ptr_;
         // note: needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
         //       written
+        //       see: https://github.com/espressif/crosstool-NG/issues/55
         ++alloc_ptr_;
         return inst;
     }
