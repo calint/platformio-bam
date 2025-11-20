@@ -2,7 +2,7 @@
 [ ] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
 [ ] if empty row skip the scanline completely
-[ ] when rendering tiles and if empty tile skip rendering for that tile 
+[ ] when rendering overlay tiles and if empty tile skip rendering for that tile 
 [ ] 2 tile maps rendered for parallax effect
     => experimental code in etc/renderer-overlay.hpp
        on cyd: fps drop from ~30 to ~25
