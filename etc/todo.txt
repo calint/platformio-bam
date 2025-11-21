@@ -1,3 +1,4 @@
+[ ] s028: disable including fonts in tft
 [x] change `int` to int32_t for consistency between emulator and ESP32
 [ ] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
