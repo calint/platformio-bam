@@ -79,7 +79,9 @@ class object;
 
 class sprite final {
   public:
-    sprite** alloc_ptr{};
+    sprite** alloc_ptr;
+    // note: no default value since it would overwrite the 'o1store' assigned
+    //       value at 'alloc()'
     object* obj{};
     sprite_img img{};
     int16_t scr_x{};
