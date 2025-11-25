@@ -176,9 +176,9 @@ static inline auto render_scanline_tiles(
         remaining_x -= render_n_pixels;
         while (render_n_pixels--) {
             if (enable_transparency) {
-                uint16_t const px = palette[*tile_img_ptr];
+                uint8_t const px = *tile_img_ptr;
                 if (px != 0) {
-                    *render_buf_ptr = px;
+                    *render_buf_ptr = palette_tiles[px];
                 }
             } else {
                 *render_buf_ptr = palette[*tile_img_ptr];
