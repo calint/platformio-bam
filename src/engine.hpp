@@ -20,21 +20,15 @@ extern int32_t const display_height;
 // note: most data is stored in program memory using `constexpr` due to RAM
 //       constraints on the devices
 
+//
+// tile map
+//
+
 // palette used when rendering tile images
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note: lower and higher byte swapped to match default mode of device
 static uint16_t constexpr palette_tiles[256]{
 #include "application/resources/palette_tiles.hpp"
-};
-
-// palette used when rendering overlay
-static uint16_t constexpr palette_overlay[256]{
-#include "application/resources/palette_overlay.hpp"
-};
-
-// palette used when rendering sprites
-static uint16_t constexpr palette_sprites[256]{
-#include "application/resources/palette_sprites.hpp"
 };
 
 // images used by tile map
@@ -52,6 +46,19 @@ static uint8_t tile_map_flags[tile_map_height][tile_map_width]{
 #include "application/resources/tile_map_flags.hpp"
 };
 
+// render tile map starting at top left pixel position
+static float tile_map_x = 0;
+static float tile_map_y = 0;
+
+//
+// overlay
+//
+
+// palette used when rendering overlay
+static uint16_t constexpr palette_overlay[256]{
+#include "application/resources/palette_overlay.hpp"
+};
+
 // images used by tile map
 static uint8_t constexpr overlay_imgs[overlay_img_count]
                                      [tile_width * tile_height]{
@@ -65,11 +72,31 @@ static uint8_t overlay_map_row_nchars[overlay_map_height];
 // note: keeps track of how many visible images are in a row for optimization
 //       by skipping rendering of a whole scanline if empty
 
+//
+// sprites
+//
+
+// palette used when rendering sprites
+static uint16_t constexpr palette_sprites[256]{
+#include "application/resources/palette_sprites.hpp"
+};
+
 // images used by sprites
 static uint8_t constexpr sprite_imgs[sprite_img_count]
                                     [sprite_width * sprite_height]{
 #include "application/resources/sprite_imgs.hpp"
                                     };
+
+// pointer to sprite image
+using sprite_img = uint8_t const*;
+
+// the reserved 'sprite_ix' in 'collision_map' representing 'no sprite pixel'
+static sprite_ix constexpr sprite_ix_reserved =
+    std::numeric_limits<sprite_ix>::max();
+
+//
+// touch screen
+//
 
 // calibration of touch screen (defined in `platformio.ini`)
 static int16_t constexpr touch_screen_min_x = TOUCH_MIN_X;
@@ -81,16 +108,6 @@ static int16_t constexpr touch_screen_max_y = TOUCH_MAX_Y;
 static int16_t constexpr touch_screen_range_y =
     touch_screen_max_y - touch_screen_min_y;
 // --
-
-// render tile map starting at top left pixel position
-static float tile_map_x = 0;
-static float tile_map_y = 0;
-
-using sprite_img = uint8_t const*;
-
-// the reserved 'sprite_ix' in 'collision_map' representing 'no sprite pixel'
-static sprite_ix constexpr sprite_ix_reserved =
-    std::numeric_limits<sprite_ix>::max();
 
 // forward declaration of type
 class object;

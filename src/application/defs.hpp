@@ -19,6 +19,48 @@ static int32_t constexpr clk_locked_dt_ms = BAM_TIME_STEP_MS;
 // 0 to update fps every frame and make no output
 static int32_t constexpr clk_fps_update_ms = 2000;
 
+//
+// tile map
+//
+
+// number of tile images
+static int32_t constexpr tile_img_count = 256;
+// defined in 'resources/tile_imgs.hpp'
+
+// type used to index in the 'tile_imgs' array from 'tile_map'
+using tile_img_ix = uint8_t;
+// note: 256 entries
+
+// tile dimensions
+static int32_t constexpr tile_width = 16;
+static int32_t constexpr tile_height = 16;
+// note: when changing dimensions update 'png-to-resources/update.sh'
+
+// tile map dimension
+static int32_t constexpr tile_map_width = 17;
+static int32_t constexpr tile_map_height = 90;
+// defined in 'resources/tile_map.hpp'
+
+//
+// overlay
+//
+
+static int32_t constexpr overlay_img_count = 256;
+// defined in 'resources/overlay_imgs.hpp'
+
+// type used to index an 'overlay' image from `overlay_map`
+using overlay_img_ix = uint8_t;
+// note: 256 characters where 0 is empty
+
+static int32_t constexpr overlay_map_width = 17;
+static int32_t constexpr overlay_map_height = 30;
+// note: dimension for 272 x 480 screen
+// note: image size in overlay is same as tiles
+
+//
+// sprites
+//
+
 // number of sprite images
 static int32_t constexpr sprite_img_count = 256;
 // defined in 'resources/sprite_imgs.hpp'
@@ -32,43 +74,8 @@ static int32_t constexpr sprite_height = 16;
 // note: when changing dimensions update 'png-to-resources/update.sh'
 
 // number of layers of sprites
-// 0: ground, 1: air, 2: overlay
+// 0: ground, 1: air, 2: above air
 static int32_t constexpr sprite_layer_count = 3;
-
-// number of tile images
-static int32_t constexpr tile_img_count = 256;
-// defined in 'resources/tile_imgs.hpp'
-
-static int32_t constexpr overlay_img_count = 256;
-// defined in 'resources/overlay_imgs.hpp'
-
-// type used to index in the 'tile_imgs' array from 'tile_map'
-using tile_img_ix = uint8_t;
-
-// tile dimensions
-static int32_t constexpr tile_width = 16;
-static int32_t constexpr tile_height = 16;
-// note: when changing dimensions update 'png-to-resources/update.sh'
-
-//
-// example configuration for more sprites and tile_imgs
-//
-// static int32_t constexpr sprite_img_count = 512;
-// using sprite_img_ix = uint16_t;
-// static int32_t constexpr tile_img_count = 512;
-// using tile_img_ix = uint16_t;
-
-// tile map dimension
-static int32_t constexpr tile_map_width = 17;
-static int32_t constexpr tile_map_height = 90;
-// defined in 'resources/tile_map.hpp'
-
-// overlay dimensions (usually text over for printing "score" etc)
-using overlay_img_ix = uint8_t;
-// note: 256 characters where 0 is empty
-static int32_t constexpr overlay_map_width = 17;
-static int32_t constexpr overlay_map_height = 30;
-// note: dimension for 272 x 480 screen
 
 // type used to index a 'sprite'
 // note: 8-bit for 'collision_map' to fit in a contiguous block on heap
