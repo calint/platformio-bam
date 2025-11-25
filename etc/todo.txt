@@ -1,9 +1,9 @@
 [ ] s028: disable including fonts in tft
 [x] change `int` to int32_t for consistency between emulator and ESP32
-[ ] consider making one more layer of tile map for printing with transparency
+[x] consider making one more layer of tile map for printing with transparency
     intended for "score", "game over" etc overlay over tiles and sprites
-[ ] if empty row skip the scanline completely
-[ ] when rendering overlay tiles and if empty tile skip rendering for that tile 
+[x] if empty row skip the scanline completely
+[x] when rendering overlay tiles and if empty tile skip rendering for that tile 
 [ ] 2 tile maps rendered for parallax effect
     => experimental code in etc/renderer-overlay.hpp
        on cyd: fps drop from ~30 to ~25

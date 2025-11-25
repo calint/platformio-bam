@@ -174,17 +174,25 @@ static inline auto render_scanline_tiles(
         }
         // decrease remaining pixels to render before using that variable
         remaining_x -= render_n_pixels;
-        while (render_n_pixels--) {
-            if (enable_transparency) {
-                uint8_t const px = *tile_img_ptr;
-                if (px != 0) {
-                    *render_buf_ptr = palette_tiles[px];
+        if (enable_transparency) {
+            if (*tile_map_ptr != 0) {
+                while (render_n_pixels--) {
+                    uint8_t const px = *tile_img_ptr;
+                    if (px != 0) {
+                        *render_buf_ptr = palette_tiles[px];
+                    }
+                    tile_img_ptr += tile_img_ptr_inc;
+                    ++render_buf_ptr;
                 }
             } else {
-                *render_buf_ptr = palette[*tile_img_ptr];
+                render_buf_ptr += render_n_pixels;
             }
-            tile_img_ptr += tile_img_ptr_inc;
-            ++render_buf_ptr;
+        } else {
+            while (render_n_pixels--) {
+                *render_buf_ptr = palette[*tile_img_ptr];
+                tile_img_ptr += tile_img_ptr_inc;
+                ++render_buf_ptr;
+            }
         }
         // next tile
         ++tile_map_ptr;

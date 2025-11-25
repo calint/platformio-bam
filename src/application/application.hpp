@@ -103,6 +103,8 @@ inline auto application_init() -> void {
     overlay_map[2][8] = 'X';
     overlay_map[2][9] = 'Y';
     overlay_map[2][10] = 'Z';
+    overlay_map[2][11] = 0;
+    overlay_map[2][12] = 'A';
     overlay_map_row_nchars[2] = 11;
 }
 
