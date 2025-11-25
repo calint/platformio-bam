@@ -76,6 +76,34 @@ inline auto application_init() -> void {
     overlay_map[0][8] = '8';
     overlay_map[0][9] = '9';
     overlay_map_row_nchars[0] = 10;
+    overlay_map[1][0] = 'A';
+    overlay_map[1][1] = 'B';
+    overlay_map[1][2] = 'C';
+    overlay_map[1][3] = 'D';
+    overlay_map[1][4] = 'E';
+    overlay_map[1][5] = 'F';
+    overlay_map[1][6] = 'G';
+    overlay_map[1][7] = 'H';
+    overlay_map[1][8] = 'I';
+    overlay_map[1][9] = 'J';
+    overlay_map[1][10] = 'K';
+    overlay_map[1][11] = 'L';
+    overlay_map[1][12] = 'M';
+    overlay_map[1][13] = 'N';
+    overlay_map[1][14] = 'O';
+    overlay_map_row_nchars[1] = 15;
+    overlay_map[2][0] = 'P';
+    overlay_map[2][1] = 'Q';
+    overlay_map[2][2] = 'R';
+    overlay_map[2][3] = 'S';
+    overlay_map[2][4] = 'T';
+    overlay_map[2][5] = 'U';
+    overlay_map[2][6] = 'V';
+    overlay_map[2][7] = 'W';
+    overlay_map[2][8] = 'X';
+    overlay_map[2][9] = 'Y';
+    overlay_map[2][10] = 'Z';
+    overlay_map_row_nchars[2] = 11;
 }
 
 // callback when screen is touched, happens before 'render(...)'
