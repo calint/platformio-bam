@@ -27,7 +27,7 @@ extern int32_t const display_height;
 // palette used when rendering tile images
 // converts uint8_t to uint16_t rgb 565 (red being the highest bits)
 // note: lower and higher byte swapped to match default mode of device
-static uint16_t constexpr palette_tiles[256]{
+static uint16_t palette_tiles[256]{
 #include "application/resources/palette_tiles.hpp"
 };
 
@@ -55,7 +55,7 @@ static float tile_map_y = 0;
 //
 
 // palette used when rendering overlay
-static uint16_t constexpr palette_overlay[256]{
+static uint16_t palette_overlay[256]{
 #include "application/resources/palette_overlay.hpp"
 };
 
@@ -77,7 +77,7 @@ static uint8_t overlay_map_row_nchars[overlay_map_height];
 //
 
 // palette used when rendering sprites
-static uint16_t constexpr palette_sprites[256]{
+static uint16_t palette_sprites[256]{
 #include "application/resources/palette_sprites.hpp"
 };
 
