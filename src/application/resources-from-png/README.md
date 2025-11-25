@@ -2,10 +2,11 @@
 
 ## editing resources
 
-* edit gimp files `sprites.xcf` and `tiles.xcf`
+* edit gimp files `sprites.xcf`, `tiles.xcf` and `overlay.xcf`
 * suggestion is to create a layer for each sprite / tile
-* `sprites.xcf` and `tiles.xcf` can use different palettes
-* `sprites.xcf` background color is index 0 and represents transparent pixel
+* `sprites.xcf`, `tiles.xcf`, `overlay.xcf` can use different palettes
+* `sprites.xcf` and `overlay.xcf` background color is index 0 and represents
+  transparent pixel
 
 ## exporting to png
 
