@@ -5,7 +5,10 @@
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
 
+#include <cstdint>
+
 class state final {
   public:
     bool hero_is_alive{};
-} static state{};
+    int32_t score;
+} static state;

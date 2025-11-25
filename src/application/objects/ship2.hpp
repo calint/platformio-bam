@@ -4,6 +4,7 @@
 #include "../animator.hpp"
 #include "../game_object.hpp"
 #include "../objects/upgrade.hpp"
+#include "../state.hpp"
 #include <new>
 
 static animator::frame constexpr ship2_animation[]{
@@ -55,5 +56,7 @@ class ship2 final : public game_object {
         upg->y = y;
         upg->dy = 30;
         upg->ddy = 20;
+
+        state.score += 50;
     }
 };

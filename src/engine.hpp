@@ -109,6 +109,52 @@ static int16_t constexpr touch_screen_range_y =
     touch_screen_max_y - touch_screen_min_y;
 // --
 
+class overlay final {
+    uint8_t x_{};
+    uint8_t y_{};
+    uint8_t nlx_{};
+
+  public:
+    auto print(char const* str) -> void {
+        while (*str) {
+            bool const is_set = overlay_map[y_][x_];
+            if (*str == ' ' && is_set) {
+                --overlay_map_row_nchars[y_];
+            } else if (*str != ' ' && !is_set) {
+                ++overlay_map_row_nchars[y_];
+            }
+            overlay_map[y_][x_] = uint8_t(*str);
+            ++str;
+            ++x_;
+        }
+    }
+
+    auto print(int32_t const num) -> void {
+        char s[20];
+        snprintf(s, sizeof(s), "%d", num);
+        print(s);
+    }
+
+    auto nl() -> void {
+        ++y_;
+        x_ = nlx_;
+    }
+
+    auto pos(uint8_t y, uint8_t x) -> void {
+        x_ = x;
+        y_ = y;
+        nlx_ = x;
+    }
+
+    auto clear_line() -> void {
+        for (int32_t i = 0; i < overlay_map_width; ++i) {
+            overlay_map[y_][i] = 0;
+        }
+        overlay_map_row_nchars[y_] = 0;
+        x_ = nlx_;
+    }
+} static overlay;
+
 // forward declaration of type
 class object;
 
@@ -184,7 +230,7 @@ class objects : public object_store {
             obj->pre_render();
         }
     }
-} static objects{};
+} static objects;
 
 // helper class managing current frame time, dt, frames per second calculation
 class clk {
@@ -245,7 +291,7 @@ class clk {
         }
         return false;
     }
-} static clk{};
+} static clk;
 
 // callback from 'main.cpp'
 static auto engine_init() -> void {

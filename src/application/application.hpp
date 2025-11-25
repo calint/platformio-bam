@@ -7,6 +7,7 @@
 
 // device interface
 #include "../device.hpp"
+#include "../engine.hpp"
 #include "defs.hpp"
 #include "game_object.hpp"
 #include "objects/ben.hpp"
@@ -20,8 +21,8 @@
 #include "state.hpp"
 
 // movement of tile map in pixels per second
-static float tile_map_dx = 0;
-static float tile_map_dy = 0;
+static float tile_map_dx;
+static float tile_map_dy;
 
 // callback from 'setup()'
 inline auto application_init() -> void {
@@ -65,47 +66,15 @@ inline auto application_init() -> void {
     hro->x = float(display_width) / 2 - float(sprite_width) / 2;
     hro->y = 30;
 
-    overlay_map[0][0] = '0';
-    overlay_map[0][1] = '1';
-    overlay_map[0][2] = '2';
-    overlay_map[0][3] = '3';
-    overlay_map[0][4] = '4';
-    overlay_map[0][5] = '5';
-    overlay_map[0][6] = '6';
-    overlay_map[0][7] = '7';
-    overlay_map[0][8] = '8';
-    overlay_map[0][9] = '9';
-    overlay_map_row_nchars[0] = 10;
-    overlay_map[1][0] = 'A';
-    overlay_map[1][1] = 'B';
-    overlay_map[1][2] = 'C';
-    overlay_map[1][3] = 'D';
-    overlay_map[1][4] = 'E';
-    overlay_map[1][5] = 'F';
-    overlay_map[1][6] = 'G';
-    overlay_map[1][7] = 'H';
-    overlay_map[1][8] = 'I';
-    overlay_map[1][9] = 'J';
-    overlay_map[1][10] = 'K';
-    overlay_map[1][11] = 'L';
-    overlay_map[1][12] = 'M';
-    overlay_map[1][13] = 'N';
-    overlay_map[1][14] = 'O';
-    overlay_map_row_nchars[1] = 15;
-    overlay_map[2][0] = 'P';
-    overlay_map[2][1] = 'Q';
-    overlay_map[2][2] = 'R';
-    overlay_map[2][3] = 'S';
-    overlay_map[2][4] = 'T';
-    overlay_map[2][5] = 'U';
-    overlay_map[2][6] = 'V';
-    overlay_map[2][7] = 'W';
-    overlay_map[2][8] = 'X';
-    overlay_map[2][9] = 'Y';
-    overlay_map[2][10] = 'Z';
-    overlay_map[2][11] = 0;
-    overlay_map[2][12] = 'A';
-    overlay_map_row_nchars[2] = 11;
+    overlay.print("0123456789");
+    overlay.nl();
+    overlay.print("ABCDEFGHIJKLMNO");
+    overlay.nl();
+    overlay.print("PQRSTUVWXYZ ABC");
+    overlay.nl();
+    overlay.print("SCORE");
+    overlay.nl();
+    overlay.print(state.score);
 }
 
 // callback when screen is touched, happens before 'render(...)'
@@ -188,6 +157,9 @@ static float wave_triggers_next_y =
 // callback after frame has been rendered and objects updated
 // note: if objects are deleted see 'objects::update()'
 inline auto application_on_frame_completed() -> void {
+    overlay.clear_line();
+    overlay.print(state.score);
+
     // update x position in pixels in the tile map
     tile_map_x += tile_map_dx * clk.dt;
     if (tile_map_x < 0) {

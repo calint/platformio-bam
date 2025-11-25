@@ -2,6 +2,7 @@
 
 #include "../../engine.hpp"
 #include "../game_object.hpp"
+#include "../state.hpp"
 
 class ship1 final : public game_object {
   public:
@@ -27,4 +28,6 @@ class ship1 final : public game_object {
 
         return true;
     }
+
+    auto on_death_by_collision() -> void override { state.score += 10; }
 };
