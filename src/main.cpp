@@ -46,15 +46,15 @@
 // device file specified in `platformio.ini`
 #if DEVICE_ESP32_2432S028R
 #include "devices/ESP32_2432S028R.hpp"
-static ESP32_2432S028R device{};
+static ESP32_2432S028R device;
 
 #elif DEVICE_JC4827W543R
 #include "devices/JC4827W543R.hpp"
-static JC4827W543R device{};
+static JC4827W543R device;
 
 #elif DEVICE_JC4827W543C
 #include "devices/JC4827W543C.hpp"
-static JC4827W543C device{};
+static JC4827W543C device;
 
 #else
 #error                                                                         \

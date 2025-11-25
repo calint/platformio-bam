@@ -175,7 +175,7 @@ class sprite final {
 
 using sprites_store = o1store<sprite, sprite_count, 1>;
 
-static sprites_store sprites{};
+static sprites_store sprites;
 
 class object {
   public:
