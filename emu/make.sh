@@ -9,7 +9,7 @@ g++ -std=gnu++11 -O3 -g3 -o bam $(pkg-config --cflags --libs sdl3) \
     -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast \
     -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wpointer-arith \
     -Wswitch-enum -Wvla -Wsuggest-final-types -Wsuggest-final-methods \
-    -Wsuggest-override -Wno-unused-parameter \
+    -Wsuggest-override -Wno-unused-parameter -Wno-unused-variable \
     -flifetime-dse=1 \
     -DTOUCH_MIN_X=0 -DTOUCH_MAX_X=240 -DTOUCH_MIN_Y=0 -DTOUCH_MAX_Y=320 \
     -DTFT_WIDTH=240 -DTFT_HEIGHT=320 \

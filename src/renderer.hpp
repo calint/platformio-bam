@@ -308,6 +308,16 @@ inline auto render(int32_t const x, int32_t const y) -> void {
     tile_img_ix const* tile_map_row_ptr = &tile_map[tile_y][0];
     // pointer to start of current row of tile flags
     uint8_t const* tile_map_flags_row_ptr = &tile_map_flags[tile_y][0];
+
+    // overlay
+    overlay_img_ix const* overlay_map_row_ptr = &overlay_map[0][0];
+    uint8_t const* overlay_map_flags_row_ptr = &overlay_map_flags[0][0];
+    uint8_t const* overlay_map_row_nchars_ptr = &overlay_map_row_nchars[0];
+    int32_t overlay_line = 0;
+    int32_t overlay_line_times_tile_width = 0;
+    int32_t overlay_line_times_tile_width_flipped =
+        (tile_height - 1) * tile_width;
+
     // pointer to collision map starting at top left of screen
     sprite_ix* collision_map_row_ptr = collision_map;
     // keeps track of how many scanlines have been rendered since last DMA
@@ -348,12 +358,32 @@ inline auto render(int32_t const x, int32_t const y) -> void {
                                   tile_map_row_ptr, tile_map_flags_row_ptr,
                                   scanline_y, tile_line_times_tile_width,
                                   tile_line_times_tile_width_flipped);
+            if (*overlay_map_row_nchars_ptr != 0) {
+                render_scanline_tiles<true>(
+                    render_buf_ptr, palette_overlay, &overlay_imgs[0][0], 0, 0,
+                    overlay_map_row_ptr, overlay_map_flags_row_ptr, scanline_y,
+                    overlay_line_times_tile_width,
+                    overlay_line_times_tile_width_flipped);
+            }
             render_scanline_sprites(render_buf_ptr, palette_sprites,
                                     collision_map_row_ptr, tile_x, tile_x_fract,
                                     scanline_y);
             ++tile_line;
             tile_line_times_tile_width += tile_width;
             tile_line_times_tile_width_flipped -= tile_width;
+
+            ++overlay_line;
+            overlay_line_times_tile_width += tile_width;
+            overlay_line_times_tile_width_flipped -= tile_width;
+            if (overlay_line % tile_height == 0) {
+                overlay_map_row_ptr += overlay_map_width;
+                overlay_map_flags_row_ptr += overlay_map_width;
+                overlay_line_times_tile_width = 0;
+                overlay_line_times_tile_width_flipped =
+                    (tile_height - 1) * tile_width;
+                ++overlay_map_row_nchars_ptr;
+            }
+
             render_buf_ptr += display_width;
             collision_map_row_ptr += display_width;
             ++scanline_y;

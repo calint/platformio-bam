@@ -27,6 +27,11 @@ static uint16_t constexpr palette_tiles[256]{
 #include "application/resources/palette_tiles.hpp"
 };
 
+// palette used when rendering overlay
+static uint16_t constexpr palette_overlay[256]{
+#include "application/resources/palette_overlay.hpp"
+};
+
 // palette used when rendering sprites
 static uint16_t constexpr palette_sprites[256]{
 #include "application/resources/palette_sprites.hpp"
@@ -46,6 +51,19 @@ static tile_img_ix tile_map[tile_map_height][tile_map_width]{
 static uint8_t tile_map_flags[tile_map_height][tile_map_width]{
 #include "application/resources/tile_map_flags.hpp"
 };
+
+// images used by tile map
+static uint8_t constexpr overlay_imgs[overlay_img_count]
+                                     [tile_width * tile_height]{
+#include "application/resources/overlay_imgs.hpp"
+                                     };
+
+// overlay
+static overlay_img_ix overlay_map[overlay_map_height][overlay_map_width];
+static uint8_t overlay_map_flags[overlay_map_height][overlay_map_width];
+static uint8_t overlay_map_row_nchars[overlay_map_height];
+// note: keeps track of how many visible images are in a row for optimization
+//       by skipping rendering of a whole scanline if empty
 
 // images used by sprites
 static uint8_t constexpr sprite_imgs[sprite_img_count]

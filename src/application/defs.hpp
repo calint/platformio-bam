@@ -39,6 +39,9 @@ static int32_t constexpr sprite_layer_count = 3;
 static int32_t constexpr tile_img_count = 256;
 // defined in 'resources/tile_imgs.hpp'
 
+static int32_t constexpr overlay_img_count = 256;
+// defined in 'resources/overlay_imgs.hpp'
+
 // type used to index in the 'tile_imgs' array from 'tile_map'
 using tile_img_ix = uint8_t;
 
@@ -59,6 +62,13 @@ static int32_t constexpr tile_height = 16;
 static int32_t constexpr tile_map_width = 17;
 static int32_t constexpr tile_map_height = 90;
 // defined in 'resources/tile_map.hpp'
+
+// overlay dimensions (usually text over for printing "score" etc)
+using overlay_img_ix = uint8_t;
+// note: 256 characters where 0 is empty
+static int32_t constexpr overlay_map_width = 17;
+static int32_t constexpr overlay_map_height = 30;
+// note: dimension for 272 x 480 screen
 
 // type used to index a 'sprite'
 // note: 8-bit for 'collision_map' to fit in a contiguous block on heap

@@ -64,6 +64,19 @@ inline auto application_init() -> void {
     hero* hro = new (objects.alloc()) hero{};
     hro->x = float(display_width) / 2 - float(sprite_width) / 2;
     hro->y = 30;
+
+    overlay_map[0][0] = 48;
+    overlay_map[0][1] = 49;
+    overlay_map[0][2] = 48;
+    overlay_map[0][3] = 49;
+    overlay_map[0][4] = 48;
+    overlay_map[1][0] = 49;
+    overlay_map[1][1] = 48;
+    overlay_map[1][2] = 49;
+    overlay_map[1][3] = 48;
+    overlay_map[1][4] = 48;
+    overlay_map_row_nchars[0] = 4;
+    overlay_map_row_nchars[1] = 4;
 }
 
 // callback when screen is touched, happens before 'render(...)'

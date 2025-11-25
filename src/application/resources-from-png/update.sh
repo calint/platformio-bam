@@ -10,3 +10,5 @@ SIZE=${1:-16}
 ./read-palette.py tiles.png >../resources/palette_tiles.hpp
 ./read-sprites.py $SIZE $SIZE tiles.png >../resources/tile_imgs.hpp
 
+./read-palette.py overlay.png >../resources/palette_overlay.hpp
+./read-sprites.py $SIZE $SIZE overlay.png >../resources/overlay_imgs.hpp
