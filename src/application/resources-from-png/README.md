@@ -38,3 +38,7 @@ note: _check that transparency pixel is index 0_
 ### sprites
 
 ![sprites](sprites.png)
+
+### overlay
+
+![overlay](overlay.png)
