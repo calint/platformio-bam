@@ -23,7 +23,7 @@
 * script `update.sh` overwrites files in `../resources/`
   * `palette_sprites.hpp`
   * `palette_tiles.hpp`
-  * `palette_overlay`
+  * `palette_overlay.hpp`
   * `sprite_imgs.hpp`
   * `tile_imgs.hpp`
   * `overlay_imgs.hpp`
