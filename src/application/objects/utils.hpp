@@ -17,13 +17,13 @@ class sprites_2x2 final {
         obj->spr = sprites.alloc();
         obj->spr->obj = obj;
         obj->spr->layer = layer;
-        obj->spr->flip = 0;
+        obj->spr->flip = sprite::flip_none;
         // additional 3 sprites
         for (sprite*& spr : sprs) {
             spr = sprites.alloc();
             spr->obj = obj;
             spr->layer = layer;
-            spr->flip = 0;
+            spr->flip = sprite::flip_none;
         }
         obj->spr->img = sprite_imgs[top_left_index_in_16_sprites_row];
         switch (mr) {
@@ -35,25 +35,25 @@ class sprites_2x2 final {
             break;
         case mirror::all:
             sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row];
-            sprs[0]->flip = 1; // horizontal
+            sprs[0]->flip = sprite::flip_horizontal;
             sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row];
-            sprs[1]->flip = 2; // vertical
+            sprs[1]->flip = sprite::flip_vertical;
             sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row];
-            sprs[2]->flip = 3; // horizontal and vertical
+            sprs[2]->flip = sprite::flip_both;
             break;
         case mirror::horizontal:
             sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row];
-            sprs[0]->flip = 1; // horizontal
+            sprs[0]->flip = sprite::flip_horizontal;
             sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
             sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row + 16];
-            sprs[2]->flip = 1; // horizontal
+            sprs[2]->flip = sprite::flip_horizontal;
             break;
         case mirror::vertical:
             sprs[0]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
             sprs[1]->img = sprite_imgs[top_left_index_in_16_sprites_row];
-            sprs[1]->flip = 2; // vertical
+            sprs[1]->flip = sprite::flip_vertical;
             sprs[2]->img = sprite_imgs[top_left_index_in_16_sprites_row + 1];
-            sprs[2]->flip = 2; // vertical
+            sprs[2]->flip = sprite::flip_vertical;
             break;
         }
     }

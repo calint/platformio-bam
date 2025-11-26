@@ -23,19 +23,19 @@ class hero final : public game_object {
         spr->obj = this;
         spr->img = sprite_imgs[0];
         spr->layer = 1; // put in top layer
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
 
         spr_left_ = sprites.alloc();
         spr_left_->obj = this;
         spr_left_->img = sprite_imgs[0];
         spr_left_->layer = 1;
-        spr_left_->flip = 0;
+        spr_left_->flip = sprite::flip_none;
 
         spr_right_ = sprites.alloc();
         spr_right_->obj = this;
         spr_right_->img = sprite_imgs[0];
         spr_right_->layer = 1;
-        spr_right_->flip = 0;
+        spr_right_->flip = sprite::flip_none;
 
         last_upgrade_deployed_ms_ = clk.ms;
 

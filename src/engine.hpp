@@ -176,8 +176,10 @@ class sprite final {
     //       number of layers specified by 'sprite_layer_count'
     uint8_t flip{}; // bits: horiz: 0b01, vert: 0b10
 
+    static uint8_t constexpr flip_none = 0;
     static uint8_t constexpr flip_horizontal = 1;
     static uint8_t constexpr flip_vertical = 2;
+    static uint8_t constexpr flip_both = 3;
 };
 
 using sprites_store = o1store<sprite, sprite_count, 1>;

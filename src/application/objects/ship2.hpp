@@ -27,7 +27,7 @@ class ship2 final : public game_object {
         spr->obj = this;
         spr->img = animator_.sprite_img();
         spr->layer = 1;
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
     }
 
     auto update() -> bool override {
@@ -36,7 +36,7 @@ class ship2 final : public game_object {
         }
 
         if (dy > 0) {
-            spr->flip = 2; // vertical
+            spr->flip = sprite::flip_vertical;
         }
 
         if (y > display_height) {

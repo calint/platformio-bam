@@ -15,7 +15,7 @@ class fragment final : public game_object {
         spr->obj = this;
         spr->img = sprite_imgs[2];
         spr->layer = 2;
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
     }
 
     auto update() -> bool override {

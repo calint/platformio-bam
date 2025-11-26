@@ -14,7 +14,7 @@ class ship1 final : public game_object {
         spr->obj = this;
         spr->img = sprite_imgs[5];
         spr->layer = 1;
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
     }
 
     auto update() -> bool override {

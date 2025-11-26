@@ -24,7 +24,7 @@ class ned final : public game_object {
         spr = sprites.alloc();
         spr->obj = this;
         spr->img = animator_.sprite_img();
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
     }
 
     auto update() -> bool override {
@@ -37,7 +37,7 @@ class ned final : public game_object {
             if (x <= display_width - sprite_width) {
                 if (animator_.update()) {
                     spr->img = animator_.sprite_img();
-                    spr->flip = 0;
+                    spr->flip = sprite::flip_none;
                     x += moving_direction * animator_.displace_x();
                     y += animator_.displace_y();
                 }
@@ -45,14 +45,14 @@ class ned final : public game_object {
                 moving_direction = -1;
                 animator_.reset();
                 spr->img = animator_.sprite_img();
-                spr->flip = 1;
+                spr->flip = sprite::flip_horizontal;
             }
             break;
         case -1: // left
             if (x >= 0) {
                 if (animator_.update()) {
                     spr->img = animator_.sprite_img();
-                    spr->flip = 1;
+                    spr->flip = sprite::flip_horizontal;
                     x += moving_direction * animator_.displace_x();
                     y += animator_.displace_y();
                 }
@@ -60,7 +60,7 @@ class ned final : public game_object {
                 moving_direction = 1;
                 animator_.reset();
                 spr->img = animator_.sprite_img();
-                spr->flip = 0;
+                spr->flip = sprite::flip_none;
             }
             break;
         default: // other

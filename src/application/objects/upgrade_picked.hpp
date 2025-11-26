@@ -12,7 +12,7 @@ class upgrade_picked final : public game_object {
         spr->obj = this;
         spr->img = sprite_imgs[9];
         spr->layer = 2;
-        spr->flip = 0;
+        spr->flip = sprite::flip_none;
 
         death_at_ms_ = clk.ms + 5000;
     }
