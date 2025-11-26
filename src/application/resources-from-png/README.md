@@ -23,8 +23,10 @@
 * script `update.sh` overwrites files in `../resources/`
   * `palette_sprites.hpp`
   * `palette_tiles.hpp`
+  * `palette_overlay`
   * `sprite_imgs.hpp`
   * `tile_imgs.hpp`
+  * `overlay_imgs.hpp`
 * default size of sprites and tiles is 16 and can be changed,
   e.g., `update.sh 32`
 
