@@ -46,6 +46,10 @@ static uint8_t tile_map_flags[tile_map_height][tile_map_width]{
 #include "application/resources/tile_map_flags.hpp"
 };
 
+// bit flags for flipped tile
+static uint8_t constexpr tile_flag_flip_horizontal = 8;
+static uint8_t constexpr tile_flag_flip_vertical = 4;
+
 // render tile map starting at top left pixel position
 static float tile_map_x = 0;
 static float tile_map_y = 0;
@@ -171,6 +175,9 @@ class sprite final {
     // note: lower 'layer' number is rendered first
     //       number of layers specified by 'sprite_layer_count'
     uint8_t flip{}; // bits: horiz: 0b01, vert: 0b10
+
+    static uint8_t constexpr flip_horizontal = 1;
+    static uint8_t constexpr flip_vertical = 2;
 };
 
 using sprites_store = o1store<sprite, sprite_count, 1>;

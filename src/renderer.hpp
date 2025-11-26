@@ -143,8 +143,8 @@ static inline auto render_scanline_tiles(
         count_right_shifts_until_1(tile_width * tile_height);
     while (remaining_x) {
         uint8_t tile_flags = *tile_map_flags_ptr;
-        bool const flip_horiz = tile_flags & 0x8;
-        bool const flip_vert = tile_flags & 0x4;
+        bool const flip_horiz = tile_flags & tile_flag_flip_horizontal;
+        bool const flip_vert = tile_flags & tile_flag_flip_vertical;
         // pointer to tile image to render
         uint8_t const* tile_img_ptr = &imgs[*tile_map_ptr << imgs_index_shift];
         if (flip_vert) {
@@ -224,8 +224,8 @@ static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
             // pointer to sprite image to be rendered
             uint8_t const* spr_img_ptr = spr->img;
             // extract sprite flip
-            bool const flip_horiz = spr->flip & 1;
-            bool const flip_vert = spr->flip & 2;
+            bool const flip_horiz = spr->flip & sprite::flip_horizontal;
+            bool const flip_vert = spr->flip & sprite::flip_vertical;
             if (flip_vert) {
                 spr_img_ptr += (sprite_height - 1) * sprite_width -
                                (scanline_y - spr->scr_y) * sprite_width;
