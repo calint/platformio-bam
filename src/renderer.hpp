@@ -62,7 +62,7 @@ class dma_buffers final {
     uint16_t* buf_1_{};
     uint16_t* buf_2_{};
     uint16_t* buf_current_{};
-} static dma_buffers{};
+} static dma_buffers;
 
 inline auto renderer_init() -> void {
     dma_buffers.init();
