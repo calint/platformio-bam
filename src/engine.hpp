@@ -9,6 +9,7 @@
 #include "o1store.hpp"
 
 #include <cstdint>
+#include <cstring>
 #include <limits>
 
 // defined by the device
@@ -116,7 +117,7 @@ static int16_t constexpr touch_screen_range_y =
 class overlay final {
     uint8_t x_{};
     uint8_t y_{};
-    uint8_t nlx_{};
+    uint8_t nlx_{}; // at newline set x
 
   public:
     auto print(char const* str) -> void {
@@ -127,7 +128,7 @@ class overlay final {
             } else if (*str != ' ' && !is_set) {
                 ++overlay_map_row_nchars[y_];
             }
-            overlay_map[y_][x_] = uint8_t(*str);
+            overlay_map[y_][x_] = overlay_img_ix(*str);
             ++str;
             ++x_;
         }
@@ -151,9 +152,7 @@ class overlay final {
     }
 
     auto clear_line() -> void {
-        for (int32_t i = 0; i < overlay_map_width; ++i) {
-            overlay_map[y_][i] = 0;
-        }
+        memset(&overlay_map[y_][0], 0, overlay_map_width);
         overlay_map_row_nchars[y_] = 0;
         x_ = nlx_;
     }
