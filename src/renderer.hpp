@@ -7,10 +7,6 @@
 
 #include <cstring>
 
-// defined in device implementation
-extern int32_t const display_width;
-extern int32_t const display_height;
-
 // statistics about ratio of busy DMA before sending new buffer (higher is
 // better meaning DMA is not finished before rendering)
 static int32_t dma_busy;
