@@ -1,6 +1,8 @@
 #pragma once
 // device interface used by 'main.cpp' and implemented in `src/devices`
 
+// reviewed: 2025-11-27
+
 // note: device implementations must define global constants:
 //       `static int32_t const display_width`
 //       `static int32_t const display_height`
@@ -29,8 +31,7 @@ class device {
     // number of touches read at `display_get_touch`
     virtual auto display_touch_count() -> uint8_t = 0;
 
-    // if touched, get x, y values between 0 and 4095
-    // pressure between 0 and 255
+    // if touched, get x, y device values and pressure between 0 and 255
     virtual auto display_get_touch(touch touches[]) -> void = 0;
 
     // wait for previous DMA transaction to complete and make a new transaction
@@ -47,7 +48,7 @@ class device {
     virtual auto spiffs_available() const -> bool = 0;
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
-    // returns number of bytes read or -1 if failed
+    // returns number of bytes read or 0 if failed
     virtual auto spiffs_read(char const* path, char* buf, size_t buf_len) const
         -> size_t = 0;
 
@@ -70,7 +71,7 @@ class device {
     virtual auto sd_available() const -> bool = 0;
 
     // read from SD path 'path' maximum 'buf_len' into 'buf'
-    // returns number of bytes read or -1 if failed
+    // returns number of bytes read or 0 if failed
     virtual auto sd_read(char const* path, char* buf, size_t buf_len) const
         -> size_t = 0;
 

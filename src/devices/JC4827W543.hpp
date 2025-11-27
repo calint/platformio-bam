@@ -1,6 +1,7 @@
 #pragma once
-// display: NV3041A
-//     bus: QSPI
+// display: NV3041A bus: QSPI
+
+// reviewed: 2025-11-27
 
 // code lifted and prettified from Arduino_GFX
 // https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
@@ -16,11 +17,11 @@
 // orientation and requested orientation
 // note: `display_width` and `display_height` are necessary constants for the
 //       framework
-//       `display_orientation` defined in `game/defs.hpp`
+//       `display_orientation` is defined in `game/defs.hpp`
 int32_t const display_width = display_orientation == 1 ? 480 : 272;
 int32_t const display_height = display_orientation == 1 ? 272 : 480;
 
-/// @brief Abstract class for resistive and capacitive versions of the device
+// abstract class for resistive and capacitive versions of the device
 class JC4827W543 : public abstract_device {
     // maximum for this device
     static int32_t constexpr dma_max_transfer_b = 32768;
@@ -28,8 +29,8 @@ class JC4827W543 : public abstract_device {
 
     static int32_t constexpr tft_width = 480;
     static int32_t constexpr tft_height = 272;
-    static int32_t constexpr tft_orientation =
-        1; // native orientation is landscape
+    static int32_t constexpr tft_orientation = 1;
+    // note: native orientation is landscape
     static int32_t constexpr tft_cs = 45;
     static int32_t constexpr tft_sck = 47;
     static int32_t constexpr tft_d0 = 21;
@@ -223,6 +224,7 @@ class JC4827W543 : public abstract_device {
 
     auto dma_write_bytes(uint8_t const* data, uint32_t const len)
         -> void override {
+
         dma_wait_for_completion();
 
         transaction_async_.tx_buffer = data;

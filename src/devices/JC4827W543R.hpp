@@ -1,5 +1,7 @@
 #pragma once
 
+// reviewed: 2025-11-27
+
 #include "JC4827W543.hpp"
 
 #include <XPT2046_Touchscreen.h>
