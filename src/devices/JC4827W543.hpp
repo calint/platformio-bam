@@ -1,5 +1,7 @@
 #pragma once
+//
 // display: NV3041A bus: QSPI
+//
 
 // code lifted and prettified from Arduino_GFX
 // https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7

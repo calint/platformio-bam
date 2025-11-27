@@ -2,6 +2,7 @@
 //
 // implements a O(1) store of objects
 //
+
 // template parameters:
 // * 'Type' is object type. 'Type' must contain public field 'Type **alloc_ptr'
 // * Size is number of preallocated objects

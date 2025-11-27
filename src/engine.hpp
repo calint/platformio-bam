@@ -1,5 +1,7 @@
 #pragma once
+//
 // platform-independent game engine code
+//
 
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01

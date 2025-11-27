@@ -1,5 +1,7 @@
 #pragma once
+//
 // device interface used by 'main.cpp' and implemented in `src/devices`
+//
 
 // note: device implementations must define global constants:
 //       `static int32_t const display_width`
