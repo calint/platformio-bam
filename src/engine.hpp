@@ -4,6 +4,7 @@
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
+// reviewed: 2025-11-27
 
 #include "application/defs.hpp"
 #include "o1store.hpp"
@@ -289,7 +290,7 @@ class clk {
             }
             prv_ms_ = ms;
         }
-        frames_rendered_since_last_update_++;
+        ++frames_rendered_since_last_update_;
         time const dt_ms = time_ms - last_fps_update_ms_;
         if (int32_t(dt_ms) >= interval_ms_) {
             fps = frames_rendered_since_last_update_ * 1000 / int32_t(dt_ms);
