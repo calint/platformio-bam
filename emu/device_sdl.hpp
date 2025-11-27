@@ -3,6 +3,8 @@
 // sdl3 device implementation
 //
 
+// reviewed: 2025-11-27
+
 // note: device implementations must define global constants:
 //       `static int32_t const display_width`
 //       `static int32_t const display_height`
@@ -93,7 +95,7 @@ class device_sdl final : public device {
     auto spiffs_available() const -> bool override { return false; }
 
     // read from SPIFFS 'path' maximum 'buf_len' into 'buf'
-    // returns number of bytes read or -1 if failed
+    // returns number of bytes read or 0 if failed
     auto spiffs_read(char const* path, char* buf, size_t buf_len) const
         -> size_t override {
         return 0;
@@ -122,9 +124,10 @@ class device_sdl final : public device {
     auto sd_available() const -> bool override { return false; }
 
     // read from SD path 'path' maximum 'buf_len' into 'buf'
-    // returns number of bytes read or -1 if failed
+    // returns number of bytes read or 0 if failed
     auto sd_read(char const* path, char* buf, size_t buf_len) const
         -> size_t override {
+
         return 0;
     }
 
@@ -132,6 +135,7 @@ class device_sdl final : public device {
     // write or append returns true if ok
     auto sd_write(char const* path, char const* buf, size_t buf_len,
                   char const* mode) const -> bool override {
+
         return false;
     }
 

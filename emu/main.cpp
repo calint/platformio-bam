@@ -3,6 +3,8 @@
 // see `make.sh` for supplied defines
 //
 
+// reviewed: 2025-11-27
+
 // note: rendering is kept as the implementation for closest emulation
 
 // first the application defs
@@ -87,7 +89,7 @@ auto loop() -> void {
         uint8_t const touch_count = device.display_touch_count();
         device::touch touches[10]{};
         device.display_get_touch(touches);
-        application_on_touch(touches, touch_count);
+        application_on_touch(touches, touch_count > 10 ? 10 : touch_count);
     }
 
     engine_loop();
@@ -96,9 +98,9 @@ auto loop() -> void {
 auto main() -> int {
     setup();
     while (true) {
-        unsigned long t0 = millis();
+        unsigned long const t0 = millis();
         loop();
-        unsigned long dt = millis() - t0;
+        unsigned long const dt = millis() - t0;
         if (BAM_TIME_STEP_MS > dt) {
             SDL_Delay(Uint32(BAM_TIME_STEP_MS - dt));
         }
