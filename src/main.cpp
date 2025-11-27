@@ -34,6 +34,7 @@
 // reviewed: 2023-12-11
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
+// reviewed: 2025-11-27
 
 #include <Arduino.h>
 #include <hal/efuse_hal.h>
@@ -153,7 +154,7 @@ auto loop() -> void {
         uint8_t const touch_count = device.display_touch_count();
         device::touch touches[10]{};
         device.display_get_touch(touches);
-        application_on_touch(touches, touch_count);
+        application_on_touch(touches, touch_count > 10 ? 10 : touch_count);
     }
 
     engine_loop();

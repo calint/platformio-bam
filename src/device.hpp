@@ -1,13 +1,12 @@
 #pragma once
 // device interface used by 'main.cpp' and implemented in `src/devices`
 
-// reviewed: 2025-11-27
-
 // note: device implementations must define global constants:
 //       `static int32_t const display_width`
 //       `static int32_t const display_height`
 
 // reviewed: 2024-05-22
+// reviewed: 2025-11-27
 
 #include <cstddef>
 #include <cstdint>

@@ -1,11 +1,11 @@
 #pragma once
 // display: NV3041A bus: QSPI
 
-// reviewed: 2025-11-27
-
 // code lifted and prettified from Arduino_GFX
 // https://github.com/moononournation/Arduino_GFX/releases/tag/v1.4.7
 // bus/Arduino_ESP32QSPI and display/Arduino_NV3041A
+
+// reviewed: 2025-11-27
 
 #include "../application/defs.hpp"
 #include "abstract_device.hpp"
