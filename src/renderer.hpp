@@ -17,6 +17,8 @@ static int32_t dma_writes;
 static uint32_t const collision_map_size_B =
     sizeof(sprite_ix) * display_width * display_height;
 static sprite_ix* collision_map;
+// note: initialized at 'render_init' due to technical limitations of ESP32
+//       regarding statically allocated arrays
 
 // forward declarations to used device functions
 auto device_dma_write_bytes(uint8_t const* data, uint32_t len) -> void;
