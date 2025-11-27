@@ -321,6 +321,8 @@ inline auto render(int32_t const x, int32_t const y) -> void {
     overlay_img_ix const* overlay_map_row_ptr = &overlay_map[0][0];
     uint8_t const* overlay_map_flags_row_ptr = &overlay_map_flags[0][0];
     uint8_t const* overlay_map_row_nchars_ptr = &overlay_map_row_nchars[0];
+    // note: keeps track of number of printable characters on line, if none skip
+    //       scanline
     int32_t overlay_line = 0;
     int32_t overlay_line_times_tile_width = 0;
     int32_t overlay_line_times_tile_width_flipped =
@@ -338,7 +340,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
     // for all lines on display
     int32_t remaining_y = display_height;
     while (remaining_y) {
-        // render from tiles map and sprites to the 'render_buf_ptr'
+        // render from tiles map, sprites and overlay to the 'render_buf_ptr'
         int32_t const render_n_tile_lines =
             remaining_y < tile_height ? remaining_y : tile_height;
         // prepare loop variables
@@ -383,7 +385,8 @@ inline auto render(int32_t const x, int32_t const y) -> void {
             ++overlay_line;
             overlay_line_times_tile_width += tile_width;
             overlay_line_times_tile_width_flipped -= tile_width;
-            if (overlay_line % tile_height == 0) {
+            if ((overlay_line & tile_height_and) == 0) {
+                // new row
                 overlay_map_row_ptr += overlay_map_width;
                 overlay_map_flags_row_ptr += overlay_map_width;
                 overlay_line_times_tile_width = 0;
