@@ -1,5 +1,5 @@
 #pragma once
-// rendering of tile map, sprites and overlay
+// device independent rendering of tile map, sprites and overlay
 
 // reviewed: 2025-11-27
 
