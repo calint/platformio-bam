@@ -1,4 +1,7 @@
 #pragma once
+// rendering of tile map, sprites and overlay
+
+// reviewed: 2025-11-27
 
 #include "application/defs.hpp"
 #include "engine.hpp"
