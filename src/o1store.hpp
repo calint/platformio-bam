@@ -4,59 +4,60 @@
 //
 
 // template parameters:
-// * 'Type' is object type. 'Type' must contain public field 'Type **alloc_ptr'
-// * Size is number of preallocated objects
-// * StoreId is used for debugging
-// * InstanceSizeInBytes is custom size of instance to fit largest object in an
-//   object hierarchy or 0 if 'Type' sizeof is used
+// * 'type' is object type. 'type' must contain public field 'type **alloc_ptr'
+// * 'size' is number of preallocated objects
+// * 'store_id' is used for debugging
+// * 'instance_size_B' is custom size of instance to fit largest object in an
+//   object hierarchy or 0 if 'type' sizeof is used
 //
 // note: no destructor since life-time is program life-time
 //
 
 // reviewed: 2024-05-01
 // reviewed: 2024-05-22
+// reviewed: 2025-11-27
 
 #include <cstdio>
 #include <cstdlib>
 
-template <typename Type, int32_t const Size, int32_t const StoreId = 0,
-          int32_t const InstanceSizeInBytes = 0>
+template <typename type, int32_t const size, int32_t const store_id = 0,
+          int32_t const instance_size_B = 0>
 class o1store {
-    Type* all_{};
-    Type** free_bgn_{};
-    Type** free_ptr_{};
-    Type** free_end_{};
-    Type** alloc_bgn_{};
-    Type** alloc_ptr_{};
-    Type** del_bgn_{};
-    Type** del_ptr_{};
-    Type** del_end_{};
+    type* all_{};
+    type** free_bgn_{};
+    type** free_ptr_{};
+    type** free_end_{};
+    type** alloc_bgn_{};
+    type** alloc_ptr_{};
+    type** del_bgn_{};
+    type** del_ptr_{};
+    type** del_end_{};
 
   public:
     o1store() {
-        all_ = static_cast<Type*>(calloc(
-            Size, InstanceSizeInBytes ? InstanceSizeInBytes : sizeof(Type)));
+        all_ = static_cast<type*>(
+            calloc(size, instance_size_B ? instance_size_B : sizeof(type)));
         free_ptr_ = free_bgn_ =
-            static_cast<Type**>(calloc(Size, sizeof(Type*)));
+            static_cast<type**>(calloc(size, sizeof(type*)));
         alloc_ptr_ = alloc_bgn_ =
-            static_cast<Type**>(calloc(Size, sizeof(Type*)));
-        del_ptr_ = del_bgn_ = static_cast<Type**>(calloc(Size, sizeof(Type*)));
+            static_cast<type**>(calloc(size, sizeof(type*)));
+        del_ptr_ = del_bgn_ = static_cast<type**>(calloc(size, sizeof(type*)));
 
         if (!all_ || !free_bgn_ || !alloc_bgn_ || !del_bgn_) {
-            printf("!!! o1store %d: could not allocate arrays\n", StoreId);
+            printf("!!! o1store %d: could not allocate arrays\n", store_id);
             exit(1);
         }
 
-        free_end_ = free_bgn_ + Size;
-        del_end_ = del_bgn_ + Size;
+        free_end_ = free_bgn_ + size;
+        del_end_ = del_bgn_ + size;
 
         // write pointers to instances in the 'free' list
-        Type* all_it = all_;
-        for (Type** free_it = free_bgn_; free_it < free_end_; ++free_it) {
+        type* all_it = all_;
+        for (type** free_it = free_bgn_; free_it < free_end_; ++free_it) {
             *free_it = all_it;
-            if (InstanceSizeInBytes) {
-                all_it = reinterpret_cast<Type*>(
-                    reinterpret_cast<char*>(all_it) + InstanceSizeInBytes);
+            if (instance_size_B) {
+                all_it = reinterpret_cast<type*>(
+                    reinterpret_cast<char*>(all_it) + instance_size_B);
             } else {
                 ++all_it;
             }
@@ -65,25 +66,25 @@ class o1store {
 
     // allocates an instance
     // returns nullptr if instance could not be allocated
-    auto alloc() -> Type* {
+    auto alloc() -> type* {
         if (free_ptr_ >= free_end_) {
             return nullptr;
         }
-        Type* inst = *free_ptr_;
+        type* inst = *free_ptr_;
         ++free_ptr_;
         *alloc_ptr_ = inst;
         inst->alloc_ptr = alloc_ptr_;
         // note: needs compiler flag -flifetime-dse=1 for inst->alloc_ptr to be
-        //       written
+        //       written when inlined
         //       see: https://github.com/espressif/crosstool-NG/issues/55
         ++alloc_ptr_;
         return inst;
     }
 
     // adds instance to list of instances to be freed with 'apply_free()'
-    auto free(Type* inst) -> void {
+    auto free(type* inst) -> void {
         if (del_ptr_ >= del_end_) {
-            printf("!!! o1store %d: free overrun\n", StoreId);
+            printf("!!! o1store %d: free overrun\n", store_id);
             exit(1);
         }
         *del_ptr_ = inst;
@@ -92,10 +93,10 @@ class o1store {
 
     // deallocates the instances that have been freed
     auto apply_free() -> void {
-        for (Type** it = del_bgn_; it < del_ptr_; ++it) {
-            Type* inst_deleted = *it;
+        for (type** it = del_bgn_; it < del_ptr_; ++it) {
+            type* inst_deleted = *it;
             --alloc_ptr_;
-            Type* inst_to_move = *alloc_ptr_;
+            type* inst_to_move = *alloc_ptr_;
             inst_to_move->alloc_ptr = inst_deleted->alloc_ptr;
             *(inst_deleted->alloc_ptr) = inst_to_move;
             --free_ptr_;
@@ -105,7 +106,7 @@ class o1store {
     }
 
     // returns list of allocated instances
-    inline auto allocated_list() const -> Type** { return alloc_bgn_; }
+    inline auto allocated_list() const -> type** { return alloc_bgn_; }
 
     // returns length of list of allocated instances
     inline auto allocated_list_len() const -> int32_t {
@@ -113,28 +114,28 @@ class o1store {
     }
 
     // returns one past the end of allocated instances list
-    inline auto allocated_list_end() const -> Type** { return alloc_ptr_; }
+    inline auto allocated_list_end() const -> type** { return alloc_ptr_; }
 
     // returns the list with all preallocated instances
-    inline auto all_list() const -> Type* { return all_; }
+    inline auto all_list() const -> type* { return all_; }
 
     // returns the length of 'all' list
-    auto constexpr all_list_len() const -> int32_t { return Size; }
+    auto constexpr all_list_len() const -> int32_t { return size; }
 
     // returns instance at index 'ix' from 'all' list
-    inline auto instance(int32_t ix) const -> Type* {
-        if (!InstanceSizeInBytes) {
+    inline auto instance(int32_t ix) const -> type* {
+        if (!instance_size_B) {
             return &all_[ix];
         }
         // note: if instance size is specified do pointer shenanigans
-        return reinterpret_cast<Type*>(reinterpret_cast<char*>(all_) +
-                                       InstanceSizeInBytes * ix);
+        return reinterpret_cast<type*>(reinterpret_cast<char*>(all_) +
+                                       instance_size_B * ix);
     }
 
     // returns the size of allocated heap memory in bytes
     auto constexpr allocated_data_size_B() const -> int32_t {
-        return InstanceSizeInBytes
-                   ? (Size * InstanceSizeInBytes + 3 * Size * sizeof(Type*))
-                   : (Size * sizeof(Type) + 3 * Size * sizeof(Type*));
+        return instance_size_B
+                   ? (size * instance_size_B + 3 * size * sizeof(type*))
+                   : (size * sizeof(type) + 3 * size * sizeof(type*));
     }
 };
