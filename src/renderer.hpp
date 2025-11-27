@@ -376,6 +376,11 @@ inline auto render(int32_t const x, int32_t const y) -> void {
                                   tile_map_row_ptr, tile_map_flags_row_ptr,
                                   scanline_y, tile_line_times_tile_width,
                                   tile_line_times_tile_width_flipped);
+
+            render_scanline_sprites(render_buf_ptr, palette_sprites,
+                                    collision_map_row_ptr, tile_x, tile_x_fract,
+                                    scanline_y);
+
             if (*overlay_map_row_nchars_ptr != 0) {
                 render_scanline_tiles<true>(
                     render_buf_ptr, palette_overlay, &overlay_imgs[0][0], 0, 0,
@@ -383,9 +388,6 @@ inline auto render(int32_t const x, int32_t const y) -> void {
                     overlay_line_times_tile_width,
                     overlay_line_times_tile_width_flipped);
             }
-            render_scanline_sprites(render_buf_ptr, palette_sprites,
-                                    collision_map_row_ptr, tile_x, tile_x_fract,
-                                    scanline_y);
             ++tile_line;
             tile_line_times_tile_width += tile_width;
             tile_line_times_tile_width_flipped -= tile_width;

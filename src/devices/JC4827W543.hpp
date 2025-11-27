@@ -174,7 +174,10 @@ class JC4827W543 : public abstract_device {
             0x21, 0x00,
 
             // SLPOUT, turns off sleep mode, default
-            0x11, 0x00};
+            0x11, 0x00
+
+            //
+        };
 
         for (int32_t i = 0; i < sizeof(init_commands); i += 2) {
             bus_write_c8d8(init_commands[i], init_commands[i + 1]);
