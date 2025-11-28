@@ -446,6 +446,9 @@ inline auto render(int32_t const x, int32_t const y) -> void {
 }
 
 // benchmarks full throughput
+// ESP32-2432S028R: 31 fps  dma: 100%
+//     JC4827W543C: 44 fps  dma: 98%
+//     JC4827W543R: 46 fps  dma: 100%
 inline auto render_bench(int32_t const x, int32_t const y) -> void {
     // current pixel value
     static uint16_t px = 0;
