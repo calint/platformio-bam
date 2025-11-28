@@ -327,7 +327,7 @@ static auto engine_loop() -> void {
     objects.pre_render();
 
     // render tiles, sprites and collision map
-    render(int32_t(tile_map_x), int32_t(tile_map_y));
+    render_bench(int32_t(tile_map_x), int32_t(tile_map_y));
 
     // call 'update()' on allocated objects
     objects.update();

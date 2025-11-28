@@ -449,6 +449,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
 inline auto render_bench(int32_t const x, int32_t const y) -> void {
     // current pixel value
     static uint16_t px = 0;
+    static uint16_t px0 = 0;
 
     // clear stats for this frame
     dma_busy = dma_writes = 0;
@@ -457,6 +458,7 @@ inline auto render_bench(int32_t const x, int32_t const y) -> void {
     int32_t remaining_y = display_height;
     int32_t dma_scanline_count = 0;
     uint16_t* render_buf_ptr = dma_buffers.current_buffer();
+    px = px0;
     while (remaining_y) {
         for (int32_t i = 0; i < display_width; ++i) {
             *render_buf_ptr = px;
@@ -489,4 +491,5 @@ inline auto render_bench(int32_t const x, int32_t const y) -> void {
         // swap to the other render buffer
         dma_buffers.swap();
     }
+    ++px0;
 }
