@@ -443,8 +443,10 @@ inline auto render(int32_t const x, int32_t const y) -> void {
 }
 
 // benchmarks full throughput
-static uint16_t render_ref_px = 0;
 inline auto render_ref(int32_t const x, int32_t const y) -> void {
+    // current pixel value
+    static uint16_t px = 0;
+
     // clear stats for this frame
     dma_busy = dma_writes = 0;
 
@@ -454,10 +456,10 @@ inline auto render_ref(int32_t const x, int32_t const y) -> void {
     uint16_t* render_buf_ptr = dma_buffers.current_buffer();
     while (remaining_y) {
         for (int32_t i = 0; i < display_width; ++i) {
-            *render_buf_ptr = render_ref_px;
+            *render_buf_ptr = px;
             ++render_buf_ptr;
         }
-        ++render_ref_px;
+        ++px;
         --remaining_y;
         ++dma_scanline_count;
         if (dma_scanline_count == dma_n_scanlines) {
