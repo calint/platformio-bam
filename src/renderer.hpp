@@ -335,6 +335,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
     int32_t overlay_line_times_tile_width = 0;
     int32_t overlay_line_times_tile_width_flipped =
         (tile_height - 1) * tile_width;
+    // note: -1 to place at start of last row in overlay image
 
     // pointer to collision map starting at top left of screen
     sprite_ix* collision_map_row_ptr = collision_map;
@@ -363,6 +364,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
             tile_line_times_tile_width = tile_y_fract * tile_width;
             tile_line_times_tile_width_flipped =
                 (tile_height - 1 - tile_y_fract) * tile_width;
+            // note: -1 to place at start of last row in tile image
             tile_y_fract = 0;
         } else {
             render_n_scanlines = render_n_tile_lines;
