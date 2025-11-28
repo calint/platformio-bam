@@ -108,66 +108,47 @@ class JC4827W543 : public abstract_device {
         // decoded using manual at:
         // https://admin.osptek.com/uploads/NV_3041_A_Datasheet_V1_2_20221011_686486a221.pdf
         uint8_t constexpr init_commands[] = {
-            0xff, 0xa5, // ?
+            0xff, 0xa5, // undocumented (enables setting gamma registers?)
 
-            // gammma  weihuan pianguangpian 0913
-            0x80, 0x00, // gam_vrp0[5:0]
-            0xa0, 0x00, // gam_vrn0[5:0]
-
-            0x81, 0x07, // gam_vrp1[5:0]
-            0xa1, 0x06, // gam_vrn1[5:0]
-
-            0x82, 0x02, // gam_vrp2[5:0]
-            0xa2, 0x01, // gam_vrn2[5:0]
-
-            0x86, 0x11, // gam_prp0[6:0]
-            0xa6, 0x10, // gam_prn0[6:0]
-
-            0x87, 0x27, // gam_prp1[6:0]
-            0xa7, 0x27, // gam_prn1[6:0]
-
-            0x83, 0x37, // gam_vrp3[5:0]
-            0xa3, 0x37, // gam_vrn3[5:0]
-
-            0x84, 0x35, // gam_vrp4[5:0]
-            0xa4, 0x35, // gam_vrn4[5:0]
-
-            0x85, 0x3f, // gam_vrp5[5:0]
-            0xa5, 0x3f, // gam_vrn5[5:0]
-
-            0x88, 0x0b, // gam_pkp0[4:0]
-            0xa8, 0x0b, // gam_pkn0[4:0]
-
-            0x89, 0x14, // gam_pkp1[4:0]
-            0xa9, 0x14, // gam_pkn1[4:0]
-
-            0x8a, 0x1a, // gam_pkp2[4:0]
-            0xaa, 0x1a, // gam_pkn2[4:0]
-
-            0x8b, 0x0a, // gam_pkp3[4:0]
-            0xab, 0x0a, // gam_pkn3[4:0]
-
-            0x8c, 0x14, // gam_pkp4[4:0]
-            0xac, 0x08, // gam_pkn4[4:0]
-
-            0x8d, 0x17, // gam_pkp5[4:0]
-            0xad, 0x07, // gam_pkn5[4:0]
-
-            0x8e, 0x16, // gam_pkp6[4:0]
-            0xae, 0x06, // gam_pkn6[4:0]
-
-            0x8f, 0x1b, // gam_pkp7[4:0]
-            0xaf, 0x07, // gam_pkn7[4:0]
-
-            0x90, 0x04, // gam_pkp8[4:0]
-            0xb0, 0x04, // gam_pkn8[4:0]
-
-            0x91, 0x0a, // gam_pkp9[4:0]
-            0xb1, 0x0a, // gam_pkn9[4:0]
-
-            0x92, 0x16, // gam_pkp10[4:0]
-            0xb2, 0x15, // gam_pkn10[4:0]
-
+            // from gemini
+            0x80, 0x06, // gam_vrp0[5:0] - lower for more blue punch
+            0xa0, 0x06, // gam_vrn0[5:0] - lower for more blue punch
+            0x81, 0x0e, // gam_vrp1[5:0] - reduced for blue boost
+            0xa1, 0x0e, // gam_vrn1[5:0] - reduced for blue boost
+            0x82, 0x16, // gam_vrp2[5:0] - controlled rise
+            0xa2, 0x16, // gam_vrn2[5:0] - controlled rise
+            0x86, 0x22, // gam_prp0[6:0] - moderate mid-tone
+            0xa6, 0x22, // gam_prn0[6:0] - moderate mid-tone
+            0x87, 0x32, // gam_prp1[6:0] - higher mid-tone
+            0xa7, 0x32, // gam_prn1[6:0] - higher mid-tone
+            0x83, 0x28, // gam_vrp3[5:0] - mid-range
+            0xa3, 0x28, // gam_vrn3[5:0] - mid-range
+            0x84, 0x30, // gam_vrp4[5:0] - upper mid-range
+            0xa4, 0x30, // gam_vrn4[5:0] - upper mid-range
+            0x85, 0x3c, // gam_vrp5[5:0] - near max for highlights
+            0xa5, 0x3c, // gam_vrn5[5:0] - near max for highlights
+            0x88, 0x0b, // gam_pkp0[4:0] - balanced curve start
+            0xa8, 0x0b, // gam_pkn0[4:0] - balanced curve start
+            0x89, 0x11, // gam_pkp1[4:0] - smooth progression
+            0xa9, 0x11, // gam_pkn1[4:0] - smooth progression
+            0x8a, 0x16, // gam_pkp2[4:0] - continued curve
+            0xaa, 0x16, // gam_pkn2[4:0] - continued curve
+            0x8b, 0x0c, // gam_pkp3[4:0] - mid curve
+            0xab, 0x0c, // gam_pkn3[4:0] - mid curve
+            0x8c, 0x11, // gam_pkp4[4:0] - upper mid
+            0xac, 0x11, // gam_pkn4[4:0] - upper mid
+            0x8d, 0x14, // gam_pkp5[4:0] - high curve
+            0xad, 0x14, // gam_pkn5[4:0] - high curve
+            0x8e, 0x15, // gam_pkp6[4:0] - continued high
+            0xae, 0x15, // gam_pkn6[4:0] - continued high
+            0x8f, 0x18, // gam_pkp7[4:0] - near peak
+            0xaf, 0x18, // gam_pkn7[4:0] - near peak
+            0x90, 0x09, // gam_pkp8[4:0] - highlight control
+            0xb0, 0x09, // gam_pkn8[4:0] - highlight control
+            0x91, 0x0e, // gam_pkp9[4:0] - upper highlight
+            0xb1, 0x0e, // gam_pkn9[4:0] - upper highlight
+            0x92, 0x17, // gam_pkp10[4:0] - max highlight
+            0xb2, 0x17, // gam_pkn10[4:0] - max highlight
             // gamma done
 
             // INVON, invert colors (displays correct colors on device)
