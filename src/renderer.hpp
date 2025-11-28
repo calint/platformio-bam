@@ -299,6 +299,9 @@ static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
 }
 
 // renders tile map and sprites
+// ESP32-2432S028R: ~29 fps  dma: ~97%
+//     JC4827W543C: ~43 fps  dma: ~98%
+//     JC4827W543R: ~44 fps  dma: ~95%
 inline auto render(int32_t const x, int32_t const y) -> void {
     // clear stats for this frame
     dma_busy = dma_writes = 0;
@@ -446,9 +449,9 @@ inline auto render(int32_t const x, int32_t const y) -> void {
 }
 
 // benchmarks full throughput
-// ESP32-2432S028R: 31 fps  dma: 100%
-//     JC4827W543C: 44 fps  dma: 98%
-//     JC4827W543R: 46 fps  dma: 100%
+// ESP32-2432S028R: ~31 fps  dma: ~100%
+//     JC4827W543C: ~44 fps  dma: ~98%
+//     JC4827W543R: ~46 fps  dma: ~100%
 inline auto render_bench(int32_t const x, int32_t const y) -> void {
     // current pixel value
     static uint16_t px = 0;
