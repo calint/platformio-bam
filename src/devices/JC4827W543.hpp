@@ -110,7 +110,7 @@ class JC4827W543 : public abstract_device {
         uint8_t constexpr init_commands[] = {
             0xff, 0xa5, // undocumented (enables setting gamma registers?)
 
-            // from gemini
+            // gamma settings from gemini
             0x80, 0x06, // gam_vrp0[5:0] - lower for more blue punch
             0xa0, 0x06, // gam_vrn0[5:0] - lower for more blue punch
             0x81, 0x0e, // gam_vrp1[5:0] - reduced for blue boost
