@@ -313,6 +313,10 @@ static auto engine_init() -> void {
 // forward declaration of platform specific function
 auto render(int32_t x, int32_t y) -> void;
 
+// forward declaration of platform specific function that benchmarks full
+// throughput
+auto render_ref(int32_t x, int32_t y) -> void;
+
 // forward declaration of user provided callback
 auto application_on_frame_completed() -> void;
 
