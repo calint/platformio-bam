@@ -298,7 +298,7 @@ static inline auto render_scanline_sprites(uint16_t* render_buf_ptr,
     }
 }
 
-// renders tile map and sprites
+// renders tile map, sprites and overlay
 // ESP32-2432S028R: ~29 fps  dma: ~97%
 //     JC4827W543C: ~43 fps  dma: ~98%
 //     JC4827W543R: ~44 fps  dma: ~95%
