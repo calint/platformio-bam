@@ -384,6 +384,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
                                     scanline_y);
 
             if (*overlay_map_row_nchars_ptr != 0) {
+                // there are characters to render on this scan line
                 render_scanline_tiles<true>(
                     render_buf_ptr, palette_overlay, &overlay_imgs[0][0], 0, 0,
                     overlay_map_row_ptr, overlay_map_flags_row_ptr, scanline_y,
