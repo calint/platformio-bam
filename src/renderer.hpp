@@ -443,7 +443,7 @@ inline auto render(int32_t const x, int32_t const y) -> void {
 }
 
 // benchmarks full throughput
-inline auto render_ref(int32_t const x, int32_t const y) -> void {
+inline auto render_bench(int32_t const x, int32_t const y) -> void {
     // current pixel value
     static uint16_t px = 0;
 
