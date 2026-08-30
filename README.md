@@ -72,3 +72,10 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 * how-to: <https://github.com/ironlungx/nvim-pio>
   * `pio init --ide vim`
   * `python3 scripts/conv.py`
+
+### archlinux
+
+install packages:
+
+* platformio-core
+* platformio-core-udev
