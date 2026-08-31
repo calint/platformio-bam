@@ -55,7 +55,7 @@ a.k.a. cheap-black-device (CBD) with capacitive touch
 
 ## development environment
 
-* PlatformIO 6.1.18
+* PlatformIO 6.1.19
 * dependencies included in `/lib/`:
   * <https://github.com/Bodmer/TFT_eSPI/releases/tag/V2.5.43>
   * <https://github.com/PaulStoffregen/XPT2046_Touchscreen/releases/tag/v1.4>
