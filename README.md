@@ -4,7 +4,7 @@
 
 ## intention
 
-* developing using arduino framework with visual code and platformio
+* developing using arduino framework and platformio
 * exploring the devices by developing a toy game
 * developing a platform-independent toy game engine featuring:
   * smooth scrolling tile map
